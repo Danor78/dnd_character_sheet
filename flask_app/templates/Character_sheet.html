@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Character Sheet 5E</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CS_style.css') }}">
+
+</head>
+<body>
+    
+    <div class="character_sheet">
+        <div id="nav_links">
+            <a class="text-light" href="/dashboard">Show all Items</a>
+            <a class="text-light" href="/new_character">Add Character</a>
+            <a class="text-light" href="/new_class">Add Class</a>
+            <a class="text-light" href="/new_item">New Item</a>
+            <a class="text-light" href="/new_weapon">New Weapon</a>
+            <a class="text-light" href="/new_armor">New Armor Piece</a>
+            <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+        </div>
+        
+        <div class="info_bar">
+            <div class="logo_and_name">
+                <img src="../static/images/amps1.jpg" alt="">
+                <div>
+                    <p id="charName" >{{character.char_name}}</p>
+                    <p>Name of Character</p>
+                </div>
+            </div>
+            <div class="char_info">
+                <div class="char_info_selector1 info_menus">
+                    <ul>
+                        <li class="class_menu active">
+                            <p class="menu_selection" id="char_class">{{character.char_class}}</p>
+                            <div class="menu_name">Class</div>
+                        </li>
+                        <li class="active">
+                            <p class="menu_selection" id="char_level">{{character.char_level}}</p>
+                            <div class="menu_name">Level</div>
+                        </li>
+                        <li class="active">
+                            <p class="menu_selection" id="char_background">{{character.char_background}}</p>
+                            <div class="menu_name">Background</div>
+                        </li>
+                    </ul>
+                    <div>
+                        <p id="owner_name" >{{character.owner_name}}</ip>
+                        <p class="menu_name">Name of Player</p>
+                    </div>
+                </div>
+                <div class="char_info_selector2 info_menus">
+                    <ul>
+                        <li class="race_menu active">
+                            <p class="menu_selection" id="char_race">{{character.char_race}}</p>
+                            <div class="menu_name">Race</div>
+                        </li>
+                        <li class="alignment_menu active">
+                            <p class="menu_selection" id="char_alignment">{{character.char_alignment}}</p>
+                            <div class="menu_name">Alignment</div>
+                        </li>
+                    </ul>
+                    <div>
+                        <input type="number" name="char_xp" id="experience_points" placeholder="{{character.experience_points}}">
+                        <p class="menu_name">Experience Points</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- >>>>>>>>>>> Sheet Info <<<<<<<<<<<< -->
+        
+        <div class="sheet_info">
+            <!-- >>>>>>>>>>> Column 1 <<<<<<<<<<<< -->
+            <div class="column_one">
+                <!-- >>>>>>>>>>> Sub Column 1a <<<<<<<<<<<< -->
+                <div class="attrib_savs_skills_box">
+                    <div class="sub_column_1a">
+                        <div class="str attrib_container">
+                            <p>Strength</p>
+                            <p class="attrib_mod" id="str_attrib_mod">{{character.attributes['str'][1]}}</p>
+                            <div class="attrib" id="str_attrib">
+                                <p onclick="changeAttrib(this, 'Strength')">{{character.attributes['str'][0]}}</p>
+                            </div>
+                        </div>
+                        <div class="dex attrib_container">
+                            <p>Dexerity</p>
+                            <p class="attrib_mod" id="dex_attrib_mod">{{character.attributes['dex'][1]}}</p>
+                            <div class="attrib" id="dex_attrib">
+                                <p onclick="changeAttrib(this, 'Dexerity')">{{character.attributes['dex'][0]}}</p>
+                            </div>
+                        </div>
+                        <div class="con attrib_container">
+                            <p class="con_p">Constatution</p>
+                            <p class="attrib_mod" id="con_attrib_mod">{{character.attributes['con'][1]}}</p>
+                            <div class="attrib" id="con_attrib">
+                                <p onclick="changeAttrib(this, 'Constatution')">{{character.attributes['con'][0]}}</p>
+                            </div>
+                        </div>
+                        <div class="int attrib_container">
+                            <p class="int_p">Intelligence</p>
+                            <p class="attrib_mod" id="int_attrib_mod">{{character.attributes['int'][1]}}</p>
+                            <div class="attrib" id="int_attrib">
+                                <p onclick="changeAttrib(this, 'Intelligence')">{{character.attributes['int'][0]}}</p>
+                            </div>
+                        </div>
+                        <div class="wis attrib_container">
+                            <p>Wisdom</p>
+                            <p class="attrib_mod" id="wis_attrib_mod">{{character.attributes['wis'][1]}}</p>
+                            <div class="attrib" id="wis_attrib">
+                                <p onclick="changeAttrib(this, 'Wisdom')">{{character.attributes['wis'][0]}}</p>
+                            </div>
+                        </div>
+                        <div class="cha attrib_container">
+                            <p>Charisma</p>
+                            <p class="attrib_mod" id="cha_attrib_mod">{{character.attributes['cha'][1]}}</p>
+                            <div class="attrib" id="cha_attrib">
+                                <p onclick="changeAttrib(this, 'Charisma')">{{character.attributes['cha'][0]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- >>>>>>>>>>> Sub Column 1b <<<<<<<<<<<< -->
+                    <div class="sub_column_1b">
+                        <!-- >>>>>>>>>>> Insperation Box <<<<<<<<<<<< -->
+                        <div class="insperation">
+                            <div id="insperation_checkBox">
+                                <p>{{character.inspiration}}</p>
+                            </div>
+                            <div id="insperation_nameBox">
+                                <p>Insperation</p>
+                            </div>
+                        </div>
+                        <!-- >>>>>>>>>>> Profinciency Box <<<<<<<<<<<< -->
+                        <div class="prof_bonus">
+                            <div id="prof_checkBox">
+                                <p>{{character.prof_bonus}}</p>
+                            </div>
+                            <div id="prof_nameBox">
+                                <p>Proficiency Bonus</p>
+                            </div>
+                        </div>
+                        <!-- >>>>>>>>>>> Saving Thows Box <<<<<<<<<<<< -->
+                        <div class="saveThrows_box">
+                            <label>Saving Throws</label>
+                            <ul class="saveThrows">
+                                {% for sav in char_dict['savs'] %}
+                                {% set save = sav + "_prof" %}
+                                {% set mod = sav + "_mod" %}
+                                <li>
+                                    {% if save in character.proficiencies['savs'] %}
+                                    <input id="{{save}}" type="checkbox" name="{{save}}" data-waschecked="true" value="prof_on" onchange="populate_savs_and_skills_Values()" checked>
+                                    {% else %}
+                                    <input id="{{save}}" type="checkbox" name="{{save}}" data-waschecked="true" value="prof_on" onchange="populate_savs_and_skills_Values()" >
+                                    {% endif %}
+                                    <div class="underline_box" id="{{sav}}">{{character.savs[mod]}}</div>
+                                    <p>{{char_dict['savs'][sav]}}</p>
+                                </li>
+                                {% endfor %}
+                                <!-- <li>
+                                    <input id="dex_save_prof" type="checkbox" name="dex_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="dex_save">{{character.savs['dex_sav_mod']}}</div>
+                                    <p>Dexterity</p>
+                                </li>
+                                <li>
+                                    <input id="con_save_prof" type="checkbox" name="con_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="con_save">{{character.savs['con_sav_mod']}}</div>
+                                    <p>Constitution</p>
+                                </li>
+                                <li>
+                                    <input id="int_save_prof" type="checkbox" name="int_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="int_save">{{character.savs['int_sav_mod']}}</div>
+                                    <p>Intelligence</p>
+                                </li>
+                                <li>
+                                    <input id="wis_save_prof" type="checkbox" name="wis_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="wis_save">{{character.savs['wis_sav_mod']}}</div>
+                                    <p>Wisdom</p>
+                                </li>
+                                <li>
+                                    <input id="cha_save_prof" type="checkbox" name="cha_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="cha_save">{{character.savs['cha_sav_mod']}}</div>
+                                    <p>Charisma</p>
+                                </li> -->
+                            </ul>
+                        </div>
+                        <!-- >>>>>>>>>>> Skills Box<<<<<<<<<<<< -->
+                        <div class="skills_box">
+                            <label>Skills</label>
+                            <ul class="skills">
+                                {% for skill_dict in char_dict['skills'] %}
+                                {% for skill in skill_dict %}
+                                {% set skill_prof = skill + '_prof' %}
+                                {% set mod = skill + "_mod" %}
+                                <!-- <p>{{skill_prof}}</p> -->
+                                <li>
+                                    {% if skill_prof in character.proficiencies['skills'] %}
+                                    <input id="{{skill_prof}}" type="checkbox" name="{{skill_prof}}" value="prof_on"  onchange="populate_savs_and_skills_Values()" checked>
+                                    {% else %}
+                                    <input id="{{skill_prof}}" type="checkbox" name="{{skill_prof}}" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    {% endif %}
+                                    <div id="{{mod}}" class="underline_box">{{character.skills[prof]}}</div>
+                                    <p>{{skill_dict[skill][0]}}</p><p class="skill_attrib">({{skill_dict[skill][1]}})</p>
+                                </li>
+                                {% endfor %}
+                                {% endfor %}
+                                <!-- <li>
+                                    <input id="animal_handling_prof" type="checkbox" name="animal_handling" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="animal_handling_mod" class="underline_box">{{character.skills['animal_handling_mod']}}</div>
+                                    <p>Animal Handling</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="arcana_prof" type="checkbox" name="arcana" value="prof_on"  onchange="populate_savs_and_skills_Values()" >
+                                    <div id="arcana_mod"class="underline_box">{{character.skills['arcana_mod']}}</div>
+                                    <p>Arcana</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="atheletics_prof" type="checkbox" name="atheletics" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="atheltics_mod"class="underline_box">{{character.skills['athletics_mod']}}</div>
+                                    <p>Athletics</p><p class="skill_attrib">(Str)</p>
+                                </li>
+                                <li>
+                                    <input id="deception_prof" type="checkbox" name="deception" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="deception_mod"class="underline_box">{{character.skills['deception_mod']}}</div>
+                                    <p>Deception</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="history_prof" type="checkbox" name="history" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="history_mod"class="underline_box">{{character.skills['history_mod']}}</div>
+                                    <p>History</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="insight_prof" type="checkbox" name="insight" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="insight_mod"class="underline_box">{{character.skills['insight_mod']}}</div>
+                                    <p>Insight</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="intimidation_prof" type="checkbox" name="intimidation" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="intimidation_mod" class="underline_box">{{character.skills['intimidation_mod']}}</div>
+                                    <p>Intimidation</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="investigation_prof" type="checkbox" name="investigation" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="investigation_mod" class="underline_box">{{character.skills['investigation_mod']}}</div>
+                                    <p>Investigation</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="medicine_prof" type="checkbox" name="medicine" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="medicine_mod" class="underline_box">{{character.skills['medicine_mod']}}</div>
+                                    <p>Medicine</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="nature_prof" type="checkbox" name="nature" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="nature_mod" class="underline_box">{{character.skills['nature_mod']}}</div>
+                                    <p>Nature</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="perception_prof" type="checkbox" name="perception" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="perception_mod" class="underline_box">{{character.skills['perception_mod']}}</div>
+                                    <p>Perception</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="performance_prof" type="checkbox" name="performance" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="performance_mod" class="underline_box">{{character.skills['performance_mod']}}</div>
+                                    <p>Performance</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="persuasion_prof" type="checkbox" name="persuasion" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="persuasion_mod" class="underline_box">{{character.skills['persuasion_mod']}}</div>
+                                    <p>Persuasion</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="religion_prof" type="checkbox" name="religion" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="religion_mod" class="underline_box">{{character.skills['religion_mod']}}</div>
+                                    <p>Religion</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="sleight_of_hand_prof" type="checkbox" name="sleight_of_hand" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="sleight_of_hand_mod" class="underline_box">{{character.skills['sleight_of_hand_mod']}}</div>
+                                    <p>Sleight of Hand</p><p class="skill_attrib">(Dex)</p>
+                                </li>
+                                <li>
+                                    <input id="stealth_prof" type="checkbox" name="stealth" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="stealth_mod" class="underline_box">{{character.skills['stealth_mod']}}</div>
+                                    <p>Stealth</p><p class="skill_attrib">(dex)</p>
+                                </li>
+                                <li>
+                                    <input id="survival_prof" type="checkbox" name="survival" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="survival_mod" class="underline_box">{{character.skills['survival_mod']}}</div>
+                                    <p>Survival</p><p class="skill_attrib">(wis)</p>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Passive Wisdom Box <<<<<<<<<<<< -->
+                <div class="pass_wis">
+                    <div class="pass_wis_checkbox">
+                        <p>{{character.passive_wisdom}}</p>
+                    </div>
+                    <div class="pass_wis_namebox">
+                        <p>Passive Wisdom</p>
+                        <p>(Perception)</p>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Profincencies and Languages Box <<<<<<<<<<<< -->
+                <div class="prof_lang">
+                    <h2>Other Proficiencies & Languages</h2>
+                    <div class="prof_menus">
+                        <label>Languages</label>
+                        <select name="languages_prof_prof" id="languages_prof">
+                            <option value="common_lang">Common</option>
+                            <option value="dwarvish_lang">Dwarvish</option>
+                            <option value="Elvish_lang">Elvish</option>
+                            <option value="giant_lang">Giant</option>
+                            <option value="gnomish_lang">Gnomish</option>
+                            <option value="goblin_lang">Goblin</option>
+                            <option value="halfling_lang">Halfling</option>
+                            <option value="orc_lang">Orc</option>
+                            <option value="abyssal_lang">Abyssal</option>
+                            <option value="celestial_lang">Celestial</option>
+                            <option value="draconic_lang">Draconic</option>
+                            <option value="deepspeech_lang">Deep Speech</option>
+                            <option value="infernal_lang">Infernal</option>
+                            <option value="primordial_lang">Primordial</option>
+                            <option value="sylvan_lang">Sylvan</option>
+                            <option value="undercommon_lang">undercommon</option>
+                        </select>
+                        <label>Armor</label>
+                        <select name="armor_prof" id="languages">
+                            <option value="light_armor">Light Armor</option>
+                            <option value="medium_armor">Medium Armor</option>
+                            <option value="heavy_armor">Heavy Armor</option>
+                        </select>
+                        <br>
+                        <label>Weapons</label>
+                        <select name="armor_prof" id="languages">
+                            <option value="simple_weapons">Simple Weapons</option>
+                            <option value="martial_weapons">Martial Weapons</option>
+                        </select>
+                    </div>
+                    <textarea name="prof_lang_text" id="prof_lang_textarea" cols="30" rows="5"></textarea>
+                </div>
+            </div>
+<!-- >>>>>>>>>>> Column two <<<<<<<<<<<< -->
+            <div class="column_two">
+<!-- >>>>>>>>>>> Life stat box<<<<<<<<<<<< -->
+                <div class="lifeStat_box">
+<!-- >>>>>>>>>>> Sub Life Stat box containing AC Initiative and Speed for the character <<<<<<<<<<<< -->
+                    <div class="sub_lifeStat_box1">
+                        <div class="ac_box">
+                            <h2>AC Class</h2>
+                            <p>{{character.ac_class}}</p>
+                        </div>
+                        <div class="initiative_box">
+                            <h2>Initiative</h2>
+                            <p id="initiative_mod">{{character.initiative}}</p>
+                        </div>
+                        <div class="speed_box">
+                            <h2>Speed</h2>
+                            <p>{{character.speed}}</p>
+                        </div>
+                    </div>
+                </div>
+<!-- >>>>>>>>>>> Character hitpoints box<<<<<<<<<<<< -->
+                <div class="hp_box">
+                    <div class="hp_max_box">
+                        <p class="hp_max_title">Hit Point Maximum</p>
+                        <input type="number" id="hp_max" name="hp_max" value="{{character.maximum_hp}}">
+                    </div>
+                    <div class="current_hp_box">
+                        <div>
+                            <p class="current_hp_title">Current Hit Points</p>
+                            <p class="current_hp">{{character.current_hp}}</p>
+                        </div>
+                        <div class="chp_button_controls">
+                            <input type="number" id="hp_change">
+                            <div class="hp_buttons">
+                                <button id="heal_button" onclick="adjust_hp('Heal')">Heal</button>
+                                <button id="damage_button" onclick="adjust_hp('Damage')">Damage</button>
+                            </div>
+                        </div>
+                        <div class="temp_hp_box">
+                            <h3>Temporary Hp</h3>
+                            <input type="number" id="temp_hp" onchange="update_current_hp()" value="{{character.temp_hp}}"  >
+                        </div>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Hitdice and Death Saves box <<<<<<<<<<<< -->
+                <div class="hitDice_deathSavs_box">
+                <!-- >>>>>>>>>>> Hitdice box <<<<<<<<<<<< -->
+                    <div class="hitDice_box">
+                        <h2>Hit Dice</h2>
+                        <div>
+                            <p>Total</p>
+                            <p id="hitDice_total">{{character.hit_dice_total}}</p>
+                            <!-- <input type="number" id="hitDice_total"> -->
+                        </div>
+                        <p id="hitDice">{{character.hit_dice}}</p>
+                        <!-- <select name="hitDice" id="hitDice">
+                            <option value="1d6">1d6</option>
+                            <option value="1d8">1d8</option>
+                            <option value="1d10">1d10</option>
+                            <option value="1d12">1d12</option>
+                        </select> -->
+                    </div>
+                    <div class="deathSaves_box">
+                        <h2>Death Saves</h2>
+                        <div class="death_successes">
+                            <h3>Successes</h3>
+                            <input type="radio" id="deathSav1" name="deathSav1" value="deathSav1">
+                            <input type="radio" id="deathSav2" name="deathSav2" value="deathSav2">
+                            <input type="radio" id="deathSav3" name="deathSav3" value="deathSav3">
+                        </div>
+                        <div class="death_failures">
+                            <h3>Failures</h3>
+                            <input type="radio" id="deathFail1" name="deathFail1" value="deathFail1">
+                            <input type="radio" id="deathFail2" name="deathFail2" value="deathFail2">
+                            <input type="radio" id="deathFail3" name="deathFail3" value="deathFail3">
+                        </div>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Attacks and Spellcasting Box <<<<<<<<<<<< -->
+                <div class="attacks_spellcasting_box">
+                    <h2>Attacks and Spellcasting</h2>
+                    <div class="asb_headers">
+                        <p class="weaponName_Header">Name</p>
+                        <p class="weaponAtkBns_Header">ATK Bonus</p>
+                        <p class="weaponDamage_Header">Damage/Type</p>
+                    </div>
+                    <div class="asb_slot1">
+                        <div id="slot1_WeaponName"><p></p></div>
+                        <div id="slot1_AtkBns"><p></p></div>
+                        <div id="slot1_Damage"><p></p></div>
+                    </div>
+                    <div class="asb_slot2">
+                        <div id="slot2_WeaponName"><p></p></div>
+                        <div id="slot2_AtkBns"><p></p></div>
+                        <div id="slot2_Damage"><p></p></div>
+                    </div>
+                    <div class="asb_slot3">
+                        <div id="slot3_WeaponName"><p></p></div>
+                        <div id="slot3_AtkBns"><p></p></div>
+                        <div id="slot3_Damage"><p></p></div>
+                    </div>
+                    <div class="asb_slot3">
+                        <div id="slot3_WeaponName"><p></p></div>
+                        <div id="slot3_AtkBns"><p></p></div>
+                        <div id="slot3_Damage"><p></p></div>
+                    </div>
+                    <textarea name="attacks_spellcasting_text" id="attacks_spellcasting_textarea" cols="30" rows="12"></textarea>
+                </div>
+                <!-- >>>>>>>>>>> Equipment and Coin Box <<<<<<<<<<<< -->
+                <div class="equipment_and_coin_box">
+                    <h2>Equipment and Coin</h2>
+                    <div class="coin_amounts">
+                        <div class="platnium_amount">
+                            <p>Platnium</p>
+                            <input type="number" id="platnium_total" value="{{character.coin['plat']}}">
+                        </div>
+                        <div class="gold_amount">
+                            <p>Gold</p>
+                            <input type="number" id="gold_total" value="{{character.coin['gold']}}">
+                        </div>
+                        <div class="silver_amount">
+                            <p>Silver</p>
+                            <input type="number" id="silver_total" value="{{character.coin['silver']}}">
+                        </div>
+                        <div class="copper_amount">
+                            <p>Copper</p>
+                            <input type="number" id="copper_total" value="{{character.coin['copper']}}">
+                        </div>
+                        <div class="Electrum_amount">
+                            <p>Electrum</p>
+                            <input type="number" id="electrum_total" value="{{character.coin['elec']}}">
+                        </div>
+                    </div>
+                    <textarea name="equipment_and_coin_text" id="equipment_and_coin_textarea" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <!-- >>>>>>>>>>> Column Threee <<<<<<<<<<<< -->
+            <div class="column_three">
+            <!-- >>>>>>>>>>> Personality Container <<<<<<<<<<<< -->
+                <div class="personality_container">
+                    <div class="personality_traits">
+                        <h2>Personality Traits</h2>
+                    <textarea name="personality_traits" id="personality_traits" cols="55" rows="4">{{character.personality_traits}}</textarea>
+                    </div>
+                    <div class="personality_ideals">
+                        <h2>Ideals</h2>
+                    <textarea name="personality_ideals" id="personality_ideals" cols="55" rows="2">{{character.ideals}}</textarea>
+                    </div>
+                    <div class="personality_bonds">
+                        <h2>Bonds</h2>
+                    <textarea name="personality_bonds" id="personality_bonds" cols="55" rows="2">{{character.bonds}}</textarea>
+                    </div>
+                    <div class="personality_flaws">
+                        <h2>Flaws</h2>
+                    <textarea name="personality_flaws" id="personality_flaws" cols="55" rows="2">{{character.flaws}}</textarea>
+                    </div>
+                </div>
+                <div class="features_and_traits">
+                    <h2>Features and Traits</h2>
+                    <textarea name="features_and_traits" id="features_and_traits_textarea" cols="55" rows="32">{{character.features_and_traits}}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/CS_script.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='new_armor.css') }}">
+</head>
+<body class="container">
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_character">Add Character</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    <br><br><br>
+    <h1 class="text-center">New Armor</h1>
+    <div class="form-group d-flex justify-content-center">
+        <form action="/create_armor" class="w-75 border border-dark p-3" method="post" id="item_form">
+            <input type="hidden" name="user_id" value="{{session['user_id']}}">
+            <div class="d-flex">
+                <div class="column_1 mr-5">
+                    <h3>Enter Info for New Armor</h3>
+                    <label for="name" class="mr-2">Item Name: </label>
+                    <input type="text" name="name">
+                    <br>
+                    <div class="d-flex align-items-center">
+                        <label for="type" class="mr-2">Type: </label>
+                        <select name="type" id="item_type" multiple>
+                            {% for type in armors['item_type'] %}
+                            <option value="{{type}}">{{armors['item_type'][type]}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+                    <label for="rarity">Rarity:</label>
+                    <select name="rarity" id="item_rarity">
+                        {% for rarity in armors['item_rarity']%}
+                        <option value="{{rarity}}">{{armors['item_rarity'][rarity]}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="d-flex form-group" style="height: 30px;">
+                        <label for="cost" class="mr-2">Cost: </label>
+                        <input type="number" name="cost" min="0" value="0" class="mr-2" style=" width: 120px;">
+                        <p class="text-secondary">(in copper pieces) <br> (ex: 1 sp = 100cp 1gp = 100 sp)</p> 
+                    </div>
+                    <div class="d-flex form-group mt-4" >
+                        <label for="weight" class="mr-2">Weight: </label>
+                        <input type="number" name="weight" min="0" value="0" class="mr-2" style="height: 30px; width: 120px;">
+                        <p class="text-secondary">(In lbs)</p> 
+                    </div>
+                    
+                    <label class="mr-3" for="is_magical">Is it Magical?</label>
+                    <input type="radio" name="is_magical" id="magical" value="yes"><span class="mr-3">Yes</span>
+                    <input type="radio" name="is_magical" id="magical" value="no" checked><span>No</span>
+                    <br>
+                    <label class="mr-3" for="is_attunable">Is it Attuneable?</label>
+                    <input type="radio" name="is_attunable" id="attunable" value="yes"><span class="mr-3">Yes</span>
+                    <input type="radio" name="is_attunable" id="attunable" value="no" checked><span>No</span>
+                    <br>
+                    <div class="">
+        
+                    </div>
+                        <div >
+                            <label for="description">Description:</label><br>
+                            <textarea name="description" id="item_description" cols="30" rows="3"></textarea>
+                        </div>
+                    <br>
+                    <div class="mb-3">
+                        <label for="source">Source Material:</label><br>
+                        <select name="source" id="">
+                            {% for src in armors['item_src'] %}
+                            <option value="{{src}}">{{armors['item_src'][src]}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+
+                </div>
+                <div class="column_2">
+                    <label for="armor_type">Armor Type: </label>
+                    <select name="armor_type" id="armor_type">
+                        {% for type in armors['armor_type'] %}
+                        <option value="{{type}}">{{armors['armor_type'][type]}}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <label for="body_part">Body part to be equipped by: </label>
+                    <select name="body_part" id="body_part">
+                        {% for type in armors['body_part'] %}
+                        <option value="{{type}}">{{armors['body_part'][type]}}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <label for="armor_AC">Armor AC:</label>
+                    <input type="number" name="armor_AC" id="armor_AC" style="width: 50px;" min="1" value="1">
+                    <br>
+                    <label for="magical_mod">Magical Modifier:</label>
+                    <input type="number" name="magical_mod" id="magical_mod" style="width: 50px;" min="0" max="5" value="0">
+                    <br>
+                    <label for="str_req">Strength Attribute Requirement:</label>
+                    <input type="number" name="str_req" id="str_req" style="width: 50px;" min="1" value="1">
+                    <br>
+                    <label for="stealth_property">Stealth Properties:</label>
+                    <select name="stealth_property" id="stealth_property">
+                        {% for type in armors['stealth_prop'] %}
+                        <option value="{{type}}">{{armors['stealth_prop'][type]}}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

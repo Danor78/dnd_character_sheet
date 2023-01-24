@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Character Sheet 5E</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CS_style.css') }}">
+
+</head>
+<body>
+    <div class="character_sheet">
+        <div class="info_bar">
+            <div class="logo_and_name">
+                <img src="./static/images/amps1.jpg" alt="">
+                <div>
+                    <input type="text" name="charName" id="charName" placeholder="Name of your Character">
+                    <p>Character Name</p>
+                </div>
+            </div>
+            <div class="char_info">
+                <div class="char_info_selector1 info_menus">
+                    <ul>
+                        <li class="class_menu active">
+                            <p class="menu_selection" id="class_selection">Pick a Class</p>
+                            <div class="sub-menu-1">
+                                <ul name="char_class" id="char_class">
+                                    <li onclick="change_selection(this, 'class_selection')" value="artificer">Artificer</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="barbarian">Barbarian</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="bard">Bard</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="cleric">Cleric</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="druid">Druid</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="fighter">Fighter</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="monk">Monk</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="paladin">Paladin</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="ranger">Ranger</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="rogue">Rogue</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="sorcerer">Sorcerer</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="warlock">Warlock</li>
+                                    <li onclick="change_selection(this, 'class_selection')" value="wizard">Wizard</li>
+                                </ul>
+                            </div>
+                            <div class="menu_name">Class</div>
+                        </li>
+                        <li class="active">
+                            <p class="menu_selection" id="level_selection">Pick a Level</p>
+                            <div class="level_menu  sub-menu-1">
+                                <ul name="char_level" id="char_level">
+                                    <li onclick="change_selection(this, 'level_selection')" value="1">1</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="2">2</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="3">3</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="4">4</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="5">5</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="6">6</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="7">7</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="8">8</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="9">9</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="10">10</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="11">11</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="12">12</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="13">13</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="14">14</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="15">15</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="16">16</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="17">17</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="18">18</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="19">19</li>
+                                    <li onclick="change_selection(this, 'level_selection')" value="20">20</li>
+                                </ul>
+                            </div>
+                            <div class="menu_name">Level</div>
+                        </li>
+                        <li class="active">
+                            <p class="menu_selection" id="background_selection">Pick a Background</p>
+                            <div class="background_menu  sub-menu-1">
+                                <ul name="char_background" id="char_background">
+                                    <li onclick="change_selection(this, 'background_selection')" value="acolyte">Acolyte</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="charlatan">Charlatan</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="criminal">Criminal</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="entertainer">Entertainer</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="folk_hero">Folk Hero</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="guild_artisan">Build Artisan</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="hermit">Hermit</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="noble">Noble</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="outlander">Outlander</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="sailor">Sailor</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="soldier">Soldier</li>
+                                    <li onclick="change_selection(this, 'background_selection')" value="urchin">Urchin</li>
+                                </ul>
+                            </div>
+                            <div class="menu_name">Background</div>
+                        </li>
+                    </ul>
+                    <div>
+                        <input type="text" name="player_name" id="player_name" placeholder="Enter Player Name">
+                        <p class="menu_name">Name of Player</p>
+                    </div>
+                </div>
+                <div class="char_info_selector2 info_menus">
+                    <ul>
+                        <li class="race_menu active">
+                            <p class="menu_selection" id="race_selection">Pick a Race</p>
+                            <div class="sub-menu-1">
+                                <ul name="char_race" id="char_race">
+                                    <li class="hover-sub2" value="dwarf">Dwarf
+                                        <div class="sub-menu-2">
+                                            <ul>
+                                                <li onclick="change_selection(this, 'race_selection')" value="duergar_dwarf">Duergar Dwarf</li>
+                                                <li onclick="change_selection(this, 'race_selection')" value="hill_dwarf">Hill Dwarf</li>
+                                                <li onclick="change_selection(this, 'race_selection')" value="mountain_dwarf">Mountain Dwarf</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="hover-sub2" value="elf">Elf
+                                        <div class="sub-menu-2">
+                                            <ul>
+                                                <li onclick="change_selection(this, 'race_selection')" value="sun_elf">Sun Elf</li>
+                                                <li onclick="change_selection(this, 'race_selection')" value="wood_elf">Wood Elf</li>
+                                                <li onclick="change_selection(this, 'race_selection')" value="dark_elf">Dark Elf</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="hover-sub2" value="dragonborn">Dragonborn
+                                        <div class="sub-menu-2">
+                                            <ul>
+                                                <li class="hover-sub3" value="meltalic_dragonborn">Meltalic Dragonborn
+                                                    <div class="sub-menu-3">
+                                                        <ul>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="gold_dragonborn">Gold Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="silver_dragonborn">Silver Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="Copper_dragonborn">Copper Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="brass_dragonborn">Brass Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="bronze_dragonborn">Bronze Dragonborn</li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li class="hover-sub3" value="chromatic_dragonborn">Chromatic Dragonborn
+                                                    <div class="sub-menu-3">
+                                                        <ul>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="red_dragonborn">Red Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="black_dragonborn">Black Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="blue_dragonborn">Blue Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="green_dragonborn">Green Dragonborn</li>
+                                                            <li onclick="change_selection(this, 'race_selection')" value="white_dragonborn">White Dragonborn</li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="hover-sub2" value="gnome">Gnome
+                                        <div class="sub-menu-2">
+                                            <ul>
+                                                <li onclick="change_selection(this, 'race_selection')" value="forest_gnome">Forest Gnome</li>
+                                                <li onclick="change_selection(this, 'race_selection')" value="rock_gnome">Rock Gnome</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li onclick="change_selection(this, 'race_selection')" value="half_elf">Half Elf</li>
+                                    <li onclick="change_selection(this, 'race_selection')" value="half_orc">Half Orc</li>
+                                    <li class="hover-sub2" onclick="change_selection(this, 'race_selection')" value="halfling">Halfling
+                                        <div class="sub-menu-2">
+                                            <ul>
+                                                <li onclick="change_selection(this, 'race_selection')" value="lightfoot_halfling">Lightfoot Halfling</li>
+                                                <li onclick="change_selection(this, 'race_selection')" value="Stout_halfling">Stout Halfling</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li onclick="change_selection(this, 'race_selection')" value="human">Human</li>
+                                    <li onclick="change_selection(this, 'race_selection')" value="tiefling">Tiefling</li>
+                                </ul>
+                            </div>
+                            <div class="menu_name">Race</div>
+                        </li>
+                        <li class="alignment_menu active">
+                            <p class="menu_selection" id="align_selection">Pick an Alignment</p>
+                            <div class="sub-menu-1">
+                                <ul name="char_alignment" id="char_alignment">
+                                    <li onclick="change_selection(this, 'align_selection')" value="law_good">Lawful Good</li>
+                                    <li onclick="change_selection(this, 'align_selection')" value="law_neutral">Lawful Neutral</li>
+                                    <li onclick="change_selection(this, 'align_selection')" value="law_evil">Lawful Evil</li>
+                                    <li onclick="change_selection(this, 'align_selection')" value="neut_good">Neutral Good</li>
+                                    <li onclick="change_selection(this, 'align_selection')" value="neut_neutral">Neutral Neutral</li>
+                                    <li onclick="change_selection(this, 'align_selection')" value="neut_evil">Neutral Evil</li>
+                                    <li onclick="change_selection(this, 'align_selection')" value="chaotic_good">Chaotic Good</li>
+                                    <li onclick="change_selection(this, 'align_selection')" value="chaotic_neutral">Chaotic Neutral</li>                                    
+                                    <li onclick="change_selection(this, 'align_selection')" value="chaotic_evil">Chotic Evil</li>                                    
+                                </ul>
+                            </div>
+                            <div class="menu_name">Alignment</div>
+                        </li>
+                    </ul>
+                    <div>
+                        <input type="number" name="char_xp" id="char_xp" placeholder="Experience Points">
+                        <p class="menu_name">Experience Points</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- >>>>>>>>>>> Sheet Info <<<<<<<<<<<< -->
+        
+        <div class="sheet_info">
+            <!-- >>>>>>>>>>> Column 1 <<<<<<<<<<<< -->
+            <div class="column_one">
+                <!-- >>>>>>>>>>> Sub Column 1a <<<<<<<<<<<< -->
+                <div class="attrib_savs_skills_box">
+                    <div class="sub_column_1a">
+                        <div class="str attrib_container">
+                            <p>Strength</p>
+                            <p class="attrib_mod" id="str_attrib_mod">--</p>
+                            <div class="attrib" id="str_attrib">
+                                <p onclick="changeAttrib(this, 'Strength')">--</p>
+                            </div>
+                        </div>
+                        <div class="dex attrib_container">
+                            <p>Dexerity</p>
+                            <p class="attrib_mod" id="dex_attrib_mod">--</p>
+                            <div class="attrib" id="dex_attrib">
+                                <p onclick="changeAttrib(this, 'Dexerity')">--</p>
+                            </div>
+                        </div>
+                        <div class="con attrib_container">
+                            <p class="con_p">Constatution</p>
+                            <p class="attrib_mod" id="con_attrib_mod">--</p>
+                            <div class="attrib" id="con_attrib">
+                                <p onclick="changeAttrib(this, 'Constatution')">--</p>
+                            </div>
+                        </div>
+                        <div class="int attrib_container">
+                            <p class="int_p">Intelligence</p>
+                            <p class="attrib_mod" id="int_attrib_mod">--</p>
+                            <div class="attrib" id="int_attrib">
+                                <p onclick="changeAttrib(this, 'Intelligence')">--</p>
+                            </div>
+                        </div>
+                        <div class="wis attrib_container">
+                            <p>Wisdom</p>
+                            <p class="attrib_mod" id="wis_attrib_mod">--</p>
+                            <div class="attrib" id="wis_attrib">
+                                <p onclick="changeAttrib(this, 'Wisdom')">--</p>
+                            </div>
+                        </div>
+                        <div class="cha attrib_container">
+                            <p>Charisma</p>
+                            <p class="attrib_mod" id="cha_attrib_mod">--</p>
+                            <div class="attrib" id="cha_attrib">
+                                <p onclick="changeAttrib(this, 'Charisma')">--</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- >>>>>>>>>>> Sub Column 1b <<<<<<<<<<<< -->
+                    <div class="sub_column_1b">
+                        <!-- >>>>>>>>>>> Insperation Box <<<<<<<<<<<< -->
+                        <div class="insperation">
+                            <div id="insperation_checkBox">
+                                <p>X</p>
+                            </div>
+                            <div id="insperation_nameBox">
+                                <p>Insperation</p>
+                            </div>
+                        </div>
+                        <!-- >>>>>>>>>>> Profinciency Box <<<<<<<<<<<< -->
+                        <div class="prof_bonus">
+                            <div id="prof_checkBox">
+                                <p>2</p>
+                            </div>
+                            <div id="prof_nameBox">
+                                <p>Proficiency Bonus</p>
+                            </div>
+                        </div>
+                        <!-- >>>>>>>>>>> Saving Thows Box <<<<<<<<<<<< -->
+                        <div class="saveThrows_box">
+                            <label>Saving Throws</label>
+                            <ul class="saveThrows">
+                                <li>
+                                    <input id="str_save_prof" type="radio" name="rad" checked="false" data-waschecked="true" value="prof_on" onchange="populate_savs_and_skills_Values()" >
+                                    <div class="underline_box" id="str_save"></div>
+                                    <p>Strength</p>
+                                </li>
+                                <li>
+                                    <input id="dex_save_prof" type="radio" name="dex_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="dex_save"></div>
+                                    <p>Dexerity</p>
+                                </li>
+                                <li>
+                                    <input id="con_save_prof" type="radio" name="con_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="con_save"></div>
+                                    <p>Constatution</p>
+                                </li>
+                                <li>
+                                    <input id="int_save_prof" type="radio" name="int_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="int_save"></div>
+                                    <p>Intelligence</p>
+                                </li>
+                                <li>
+                                    <input id="wis_save_prof" type="radio" name="wis_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="wis_save"></div>
+                                    <p>Wisdom</p>
+                                </li>
+                                <li>
+                                    <input id="cha_save_prof" type="radio" name="cha_save" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div class="underline_box" id="cha_save"></div>
+                                    <p>Charisma</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- >>>>>>>>>>> Skills Box<<<<<<<<<<<< -->
+                        <div class="skills_box">
+                            <label>Skills</label>
+                            <ul class="skills">
+                                <li>
+                                    <input id="acrobatics_prof" type="radio" name="acrobatics" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="acrobatics_mod" class="underline_box"></div>
+                                    <p>Acrobatics</p><p class="skill_attrib">(Dex)</p>
+                                </li>
+                                <li>
+                                    <input id="animal_handling_prof" type="radio" name="animal_handling" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="animal_handling_mod" class="underline_box"></div>
+                                    <p>Animal Handling</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="arcana_prof" type="radio" name="arcana" value="prof_on"  onchange="populate_savs_and_skills_Values()" >
+                                    <div id="arcana_mod"class="underline_box"></div>
+                                    <p>Arcana</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="atheletics_prof" type="radio" name="atheletics" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="atheltics_mod"class="underline_box"></div>
+                                    <p>Athletics</p><p class="skill_attrib">(Str)</p>
+                                </li>
+                                <li>
+                                    <input id="deception_prof" type="radio" name="deception" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="deception_mod"class="underline_box"></div>
+                                    <p>Deception</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="history_prof" type="radio" name="history" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="history_mod"class="underline_box"></div>
+                                    <p>History</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="insight_prof" type="radio" name="insight" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="insight_mod"class="underline_box"></div>
+                                    <p>Insight</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="intimidation_prof" type="radio" name="intimidation" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="intimidation_mod" class="underline_box"></div>
+                                    <p>Intimidation</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="investigation_prof" type="radio" name="investigation" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="investigation_mod" class="underline_box"></div>
+                                    <p>Investigation</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="medicine_prof" type="radio" name="medicine" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="medicine_mod" class="underline_box"></div>
+                                    <p>Medicine</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="nature_prof" type="radio" name="nature" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="nature_mod" class="underline_box"></div>
+                                    <p>Nature</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="perception_prof" type="radio" name="perception" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="perception_mod" class="underline_box"></div>
+                                    <p>Perception</p><p class="skill_attrib">(Wis)</p>
+                                </li>
+                                <li>
+                                    <input id="performance_prof" type="radio" name="performance" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="performance_mod" class="underline_box"></div>
+                                    <p>Performance</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="persuasion_prof" type="radio" name="persuasion" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="persuasion_mod" class="underline_box"></div>
+                                    <p>Persuasion</p><p class="skill_attrib">(Cha)</p>
+                                </li>
+                                <li>
+                                    <input id="religion_prof" type="radio" name="religion" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="religion_mod" class="underline_box"></div>
+                                    <p>Religion</p><p class="skill_attrib">(Int)</p>
+                                </li>
+                                <li>
+                                    <input id="sleight_of_hand_prof" type="radio" name="sleight_of_hand" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="sleight_of_hand_mod" class="underline_box"></div>
+                                    <p>Sleight of Hand</p><p class="skill_attrib">(Dex)</p>
+                                </li>
+                                <li>
+                                    <input id="stealth_prof" type="radio" name="stealth" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="stealth_mod" class="underline_box"></div>
+                                    <p>Stealth</p><p class="skill_attrib">(dex)</p>
+                                </li>
+                                <li>
+                                    <input id="survival_prof" type="radio" name="survival" value="prof_on"  onchange="populate_savs_and_skills_Values()">
+                                    <div id="survival_mod" class="underline_box"></div>
+                                    <p>Survival</p><p class="skill_attrib">(wis)</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Passive Wisdom Box <<<<<<<<<<<< -->
+                <div class="pass_wis">
+                    <div class="pass_wis_checkbox">
+                        <p>X</p>
+                    </div>
+                    <div class="pass_wis_namebox">
+                        <p>Passive Wisdom</p>
+                        <p>(Performance)</p>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Profincencies and Languages Box <<<<<<<<<<<< -->
+                <div class="prof_lang">
+                    <h2>Other Proficiencies & Languages</h2>
+                    <div class="prof_menus">
+                        <label>Languages</label>
+                        <select name="languages_prof_prof" id="languages_prof">
+                            <option value="common_lang">Common</option>
+                            <option value="dwarvish_lang">Dwarvish</option>
+                            <option value="Elvish_lang">Elvish</option>
+                            <option value="giant_lang">Giant</option>
+                            <option value="gnomish_lang">Gnomish</option>
+                            <option value="Goblin_lang">Goblin</option>
+                            <option value="halfling_lang">Halfling</option>
+                            <option value="orc_lang">Orc</option>
+                            <option value="abyssal_lang">Abyssal</option>
+                            <option value="celestial_lang">Celestial</option>
+                            <option value="draconic_lang">Draconic</option>
+                            <option value="deepspeech_lang">Deep Speech</option>
+                            <option value="infernal_lang">Infernal</option>
+                            <option value="primordial_lang">Primordial</option>
+                            <option value="sylvan_lang">Sylvan</option>
+                            <option value="undercommon_lang">undercommon</option>
+                        </select>
+                        <label>Armor</label>
+                        <select name="armor_prof" id="languages">
+                            <option value="light_armor">Light Armor</option>
+                            <option value="medium_armor">Medium Armor</option>
+                            <option value="heavy_armor">Heavy Armor</option>
+                        </select>
+                        <br>
+                        <label>Weapons</label>
+                        <select name="armor_prof" id="languages">
+                            <option value="simple_weapons">Simple Weapons</option>
+                            <option value="martial_weapons">Martial Weapons</option>
+                        </select>
+                    </div>
+                    <textarea name="prof_lang_text" id="prof_lang_textarea" cols="30" rows="5"></textarea>
+                </div>
+            </div>
+<!-- >>>>>>>>>>> Column two <<<<<<<<<<<< -->
+            <div class="column_two">
+<!-- >>>>>>>>>>> Life stat box<<<<<<<<<<<< -->
+                <div class="lifeStat_box">
+<!-- >>>>>>>>>>> Sub Life Stat box containing AC Initiative and Speed for the character <<<<<<<<<<<< -->
+                    <div class="sub_lifeStat_box1">
+                        <div class="ac_box">
+                            <h2>AC Class</h2>
+                            <p>18</p>
+                        </div>
+                        <div class="initiative_box">
+                            <h2>Initiative</h2>
+                            <p>+4</p>
+                        </div>
+                        <div class="speed_box">
+                            <h2>Speed</h2>
+                            <p>30ft</p>
+                        </div>
+                    </div>
+                </div>
+<!-- >>>>>>>>>>> Character hitpoints box<<<<<<<<<<<< -->
+                <div class="hp_box">
+                    <div class="hp_max_box">
+                        <p class="hp_max_title">Hit Point Maximum</p>
+                        <input type="number" id="hp_max" name="hp_max" value="23">
+                    </div>
+                    <div class="current_hp_box">
+                        <div>
+                            <p class="current_hp_title">Current Hit Points</p>
+                            <p class="current_hp"></p>
+                        </div>
+                        <div class="chp_button_controls">
+                            <input type="number" id="hp_change">
+                            <div class="hp_buttons">
+                                <button id="heal_button" onclick="adjust_hp('Heal')">Heal</button>
+                                <button id="damage_button" onclick="adjust_hp('Damage')">Damage</button>
+                            </div>
+                        </div>
+                        <div class="temp_hp_box">
+                            <h3>Temporary Hp</h3>
+                            <input type="number" id="temp_hp" onchange="update_current_hp()">
+                        </div>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Hitdice and Death Saves box <<<<<<<<<<<< -->
+                <div class="hitDice_deathSavs_box">
+                <!-- >>>>>>>>>>> Hitdice box <<<<<<<<<<<< -->
+                    <div class="hitDice_box">
+                        <h2>Hit Dice</h2>
+                        <div>
+                            <p>Total</p>
+                            <input type="number" id="hitDice_total">
+                        </div>
+                        <select name="hitDice" id="hitDice">
+                            <option value="1d6">1d6</option>
+                            <option value="1d8">1d8</option>
+                            <option value="1d10">1d10</option>
+                            <option value="1d12">1d12</option>
+                        </select>
+                    </div>
+                    <div class="deathSaves_box">
+                        <h2>Death Saves</h2>
+                        <div class="death_successes">
+                            <h3>Successes</h3>
+                            <input type="radio" id="deathSav1" name="deathSav1" value="deathSav1">
+                            <input type="radio" id="deathSav2" name="deathSav2" value="deathSav2">
+                            <input type="radio" id="deathSav3" name="deathSav3" value="deathSav3">
+                        </div>
+                        <div class="death_failures">
+                            <h3>Failures</h3>
+                            <input type="radio" id="deathFail1" name="deathFail1" value="deathFail1">
+                            <input type="radio" id="deathFail2" name="deathFail2" value="deathFail2">
+                            <input type="radio" id="deathFail3" name="deathFail3" value="deathFail3">
+                        </div>
+                    </div>
+                </div>
+                <!-- >>>>>>>>>>> Attacks and Spellcasting Box <<<<<<<<<<<< -->
+                <div class="attacks_spellcasting_box">
+                    <h2>Attacks and Spellcasting</h2>
+                    <div class="asb_headers">
+                        <p class="weaponName_Header">Name</p>
+                        <p class="weaponAtkBns_Header">ATK Bonus</p>
+                        <p class="weaponDamage_Header">Damage/Type</p>
+                    </div>
+                    <div class="asb_slot1">
+                        <div id="slot1_WeaponName"><p></p></div>
+                        <div id="slot1_AtkBns"><p></p></div>
+                        <div id="slot1_Damage"><p></p></div>
+                    </div>
+                    <div class="asb_slot2">
+                        <div id="slot2_WeaponName"><p></p></div>
+                        <div id="slot2_AtkBns"><p></p></div>
+                        <div id="slot2_Damage"><p></p></div>
+                    </div>
+                    <div class="asb_slot3">
+                        <div id="slot3_WeaponName"><p></p></div>
+                        <div id="slot3_AtkBns"><p></p></div>
+                        <div id="slot3_Damage"><p></p></div>
+                    </div>
+                    <div class="asb_slot3">
+                        <div id="slot3_WeaponName"><p></p></div>
+                        <div id="slot3_AtkBns"><p></p></div>
+                        <div id="slot3_Damage"><p></p></div>
+                    </div>
+                    <textarea name="attacks_spellcasting_text" id="attacks_spellcasting_textarea" cols="30" rows="12"></textarea>
+                </div>
+                <!-- >>>>>>>>>>> Equipment and Coin Box <<<<<<<<<<<< -->
+                <div class="equipment_and_coin_box">
+                    <h2>Equipment and Coin</h2>
+                    <div class="coin_amounts">
+                        <div class="platnium_amount">
+                            <p>Platnium</p>
+                            <input type="number" id="platnium_total">
+                        </div>
+                        <div class="gold_amount">
+                            <p>Gold</p>
+                            <input type="number" id="gold_total">
+                        </div>
+                        <div class="silver_amount">
+                            <p>Silver</p>
+                            <input type="number" id="silver_total">
+                        </div>
+                        <div class="copper_amount">
+                            <p>Copper</p>
+                            <input type="number" id="copper_total">
+                        </div>
+                        <div class="Electrum_amount">
+                            <p>Electrum</p>
+                            <input type="number" id="electrum_total">
+                        </div>
+                    </div>
+                    <textarea name="equipment_and_coin_text" id="equipment_and_coin_textarea" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <!-- >>>>>>>>>>> Column Threee <<<<<<<<<<<< -->
+            <div class="column_three">
+            <!-- >>>>>>>>>>> Personality Container <<<<<<<<<<<< -->
+                <div class="personality_container">
+                    <div class="personality_traits">
+                        <h2>Personality Traits</h2>
+                    <textarea name="personality_traits" id="personality_traits" cols="55" rows="4"></textarea>
+                    </div>
+                    <div class="personality_ideals">
+                        <h2>Ideals</h2>
+                    <textarea name="personality_ideals" id="personality_ideals" cols="55" rows="2"></textarea>
+                    </div>
+                    <div class="personality_bonds">
+                        <h2>Bonds</h2>
+                    <textarea name="personality_bonds" id="personality_bonds" cols="55" rows="2"></textarea>
+                    </div>
+                    <div class="personality_flaws">
+                        <h2>Flaws</h2>
+                    <textarea name="personality_flaws" id="personality_flaws" cols="55" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="features_and_traits">
+                    <h2>Features and Traits</h2>
+                    <textarea name="features_and_traits" id="features_and_traits_textarea" cols="55" rows="32"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/CS_script.js"></script>
+</body>
+</html>

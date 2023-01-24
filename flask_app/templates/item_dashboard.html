@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='item_dashboard.css') }}">
+
+</head>
+<body class="container">
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_character">Add Character</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <a class="text-light" href="/new_armor">New Armor Piece</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    <br><br><br>
+    <h3><strong>Your Characters</strong></h3>
+    <table class="table table-hover border border-dark">
+        <tr style="position: sticky; top: 0px; background-color: white;">
+            <!-- <th>id</th> -->
+            <th>Character Name</th>
+            <th>Race</th>
+            <th>Class</th>
+            <th>Background</th>
+            <th>Level</th>
+            <th>Last Updated</th>
+            <th>Actions</th>
+        </tr>
+        {% if characters %}
+        {% for character in characters %}
+        <tr>
+            <!-- <td>{{character.id}}</td> -->
+            <td>{{character.char_name}}</td>
+            <td>{{character.char_race}}</td>
+            <td>{{character.char_class}}</td>
+            <td>{{character.char_background}}</td>
+            <td>{{character.char_level}}</td>
+            <td>{{character.updated_at}}</td>
+            <td>
+                <a href="/export_char/{{character.id}}" style="height: 40px;">Use</a>
+                <span> | </span>
+                <a href="/edit_char/{{character.id}}" style="height: 40px;">Edit</a>
+                <span> | </span>
+                <a href="/delete_char/{{character.id}}" style="height: 40px;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+    <!-- {% if items %} -->
+    <h3><strong>Items</strong></h3>
+    <div class=" border border-dark " style="height: 250px; overflow: auto;">
+        <table class="table table-hover" style="border-collapse: collapse; width: 100%;" >
+            <tr style="position: sticky; top: 0px; background-color: white;">
+                <th><a href="/dashboard/name">Name</a></th>
+                <th><a href="/dashboard/type">Type</a></th>
+                <th><a href="#">Sub Type</a></th>
+                <th><a href="/dashboard/cost">Cost</a></th>
+                <th><a href="/dashboard/weight">Weight</a></th>
+                <th><a href="/dashboard/rarity">Rarity</a></th>
+                <th><a href="/dashboard/is_magical">Magical</a></th>
+                <th>Actions</th>
+            </tr>
+            {% if items %}
+            {% for item in items %}
+            <tr>
+                <td style="width: 250px;"><a href="/show_item/{{item.id}}"><strong>{{item.name}}</strong></a></td>
+                <td>{{item.type}}</td>
+                {% if item.weapon_id %}
+                <td>{{item.weapon.weapon_type}}</td>
+                {% elif item.armor_id %}
+                <td>{{item.armor.armor_type}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <td>{{item.cost}}</td>
+                <td>{{item.weight}} lbs</td>
+                <td>{{item.rarity}}</td>
+                <td>{{item.is_magical}}</td>
+                <td>
+                    {% if item.user_id == session['user_id'] %}
+                    <a href="/edit_item/{{item.id}}" style="height: 40px;">Edit</a>
+                    <span> | </span>
+                    <a href="/delete_item/{{item.id}}" style="height: 40px;">Delete</a>
+                    {% else %}
+                    <p>Non-valid User</p>
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+    <!-- {% endif %} -->
+</body>
+</html>

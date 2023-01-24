@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="container">
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_character">Add Character</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <a class="text-light" href="/new_armor">New Armor Piece</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    <br><br><br>
+    <div class="d-flex justify-content-center">
+        <div class="border border-dark p-2">
+            <div>
+                <div class="d-flex">
+                    <div class="pr-4" style="width: 250px;" >
+                        <p><strong>Name:</strong>  {{item.name}}<br>   
+                        <strong>Type: </strong>{{item.type}}<br>
+                        <strong>Cost: </strong>{{item.cost}}<br>
+                        <strong>Weight: </strong>{{item.weight}} lbs<br>
+                        <strong>Source: </strong>{{item_src[item.source]}}
+                    </p>
+                        
+                    </div>
+                    <div class="pl-4" style="width: 250px;">
+                        <p><strong>Rarity: </strong>{{item.rarity}}<br>
+                        <strong>Is the item magical? </strong>{{item.is_magical}}<br>
+                        <strong>Is the item attuneable: </strong>{{item.is_attunable}}</p>
+                        {% if item.weapon_id %}
+                        <p><strong>Weapon Type: </strong>{{item.weapon.weapon_type}}<br>
+                            <strong>Damage Die: </strong>1d{{item.weapon.damage_die}} <br>
+                            <strong>Damage Type: </strong>{{item.weapon.damage_type}} <br>
+                            <strong>Weapon Properties: </strong><br>
+                            {{item.weapon.properties}}</p>
+                        {% endif %}
+                        {% if item.armor_id %}
+                        <p><strong>Armor Type: </strong>{{item.armor.armor_type}}<br>
+                            <strong>Armor AC: </strong>{{item.armor.armor_AC}} <br>
+                            <strong>Strength Attribute Requirement : </strong>{{item.armor.str_req}} <br>
+                            <strong>Armor Stealth Property: </strong>{{item.armor.stealth_property}}<br>
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <P><strong>Description: </strong>{{item.description}}</P>
+                    <p><strong>Entered in by:</strong> {{creator.first_name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

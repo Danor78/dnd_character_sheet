@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+
+</head>
+<body>
+    <!-- <img class="bg-img" src="../static/images/Dragon_portal_1.jpg" alt="Dragon Portal 1"> -->
+    <div class="container">
+        <h1 class="text-center">Welcome to the Dragon Portal</h1>
+        <div class="d-flex justify-content-center " style="margin-left: 35rem; margin-top: 1rem;">
+            <div class="w-30 border border-dark p-3 " id="login">
+                <h2>Login</h2>
+                <form action="/login" method="post">
+                    <div >
+                        {% with messages = get_flashed_messages(category_filter=["login"]) %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <p class="text-danger fs-2 fw-bolder">{{message}}</p>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="form-group m-1">
+
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control mt-2" name="email">
+                        
+                        <label for="password">Password</label>
+                        <input type="text" class="form-control mt-2" name="password">
+
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Log in">
+                    <p class="mt-2">Not Registered? You can Register <a href="/registration">here</a></p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

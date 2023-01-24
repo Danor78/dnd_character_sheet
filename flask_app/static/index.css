@@ -1,0 +1,23 @@
+body{
+    background-image: url('/static/images/Dragon_portal_1.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#login {
+    background-color: rgba(255, 255, 255, 0.149);
+    /* color: rgb(246, 240, 174); */
+    color: rgb(4, 255, 117);
+    /* opacity: .5;  */
+    font-weight: bold;
+}
+
+h1 {
+    color: rgb(171, 157, 6);
+    font-size: 60px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+
+}

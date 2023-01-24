@@ -1,0 +1,991 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+div{
+    /* border: 2px dotted red; */
+}
+
+
+body{
+    background-image: url('/static/images/info_sheet_background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#nav_links {
+    height:  80px; 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    background-color: rgb(3, 3, 92);
+    margin-bottom: 20px;
+}
+
+#nav_links a{
+    color: white;
+}
+
+/* >>>>>>>>>>> Character Info Bar <<<<<<<<<<<< */
+
+.character_sheet{
+    /* width: 75%; */
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.info_bar{
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+    padding: 3px;
+    margin: 10px;
+    /* justify-content: center; */
+    margin-bottom: 30px;
+    background-image: url('/static/images/info_bar_background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50% 40%;
+    /* background-blend-mode: lighten; */
+    box-shadow: 2px 3px 0px  black;
+}
+
+.logo_and_name{
+    display: flex;
+    align-items: center;
+    /* border: 2px dotted black; */
+    padding: 10px;
+    margin-right: 20px;
+
+}
+
+.logo_and_name img{
+    width: 100px;
+    height: 100px;
+    margin-right: 5px;
+}
+
+.logo_and_name div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#charName, #owner_name{
+    background-color: white;
+    padding: 2px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: left;
+    align-content: center;
+    font-size: 30px;
+    border: 1px solid black;
+}
+
+.logo_and_name div p{
+font-size: 25px;
+}
+
+
+.char_info{
+    /* border: 2px dotted black; */
+    padding: 20px;
+    flex-direction: column;
+    /* width: 500px; */
+}
+
+.char_info_selector1{
+    display: flex;
+}
+
+.info_menus{
+    margin-bottom: 2px;
+    /* font-family: sans-serif; */
+}
+
+.menu_name{
+        font-size: 25px;
+}
+/* >>>>>>>>>>>>>>>>>>>>>>>>> Menu / Sub-Menu CSS controls <<<<<<<<<<<<<<<<<<<<<<<<<<< */
+
+.info_menus ul{
+    display: flex;
+    list-style: none;
+}
+
+
+.menu_selection, .sub-menu-1 ul li{
+    padding: 2px;
+    padding-right: 20px;
+    padding-left: 20px;
+    text-align: center;
+    align-content: center;
+    font-size: 25px;
+    border: 1px solid black;
+    margin-right: 10px;
+    background-color: rgb(253, 251, 251);
+}
+
+.menu_selection:hover{
+    background: blue;
+    color: white;
+}
+
+.sub-menu-1{
+    display: none;
+}
+
+.info_menus ul li:hover .sub-menu-1{
+    display: block;
+    position: absolute;
+    background: transparent;
+    margin-right: -10px;
+    /* margin-left: -20px; */
+}
+
+.info_menus ul li:hover .sub-menu-1 ul{
+    display:block;
+    color: black;
+}
+
+.info_menus ul li:hover .sub-menu-1 ul li{
+    padding: 5px;
+    padding-right: 40px;
+    font-size: 25px;
+    border: 0px 2px 2px 2px solid black;
+    text-align: left;
+    margin-right: -2px;
+}
+
+.sub-menu-1 ul li:hover{
+    color: rgb(170, 20, 20);
+    background-color: aqua;
+
+}
+
+
+.sub-menu-2{
+    display: none;
+}
+
+.sub-menu-3{
+    display: none;
+}
+
+
+.hover-sub2:hover .sub-menu-2{
+    position: absolute;
+    display: block;
+    padding: 5px;
+    padding-right: 40px;
+    font-size: 25px;
+    width: 170px;
+    border: 0px 2px 2px 2px solid black;
+    background: transparent;
+    text-align: left;
+    margin-top: -40px;
+    margin-left: 155px;
+}
+
+.hover-sub3:hover .sub-menu-3{
+    position: absolute;
+    display: block;
+    padding: 5px;
+    font-size: 25px;
+    border: 0px 2px 2px 2px solid black;
+    background: transparent;
+    text-align: left;
+    margin-top: -70px;
+    margin-left: 156px;
+}
+/* >>>>>>>>>>>>>>>>>>>>>>>> End of Menu Controls <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+
+
+#player_name {
+    padding: 2px;
+    padding-left: 10px;
+    text-align: left;
+    font-size: 25px;
+    border: 1px solid black;
+
+}
+
+.char_info_selector2{
+    display: flex;
+    margin-top: 15px;
+}
+
+/* .char_info_selector2, .char_info_selector2 ul{
+    border: 2px dotted red;
+
+} */
+
+.race_text{
+    margin-right: 120px;
+}
+
+.algn_text{
+    margin-right: 138px;
+    
+}
+
+#experience_points{
+    background-color: azure;
+    padding: 2px;
+    padding-left: 10px;
+    text-align: left;
+    color: black;
+    /* align-content: center; */
+    font-size: 25px;
+    border: 1px solid black;
+
+}
+
+
+.sheet_info{
+    display: flex;
+    justify-content: center;
+    /* width: 75%; */
+    /* border: 5px dotted red; */
+    
+}
+
+/* >>>>>>>>>>> column 1 <<<<<<<<<<<< */
+.column_one{
+    display: flex; 
+    flex-direction: column;
+    /* justify-content: space-around; */
+    width: 530px;
+    /* border: 3px dotted red; */
+    /* height: 1500px; */
+    /* border: 2px dotted red; */
+    /* border: 5px dotted red; */
+
+}
+
+.attrib_savs_skills_box{
+    display: flex;
+    justify-content: space-around;
+    /* border: 3px dotted red; */
+}
+
+/* >>>>>>>>>>> sub-column 1a attributes <<<<<<<<<<<< */
+.sub_column_1a{
+    /* margin-left: 20px; */
+    display: flex;
+    flex-direction: column;
+    /* height: 1000px; */
+    width: 160px;
+    align-items: center;
+    border-radius: 20px;
+    padding-top: 10px;
+    /* border: 3px dotted red; */
+
+}
+
+.attrib_container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    /* background-color: rgba(255, 255, 255, 0.7); */
+    background-color: rgb(253, 251, 251, 1.0);
+    /* opacity: .5; */
+    border-radius: 50px 50px 20px 20px;
+    width: 140px;
+    height: 130px;
+    padding-top: 20px;
+    font-size: xx-large;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.attrib{
+    display: flex;
+    background-color: white;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.con_p, .int_p{
+    font-size: 26px;
+}
+
+/* >>>>>>>>>>> Sub Column 1b <<<<<<<<<<<< */
+
+.sub_column_1b{
+    /* border: 2px solid black; */
+    margin-left: 40px;
+    width: 290px;
+    /* border: 3px dotted red; */
+
+}
+
+/* >>>>>>>>>>> Inspiration Box <<<<<<<<<<<< */
+
+.insperation{
+    margin-top: 20px;
+    display: flex;
+    font-size: 30px;
+
+    /* justify-content: space-around; */
+}
+
+#insperation_checkBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    background-color: rgb(253, 251, 251);
+    border: 4px solid black;
+    border-radius: 10px 0px 0px 10px;
+    box-shadow: 3px 3px;
+
+}
+
+#insperation_nameBox{
+    display: flex;
+    margin-left: 5px;
+    background-color: rgb(253, 251, 251);
+    border: 4px solid black;
+    width: 220px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 10px 10px 0px;
+    box-shadow: 3px 3px;
+
+}
+
+/* >>>>>>>>>>> Proficiency Box <<<<<<<<<<<< */
+
+.prof_bonus{
+    display: flex;
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+#prof_checkBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    border: 4px solid black;
+    border-radius: 50%;
+    box-shadow: 3px 3px;
+    background-color: rgb(253, 251, 251);
+}
+
+#prof_nameBox{
+    display: flex;
+    margin-left: 5px;
+    border: 4px solid black;
+    box-shadow: 3px 3px;
+    width: 220px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 35%;
+    font-size: 22px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+/* >>>>>>>>>>> Saving Throws <<<<<<<<<<<< */
+
+.saveThrows_box{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(253, 251, 251);
+
+}
+.saveThrows_box label{
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.saveThrows_box ul li{
+    display: flex;
+    padding-top: 5px;
+    font-size: 20px;
+}
+
+.saveThrows_box ul li input{
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.underline_box{
+    width: 30px;
+    height: 20px;
+    border-bottom: 1px solid black;
+    margin-right: 10px;
+    text-align: center;
+    padding-bottom: 3px;
+
+
+}
+
+
+/* >>>>>>>>>>> Skills <<<<<<<<<<<< */
+
+.skills_box{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.skills_box label{
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.skills_box ul li{
+    display: flex;
+    padding-top: 10px;
+    font-size: 20px;
+}
+
+.skills_box ul li input{
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+/* .skills_box ul li div{
+    width: 30px;
+    height: 20px;
+    border-bottom: 1px solid black;
+    margin-right: 10px;
+} */
+
+.skill_attrib{
+    margin-left: 5px;
+    color: gray;
+}
+
+/* >>>>>>>>>>> <<<<<<<<<<<< */
+/* >>>>>>>>>>> Passive Perception Box <<<<<<<<<<<< */
+
+.pass_wis{
+    display: flex;
+    /* width: 490px; */
+    /* height: 40px; */
+    margin-top: 20px;
+    padding: 0px 10px;
+    /* margin-left: 30px; */
+}
+.pass_wis_checkbox{
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    border: 4px solid black;
+    justify-content: center;
+    margin-right: 20px;
+    border-radius: 20px 0px 20px 0px;
+    box-shadow: 3px 3px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.pass_wis_namebox{
+    display: flex;
+    width: 450px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 4px solid black;
+    border-radius: 20px 0px 20px 0px;
+    box-shadow: 3px 3px;
+    background-color: rgb(253, 251, 251);
+
+
+}
+
+/* >>>>>>>>>>> Proficiences and Languages <<<<<<<<<<<< */
+
+.prof_lang{
+    /* margin-top: 50px; */
+    /* margin-left: 30px; */
+    /* height: 100px; */
+    margin: 50px 10px 0px 10px;
+    border: 3px solid black;
+    box-shadow: 3px 3px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(253, 251, 251);
+
+    /* align-items: center; */
+}
+
+.prof_lang h2{
+    text-align: center;
+    margin: 10px;
+}
+
+#prof_lang_textarea, #attacks_spellcasting_textarea, #equipment_and_coin_textarea, #personality_traits, #personality_ideals, #personality_bonds, #personality_flaws, #features_and_traits_textarea{
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+/* >>>>>>>>>>> Column 2 <<<<<<<<<<<< */
+.column_two{
+    display: flex; 
+    flex-direction: column;
+    width: 530px;
+    /* height: 1500px; */
+
+    /* border: 2px dotted red; */
+}
+/* >>>>>>>>>>> Life stat box <<<<<<<<<<<< */
+
+.lifeStat_box{
+    display: flex;
+    flex-direction: column;
+}
+
+.sub_lifeStat_box1{
+    display: flex;
+    padding: 20px;
+}
+
+.ac_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 120px;
+    width: 120px;
+    border: 4px solid black;
+    border-radius: 0px 0px 50% 50%;
+    box-shadow: 2px 2px;
+    margin-right: 40px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.ac_box h2{
+    text-align: center;
+    padding-top: 2px;
+    
+}
+
+.ac_box p{
+    margin-top: 10px;
+    font-size: 40px;
+}
+
+.initiative_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 120px;
+    width: 140px;
+    border: 4px solid black;
+    border-radius: 30px;
+    box-shadow: 2px 2px;
+    margin-right: 40px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.initiative_box h2{
+    text-align: center;
+    font-weight: bold;
+    padding-top: 5px;
+    
+}
+
+.initiative_box p{
+    margin-top: 10px;
+    font-size: 40px;
+}
+
+.speed_box{
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    height: 120px;
+    width: 140px;
+    border: 4px solid black;
+    border-radius: 30px;
+    box-shadow: 2px 2px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.speed_box h2{
+    text-align: center;
+    font-weight: bold;
+    padding-top: 5px;
+    
+}
+
+.speed_box p{
+    margin-top: 10px;
+    font-size: 40px;
+}
+
+/* >>>>>>>>>>> Character hitpoints box <<<<<<<<<<<< */
+
+.hp_box{
+    border: 6px;
+    border-style: double;
+    border-color: black;
+    margin-left: 20px;
+    width: 455px;
+    height: 120px;
+    padding: 15px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.hp_max_box{
+    display: flex;
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+    background-color: rgb(253, 251, 251);
+}
+
+.hp_max_title{
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+.hp_box div input{
+    width: 60px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.current_hp_box{
+    display: flex;
+}
+
+.current_hp_title{
+    margin-top: 5px;
+    font-size: 20px;
+}
+
+.current_hp{
+    margin-top: 5px;
+    margin-left: 70px;
+    font-size: 28px;
+}
+
+.chp_button_controls{
+    display: flex;
+    align-items: center;
+    /* border: 2px dotted red; */
+    margin-left: 20px;
+}
+
+
+.chp_button_controls input{
+    height: 30px;
+}
+
+.hp_buttons{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    /* border: 2px dotted red; */
+
+}
+
+.hp_buttons button{
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    border-radius: 0px;
+    border-width: 3px;
+    border-color: black;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#heal_button{
+    background-color: rgb(253, 31, 31);
+}
+
+#damage_button{
+    background-color: rgb(110, 4, 4);
+}
+
+.temp_hp_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.temp_hp_box h3{
+    margin-left: 10px;
+}
+
+#temp_hp{
+    margin-top: 10px;
+}
+/* >>>>>>>>>>> <<<<<<<<<<<< */
+/* >>>>>>>>>>> Hitdice and Death Saves box <<<<<<<<<<<< */
+.hitDice_deathSavs_box{
+    margin-top: 20px;
+    display: flex;
+}
+
+/* >>>>>>>>>>> HIt Dice Box<<<<<<<<<<<< */
+
+.hitDice_box{
+    border: 7px outset black;
+    width: 200px;
+    height: 100px;
+    margin-left: 20px;
+    padding: 15px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.hitDice_box h2{
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.hitDice_box div{
+    display: flex;
+    border-bottom: 2px solid black;
+    padding-bottom: 2px;
+
+}
+
+.hitDice_box div p{
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+.hitDice_box input{
+    width: 60px;
+    font-size: 25px;
+    text-align: center;
+}
+
+#hitDice{
+    font-size: 25px;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+/* >>>>>>>>>>> Death Saves Box<<<<<<<<<<<< */
+
+.deathSaves_box, .deathFailures{
+    border: 7px inset black;
+    width: 190px;
+    height: 100px;
+    margin-left: 20px;
+    padding: 15px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+.deathSaves_box h2{
+    text-align: center;
+}
+
+.death_successes, .death_failures{
+    display: flex;
+    margin-top: 10px;
+}
+
+.deathSaves_box h3{
+    margin-right: 20px;
+}
+
+.death_failures h3{
+    margin-right: 30px;
+}
+
+#deathSav1, #deathSav2, #deathSav3, #deathFail1, #deathFail2, #deathFail3{
+    margin-right: 10px;
+}
+
+/* >>>>>>>>>>> Attacks and Spellcasting Box <<<<<<<<<<<< */
+
+.attacks_spellcasting_box{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 480px;
+    height: 520px;
+    border: 5px double black;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: rgb(253, 251, 251);
+}
+
+.attacks_spellcasting_box h2{
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.asb_headers p{
+    font-size: large;
+}
+.asb_headers, .asb_slot1, .asb_slot2, .asb_slot3{
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.weaponName_Header{
+    margin-right: 180px;
+}
+
+.weaponAtkBns_Header{
+    margin-right: 18px;
+}
+
+
+#slot1_WeaponName, #slot2_WeaponName, #slot3_WeaponName, #slot4_WeaponName{
+    width: 220px;
+    height: 30px;
+    background-color: rgb(228, 228, 228);
+    border: 1px solid rgb(128, 127, 127);
+}
+
+
+
+#slot1_AtkBns, #slot2_AtkBns, #slot3_AtkBns, #slot4_AtkBns{
+    margin-left: 10px;
+    width: 90px;
+    height: 30px;
+    background-color: rgb(228, 228, 228);
+    border: 1px solid rgb(128, 127, 127);
+
+}
+
+#slot1_Damage, #slot2_Damage, #slot3_Damage, #slot4_Damage{
+    margin-left: 10px;
+    width: 170px;
+    height: 30px;
+    background-color: rgb(228, 228, 228);
+    border: 1px solid rgb(128, 127, 127);
+}
+
+/* >>>>>>>>>>> Equipment and Coin Box <<<<<<<<<<<< */
+
+.equipment_and_coin_box{
+    margin-left: 20px;
+    margin-top: 20px;
+    border: 6px groove black;
+    padding: 10px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(253, 251, 251);
+}
+
+.equipment_and_coin_box h2{
+    margin-top: -5px;
+    margin-bottom: 10px;
+    text-align: center;
+    
+}
+
+
+.coin_amounts{
+    display: flex;
+}
+
+#platnium_total, #gold_total, #silver_total, #copper_total, #electrum_total{
+    width: 80px;
+    height: 30px;
+    margin-right: 15px;
+}
+
+/* >>>>>>>>>>> Psonality Container <<<<<<<<<<<< */
+
+.personality_container{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.personality_container h2{
+    text-align: center;
+    margin-top: 5px;
+}
+
+.personality_traits{
+    height: 160px;
+    width: 350px;
+    border: 8px double black;
+    margin-bottom: 20px;
+    border-radius: 30px 30px 0px 0px;
+    background-color: rgb(253, 251, 251);
+}
+
+#personality_traits, #personality_ideals, #personality_bonds, #personality_flaws, #features_and_traits{
+    width: 340px;
+    margin: 5px;
+}
+
+.personality_ideals, .personality_bonds, .personality_flaws{
+    /* display: flex; */
+    height: 110px;
+    width: 350px;
+    border: 2px solid black;
+    margin-bottom: 20px;
+    border: 8px double black;
+    background-color: rgb(253, 251, 251);
+
+}
+
+
+.personality_flaws{
+    border-radius: 0px 0px 30px 30px;
+
+}
+
+.features_and_traits{
+    /* height: 800px; */
+    /* width: 350px; */
+    border: 2px solid black;
+    /* margin-bottom: 20px; */
+    /* margin-left: 10px; */
+    margin: 0px 5px 20px 10px;
+    background-color: rgb(253, 251, 251);
+
+}
+
+#features_and_traits_textarea{
+    width: 345px;
+    margin: 0px 10px;
+}
+
+
+.features_and_traits h2{
+    text-align: center;
+    margin-top: 5px;
+
+}
