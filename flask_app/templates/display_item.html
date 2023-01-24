@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='display_item.css') }}">
 </head>
 <body class="container">
-    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;" >
         <a class="text-light" href="/dashboard">Show all Items</a>
         <a class="text-light" href="/new_character">Add Character</a>
         <a class="text-light" href="/new_class">Add Class</a>
@@ -19,7 +20,7 @@
     </div>
     <br><br><br>
     <div class="d-flex justify-content-center">
-        <div class="border border-dark p-2">
+        <div class="border border-dark p-2" id="display_item">
             <div>
                 <div class="d-flex">
                     <div class="pr-4" style="width: 250px;" >
