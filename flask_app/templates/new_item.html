@@ -21,6 +21,15 @@
     <h1 class="text-center">Enter New Item</h1>
     <div class="form-group d-flex justify-content-center" >
         <form action="/create_item" class="w-50 border border-dark p-3" method="post" id="item_form">
+            <div >
+                {% with messages = get_flashed_messages(category_filter=["item_input"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <p class="text-danger fs-2 fw-bolder">{{message}}</p>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
             <input type="hidden" name="user_id" value="{{session['user_id']}}">
             <!-- <h3>Enter Info for New Item</h3> -->
             <label for="name" class="mr-2">Item Name: </label>

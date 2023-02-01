@@ -3,6 +3,7 @@ import random
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import armor
 from flask_app.models import weapon
+from flask import flash
 
 # import_data = [{"id":10, "name":"Padded Armor", "type":"armor", "cost":5000, "weight":8, "description":"Padded armor consists of quilted layers of cloth and batting.", "rarity":"common", "source":"PHB", "is_magical":"no", "is_attunable":"no", "created_at":"2023-01-16 11:14:09", "updated_at":"2023-01-16 18:49:33", "img":"", "armor_id":3, "weapon_id":0, "user_id":1},
 #     {"id":11, "name":"Leather Armor", "type":"armor", "cost":10000, "weight":10, "description":"The breastplate and shoulder protectors of this armor are made of leather that has been stiffened by being boiled in oil. The rest of the armor is made of softer and more flexible materials.", "rarity":"common", "source":"PHB", "is_magical":"no", "is_attunable":"no", "created_at":"2023-01-16 11:25:29", "updated_at":"2023-01-16 11:25:29", "img":"", "armor_id":4, "weapon_id":0, "user_id":1},
@@ -318,7 +319,64 @@ class Item:
         # data is a dictionary that will be passed into the save method from server.py
         return connectToMySQL(cls.DB).query_db( query, data )
     
-    
+    @classmethod
+    def validate_item(cls, data): 
+        is_valid = True
+        
+        print("\n___Item's validated data___", data)
+        
+        if len(data['name']) < 4:
+            print("____Item Name FAILED____")
+            flash("Name must be at least 3 letters long","item_input")
+            is_valid = False
+        
+        if 'type' not in data or data['type'] == "":
+            print("____Item Type FAILED____")
+            flash("Must Select a Type","item_input")
+            is_valid = False
+            
+        if int(data['cost']) <= 0:
+            print("____Item Cost FAILED____")
+            flash("Must input a cost for the Item","item_input")
+            is_valid = False
+        
+        if int(data['weight']) <= 0:
+            print("____Item weight FAILED____")
+            flash("Must input a weight for the Item","item_input")
+            is_valid = False
+        
+        if 'description' not in data or data['description'] == "":
+            print("____Item description FAILED____")
+            flash("Please enter a description","item_input")
+            is_valid = False
+        
+        if data['rarity'] == "":
+            print("____Item Rarity FAILED____")
+            flash("Please Select a Rarity","item_input")
+            is_valid = False
+            
+        if data['is_magical'] == "":
+            print("____Item is magical FAILED____")
+            flash("Please Select if Magical or not","item_input")
+            is_valid = False
+            
+        if data['is_attunable'] == "":
+            print("____Item is attunable FAILED____")
+            flash("Please Select if attunable or not","item_input")
+            is_valid = False
+            
+        if 'source' not in data or data['source'] == "":
+            print("____Item source  FAILED____")
+            flash("Please Select a source","item_input")
+            is_valid = False
+            
+        return is_valid
+            
+
+        
+        
+        
+        
 # for data in import_data:
 #     Item.save(data)
         

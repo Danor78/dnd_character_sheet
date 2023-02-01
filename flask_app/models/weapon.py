@@ -2,6 +2,7 @@ import math
 import random
 from flask_app.models import item
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask import flash
 
 weapon_type ={
     "club" : "Club",
@@ -185,6 +186,36 @@ class Weapon():             # this is the weapon class that is a child of the It
                 weapons["martial_ranged_weapon"].append(a_item)
             
         return weapons
+    
+    @classmethod
+    def validate_weapon(cls,data):
+        is_valid = True
+        
+        if not item.Item.validate_item(data): # if not (false)
+            print("\n ____Weapon con item validation FAILED____")
+            is_valid = False
+        
+        if 'weapon_type' not in data or data['weapon_type'] == "":
+            print("____Weapon type FAILED____")
+            flash("Please Select a Weapon Type","weapon_input")
+            is_valid = False
+        
+        if 'damage_die' not in data or data['damage_die'] == "":
+            print("____weapon damage_die FAILED____")
+            flash("Please Select a damage die for the weapon","weapon_input")
+            is_valid = False
+        
+        if 'damage_type' not in data or data['damage_type'] == "":
+            print("____weapon damage_type FAILED____")
+            flash("Please Select a damage type for the weapon","weapon_input")
+            is_valid = False
+        
+        if 'damage_die' not in data or data['damage_die'] == "":
+            print("____weapon damage_die FAILED____")
+            flash("Please Select a damage die for the weapon","weapon_input")
+            is_valid = False
+        
+        return is_valid
     
     def set_is_magical(self, magical):  # easy straight up value setting if needed
         self.is_magical = magical

@@ -22,6 +22,11 @@ def create_item():
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
+    
+    if not item.Item.validate_item(request.form): # if not (false)
+        print("\n ____Item con validation FAILED____")
+        return redirect("/new_item")
+    
     logged_in_user =user.User.get_by_id(session["user_id"])
     print("\n __Item Request.form__")
     print(request.form)

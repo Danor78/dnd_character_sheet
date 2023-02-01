@@ -10,6 +10,7 @@ def new_weapon():
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
+    
     logged_in_user =user.User.get_by_id(session["user_id"])
     weapons = {}
     weapons['item_type'] = item.item_type
@@ -26,6 +27,11 @@ def create_weapon():
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
+    
+    if not weapon.Weapon.validate_weapon(request.form): # if not (false)
+        print("\n ____weapon con validation FAILED____")
+        return redirect("/new_weapon")
+    
     logged_in_user =user.User.get_by_id(session["user_id"])
     
     weapon_info ={
