@@ -5,6 +5,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import armor
 from flask_app.models import weapon
 from flask_app.models import item
+from flask import flash
 
 
 char_dict ={
@@ -253,6 +254,63 @@ class Character:
             """
         # data is a dictionary that will be passed into the save method from server.py
         return connectToMySQL(cls.DB).query_db( query, data )
+    
+    @classmethod
+    def validate_char(cls,data):
+        is_valid = True
+        
+        print("\n___Character's validated data___", data)
+        
+        if len(data['char_name']) < 3:
+            print("____Char Name FAILED____")
+            flash("Name must be at least 3 letters long","char_input")
+            is_valid = False
+        
+        if 'char_race' not in data or data['char_race'] != "":
+            print("____Char Race FAILED____")
+            flash("Please Select a race","char_input")
+            is_valid = False
+        
+        if 'char_class' not in data or data['char_class'] != "":
+            print("____Char class FAILED____")
+            flash("Please Select a class","char_input")
+            is_valid = False
+        
+        if 'char_background' not in data or data['char_background'] != "":
+            print("____Char background FAILED____")
+            flash("Please Select a background","char_input")
+            is_valid = False
+        
+        if 'char_alignment' not in data or data['char_alignment'] != "" :
+            print("____Char alignment FAILED____")
+            flash("Please Select a alignment","char_input")
+            is_valid = False
+        
+        if 'personality_traits' not in data or data['personality_traits'] != "":
+            print("____Char Personality FAILED____")
+            flash("Please fill out a Personality","char_input")
+            is_valid = False
+        
+        if 'ideal' not in data or data['ideal'] != "":
+            print("____Char Ideal FAILED____")
+            flash("Please fill out a ideal","char_input")
+            is_valid = False
+        
+        if 'bond' not in data or data['bond'] != "":
+            print("____Char Bond FAILED____")
+            flash("Please fill out a bond","char_input")
+            is_valid = False
+        
+        if 'flaw' not in data or data['flaw'] != "":
+            print("____Char Flaw FAILED____")
+            flash("Please fill out a flaw","char_input")
+            is_valid = False
+        
+        return is_valid
+        
+        
+        
+    
     
     @classmethod
     def update(cls, data ):

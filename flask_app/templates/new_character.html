@@ -21,6 +21,15 @@
     <br><br><br>
     <h1 class="text-center">Enter New Character</h1>
     <div class="d-flex justify-content-center" id="columns_container">
+        <div >
+            {% with messages = get_flashed_messages(category_filter=["char_input"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-danger fs-2 fw-bolder">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
         <form action="/character_creation" class="border border-dark p-3" method="post" id="character_form">
             <input type="hidden" name="user_id" value="{{session['user_id']}}">
             <div class="row_container d-flex">

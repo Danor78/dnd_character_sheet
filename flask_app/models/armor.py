@@ -105,7 +105,30 @@ class Armor():
         # data is a dictionary that will be passed into the save method from server.py
         return connectToMySQL(cls.DB).query_db( query, data )
 
-
+    @classmethod
+    def validate_armor(cls,data):
+        is_valid = True
+        
+        if not item.Item.validate_item(data): # if not (false)
+            print("\n ____Weapon con item validation FAILED____")
+            is_valid = False
+        
+        if 'amor_type' not in data or data['weapon_type'] == "":
+            print("____Armor type FAILED____")
+            flash("Please Select a armor Type","armor_input")
+            is_valid = False
+        
+        if 'body_part' not in data or data['body_part'] == "":
+            print("____armor body_part FAILED____")
+            flash("Please Select a body part to be equipped","armor_input")
+            is_valid = False
+        
+        if 'stealth_property' not in data or data['stealth_property'] == "":
+            print("____armor stealth_property FAILED____")
+            flash("Please Select a stealth property for the weapon","armor_input")
+            is_valid = False
+        
+        return is_valid
 
     def set_armor_name(self, name):  # easy straight up value setting if needed
         self.armor_name = name

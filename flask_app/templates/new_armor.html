@@ -21,6 +21,15 @@
     <h1 class="text-center">New Armor</h1>
     <div class="form-group d-flex justify-content-center">
         <form action="/create_armor" class="w-75 border border-dark p-3" method="post" id="item_form">
+            <div >
+                {% with messages = get_flashed_messages(category_filter=["armor_input"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <p class="text-danger fs-2 fw-bolder">{{message}}</p>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
             <input type="hidden" name="user_id" value="{{session['user_id']}}">
             <div class="d-flex">
                 <div class="column_1 mr-5">
@@ -63,12 +72,11 @@
                     <input type="radio" name="is_attunable" id="attunable" value="no" checked><span>No</span>
                     <br>
                     <div class="">
-        
                     </div>
-                        <div >
-                            <label for="description">Description:</label><br>
-                            <textarea name="description" id="item_description" cols="30" rows="3"></textarea>
-                        </div>
+                    <div >
+                        <label for="description">Description:</label><br>
+                        <textarea name="description" id="item_description" cols="30" rows="3"></textarea>
+                    </div>
                     <br>
                     <div class="mb-3">
                         <label for="source">Source Material:</label><br>
@@ -111,7 +119,6 @@
                         <option value="{{type}}">{{armors['stealth_prop'][type]}}</option>
                         {% endfor %}
                     </select>
-
                 </div>
             </div>
         </form>

@@ -4,8 +4,6 @@ from flask_app.models import item
 from flask_app.models import weapon
 from flask_app.models import armor
 from flask_app.models import user
-
-
 # from flask_app.models import weapon
 # from flask_app.models import armor
 

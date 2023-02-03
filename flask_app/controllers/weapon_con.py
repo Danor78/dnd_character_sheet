@@ -71,13 +71,11 @@ def create_weapon():
         "armor_id" : None,
         "weapon_id" : weapon.Weapon.save(weapon_info)
     }
+    
     if 'magical_mod' in request.form and int(request.form['magical_mod']) > 0:
-        item_info["name"] = request.form["name"] + request.form['magical_mod']
+        item_info["name"] = request.form["name"] + ' +' + request.form['magical_mod']
     else:
         item_info["name"] = request.form["name"]
-        
-        
-    
     
     item.Item.save(item_info)
     return redirect("/dashboard")
