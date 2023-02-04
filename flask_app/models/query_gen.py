@@ -9,25 +9,32 @@ def save_query(table_data):
 
     for i in range(1,data_len):
         q1 += table_data[i] + ", "
+        # print(q1)
     q1 += table_data[data_len]
-        
-        
+    # print(q1)
+    
+    
     q1 += ") VALUES ( %(" + table_data[1] + ")s, "
     for i in range(2,data_len):
         if table_data[i] == "created_at" or table_data[i] == "updated_at":
             if i == data_len:
                 q1 += "NOW() "
-                continue
+                print(q1,table_data[i])
+                # continue
             else:
                 q1 += "NOW(), "
-                continue
+                print(q1,table_data[i])
+                # continue
         else:
             q1 += "%(" + table_data[i] + ")s, "
+            print(q1,table_data[i])
 
     if table_data[data_len] == "created_at" or table_data[data_len] == "updated_at":
         q1 += "NOW() );"
+        print(q1,table_data[data_len])
     else:
         q1 += "%(" + table_data[data_len] + ")s );"
+        print(q1,table_data[data_len])
 
     return q1
 

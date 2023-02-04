@@ -54,7 +54,39 @@
         {% endif %}
     </table>
 
-    <!-- {% if items %} -->
+    <h3><strong>Available Classes</strong></h3>
+    <table class="table table-hover border border-dark">
+        <tr style="position: sticky; top: 0px; background-color: white;">
+            <!-- <th>id</th> -->
+            <th>Class</th>
+            <th>Hit Die</th>
+            <th>Primary Ability</th>
+            <th>Save Prof</th>
+            <th>Skill Prof</th>
+            <th>Armor Weapon Prof</th>
+            <th>Created by</th>
+            <th>Actions</th>
+        </tr>
+        {% if classes %}
+        {% for class in classes %}
+        <tr>
+            <td>{{class.name}}</td>
+            <td>{{class.hit_die}}</td>
+            <td>{{class.primary_ability}}</td>
+            <td>{{class.sav_prof}}</td>
+            <td>{{class.skill_prof}}</td>
+            <td>{{class.armor_weapon_prof}}</td>
+            <td>{{class.user.first_name}}</td>
+            <td>
+                <a href="/edit_class/{{class.id}}" style="height: 40px;">Edit</a>
+                <span> | </span>
+                <a href="/delete_class/{{class.id}}" style="height: 40px;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
     <h3><strong>Items</strong></h3>
     <div class=" border border-dark " style="height: 250px; overflow: auto;">
         <table class="table table-hover" style="border-collapse: collapse; width: 100%;" >
@@ -99,6 +131,5 @@
             {% endif %}
         </table>
     </div>
-    <!-- {% endif %} -->
 </body>
 </html>

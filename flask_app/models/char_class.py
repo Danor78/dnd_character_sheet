@@ -5,6 +5,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import armor
 from flask_app.models import weapon
 from flask_app.models import item
+from flask_app.models import user
 from flask_app.models import query_gen
 from pprint import pprint
 
@@ -13,7 +14,7 @@ from pprint import pprint
 class Char_class:
     DB="character_sheet"
     table_data = ["char_classes", "name", "description", "hit_die", "primary_ability", "sav_prof", "skill_prof", "armor_weapon_prof", 
-        "features", "start_equipment", "sub_classes", "created_at", "updated_at, user_id"]
+        "features", "start_equipment", "sub_classes", "created_at", "updated_at", "user_id"]
     
     def __init__(self, data):
         self.id = data['id']
@@ -21,14 +22,15 @@ class Char_class:
         self.description = data['description']
         self.hit_die = data['hit_die']
         self.primary_ability = data['primary_ability']
-        self.sav_prof = data['sav_prof']
-        self.skill_prof = data['skill_prof']
-        self.armor_weapon_prof = data['armor_weapon_prof']
+        self.sav_prof = json.loads(data['sav_prof'])
+        self.skill_prof = json.loads(data['skill_prof'])
+        self.armor_weapon_prof = json.loads(data['armor_weapon_prof'])
         self.features = data['features']
         self.start_equipment = data['start_equipment']
         self.sub_classes = data['sub_classes']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.user = None
 
     @classmethod
     def get_all(cls):
@@ -45,6 +47,7 @@ class Char_class:
         # Iterate over the db results and create instances of friends with cls.
         for dict_row in results:
             a_class = cls(dict_row)
+            a_class.user = user.User.get_by_id(dict_row['user_id'])
             # all_classes.append( cls(dict_row) )
             all_classes.append(a_class)
                 
