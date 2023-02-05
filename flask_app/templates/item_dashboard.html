@@ -70,7 +70,7 @@
         {% if classes %}
         {% for class in classes %}
         <tr>
-            <td>{{class.name}}</td>
+            <td><a href="/show_class/{{class.id}}">{{class.name}}</a></td>
             <td>{{class.hit_die}}</td>
             <td>{{class.primary_ability}}</td>
             <td>{{class.sav_prof}}</td>

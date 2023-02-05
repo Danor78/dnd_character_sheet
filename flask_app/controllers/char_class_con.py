@@ -3,6 +3,7 @@ from flask_app import app
 from flask_app.models import char_class
 from flask_app.models import item
 from flask_app.models import user
+import math
 
 from pprint import pprint
 
@@ -407,3 +408,90 @@ def update_class(id):
     char_class.Char_class.update(data)
     
     return redirect("/dashboard")
+
+@app.route("/delete_class/<int:id>")
+def delete_class(id):
+    if "user_id" not in session:
+        print("\n___<<< User not logged in >>>___")
+        return redirect("/")
+    char_class.Char_class.delete(id)
+    return redirect("/dashboard")
+
+@app.route("/show_class/<int:id>")
+def show_class(id):
+    if "user_id" not in session:
+        print("\n___<<< User not logged in >>>___")
+        return redirect("/")
+    a_class = char_class.Char_class.get_class_by_id(id)
+    logged_in_user =user.User.get_by_id(session["user_id"])
+    show_var = {
+        "hit_die": [ 4,6,8,10,12],
+        "savs" : {
+            "str_sav_prof" : "Strength",
+            "dex_sav_prof" : "Dexterity",
+            "con_sav_prof" : "Constitution",
+            "int_sav_prof" : "Intelligence",
+            "wis_sav_prof" : "Wisdom",
+            "cha_sav_prof" : "Charisma"
+            },
+        "skill_prof" : {
+            "acrobatics_prof" : "Acrobatics",
+            "animal_handling_prof" : "Animal Handling",
+            "arcana_prof" : "Arcana",
+            "athletics_prof" : "Athletics",
+            "deception_prof" : "Deception",
+            "history_prof" : "History",
+            "insight_prof" : "Insight",
+            "intimidation_prof" : "Intimidation",
+            "investigation_prof" : "Investigation",
+            "medicine_prof" : "Medicine",
+            "nature_prof" : "Nature",
+            "perception_prof" : "Perception",
+            "performance_prof" : "Performance",
+            "persuasion_prof" : "Persuasion",
+            "religion_prof" : "Religion",
+            "sleight_of_hand_prof" : "Sleight of Hand",
+            "stealth_prof" : "Stealth",
+            "survival_prof" : "Survival",
+            },
+        "armor_prof" : {
+            "heavy_armor_prof" : "Heavy Armor",
+            "medium_armor_prof" : "Medium Armor",
+            "light_armor_prof" : "Light Armor"
+            },
+        "weapon_prof" : {
+            "simple_weapons_prof" : "Simple Weapons",
+            "martial_weapons_prof" : "Martial Weapons",
+            "sword_prof" : "Swords",
+            "axe_prof" : "Axes",
+            "bow_prof" : "Bows",
+            "pole_prof" : "Pole Arms",
+            "warhammer_prof" : "War Hammers"
+            },
+        "starting_equip" : {
+            "simple_weapon" : "Simple Weapons",
+            "martial_weapon" : "Martial Weapons"
+        }
+    }
+    show_var['hit_mod'] = math.floor(int(a_class.hit_die) / 2) + 1
+    show_var['armor_proficiencies'] = ""
+    for prof in show_var['armor_prof']:
+        if prof in a_class.armor_weapon_prof:
+            show_var['armor_proficiencies'] += show_var['armor_prof'][prof] + " / "
+    show_var['weapon_proficiencies'] = ""
+    for prof in show_var['weapon_prof']:
+        if prof in a_class.armor_weapon_prof:
+            show_var['weapon_proficiencies'] += show_var['weapon_prof'][prof] + " / "
+    show_var['sav_throws'] = ""
+    for prof in show_var['savs']:
+        if prof in a_class.sav_prof:
+            show_var['sav_throws'] += show_var['savs'][prof] + " / "
+    show_var['skills'] = ""
+    for prof in show_var['skill_prof']:
+        print("\n __Prof__", prof)
+        print("\n __ a_class.save_prof__", a_class.sav_prof)
+        if prof in a_class.skill_prof:
+            print("\n __Prof in class.sav_prof__ => true")
+            show_var['skills'] += show_var['skill_prof'][prof] + " / "
+    
+    return render_template("show_class.html", a_class = a_class, user = logged_in_user, show_var = show_var)

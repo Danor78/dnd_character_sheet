@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="container">
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_character">Add Character</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <a class="text-light" href="/new_armor">New Armor Piece</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    <br><br><br>
+
+    <h1>Class Name: {{a_class.name}}</h1>
+    {% for section in range(1,a_class.description['number_of'] + 1) %}
+    {% with heading = "desc_heading_" + section|string %}
+    {% with description = "description_" + section|string %}
+    <h3>{{a_class.description[heading]}}</h3>
+    <p>{{a_class.description[description]}}</p>
+    {% endwith %}
+    {% endwith %}
+    {% endfor %}
+    <br>
+    <h3>Class Features</h3>
+    <h4>Hit Points</h4>
+    <p><strong>Hit Dice: </strong> 1d{{a_class.hit_die}} per {{a_class.name}} level <br>
+    <strong>Hit Points at 1st Level: </strong>{{a_class.hit_die}} + your Constitution modifier <br>
+    <strong>Hit Points at Higher Levels: </strong> 1d{{a_class.hit_die}} or (or {{show_var['hit_mod']}}) + your Constitution modifier per {{a_class.name}} level after 1st</p>
+    <br>
+    <h3>Proficiencies</h3>
+    <p><strong>Armor: </strong>{{show_var['armor_proficiencies']}} <br>
+    <strong>Weapons: </strong>{{show_var['weapon_proficiencies']}} <br>
+    <strong>Saving Throws: </strong>{{show_var['sav_throws']}} <br>
+    <strong>Skills: </strong> Choose {{a_class.skill_prof[0]}} from {{show_var['skills']}} <br></p>
+</body>
+</html>implementing 
