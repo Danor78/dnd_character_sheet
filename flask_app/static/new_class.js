@@ -36,7 +36,7 @@ function add_description_box(){
     textarea = document.createElement("textarea");
     textarea.name = "description_" + descript_num;
     textarea.setAttribute("id", "class_description_" + descript_num);
-    textarea.setAttribute("cols","33");
+    textarea.setAttribute("cols","63");
     textarea.setAttribute("rows","5");
     div_desc.appendChild(textarea);
     div.appendChild(div_desc)
@@ -106,7 +106,7 @@ function add_feature_box(){
     textarea = document.createElement("textarea");
     textarea.name = "feature_descript_" + feature_num;
     textarea.setAttribute("id", "feature_descript_" + feature_num);
-    textarea.setAttribute("cols","33");
+    textarea.setAttribute("cols","63");
     textarea.setAttribute("rows","5");
     div_desc.appendChild(textarea);
     div.appendChild(div_desc)

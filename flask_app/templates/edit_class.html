@@ -20,357 +20,274 @@
     </div>
     <br><br><br>
     <div class="">
-        <h1 class="text-center">Enter New Class</h1>
+        <h1 class="text-center">Edit Class</h1>
         <div class="border border-dark p-3" id="item_form">
-            <form action="/create_class" method="post">
+            <form action="/update_class/{{a_class.id}}" method="post">
                 <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                <input type="hidden" name="class_id" value="{{a_class.id}}">
                 <label for="name"><strong>Class Name:</strong></label>
-                <input type="text" name="name">
+                <input type="text" name="name" value="{{a_class.name}}">
                 <br>
-                <h5><strong>Class Description(s)</strong></h5>
-                <div id="description_section_1">
-                    <input type="hidden" name="descript_num" id="descript_num" value="{{descriptions_num}}">
-                    <label for="desc_heading_1"><strong>Class Description Heading</strong></label>
-                    <input type="text" name="desc_heading_1">
-                    <div class="d-flex align-items-center">
-                        <label for="description_1"><strong>Class Description:</strong></label>
-                        <textarea name="description_1" id="class_description_1" cols="33" rows="5"></textarea>
+                <div class="border-bottom border-dark mb-2">
+                    <h5><strong>Class Description(s)</strong></h5>
+                    <div id="description_section_1">
+                        <input type="hidden" name="descript_num" id="descript_num" value="{{a_class.description['number_of']}}">
+                        {% with num = a_class.description['number_of']%}
+                        {% for section in range(1,a_class.description['number_of'] + 1) %}
+                        {% with heading = "desc_heading_" + section|string %}
+                        {% with description = "description_" + section|string %}
+                        <label for="{{heading}}" class=""><strong>Class Description Heading</strong></label>
+                        <input type="text" name="{{heading}}" value="{{a_class.description[heading]}}">
+                        <div class="d-flex align-items-center mb-5">
+                            <label for="{{description}}"><strong>Class Description:</strong></label>
+                            <textarea name="{{description}}" id="a_class_description_{{section}}" cols="63" rows="5">{{a_class.description[description]}}</textarea>
+                        </div>
+                        {% endwith %}
+                        {% endwith %}
+                        {% endfor %}
+                        {% endwith %}
                     </div>
+                    <a onclick="add_description_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add Description Section</a>
                 </div>
-                <a onclick="add_description_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add Description Section</a>
                 <br>
                 <label for="hit_die"><strong>Hit_die: </strong></label>
                 <select name="hit_die" id="hit_die">
-                    <option value="4">1d4</option>
-                    <option value="6">1d6</option>
-                    <option value="8">1d8</option>
-                    <option value="10">1d10</option>
-                    <option value="12">1d12</option>
+                    {% for hitDie in edit_var['hit_die'] %}
+                    {% if a_class.hit_die == hitDie|int %}
+                    <option  value="{{hitDie}}" selected>1d{{hitDie}}</option>
+                    {% else %}
+                    <option value="{{hitDie}}" >1d{{hitDie}}</option>
+                    {% endif %}
+                    {% endfor %}
                 </select>
                 <br>
                 <label for=""><strong>Select 2 Saving Throw Proficiencies: </strong></label>
-                <div class="d-flex">
+                <div class="d-flex border-bottom border-dark mb-2">
+                    {% for savs in edit_var['savs'] %}
                     <div class="d-flex align-items-center mr-3">
-                        <input type="checkbox" name="str_sav_prof" value="prof" class="mb-3 mr-2">
-                        <p>Strength Save</p>
+                        {% if savs in a_class.sav_prof%}
+                        <input type="checkbox" name="{{savs}}" value="prof" class="mb-3 mr-2" checked>
+                        {% else %}
+                        <input type="checkbox" name="{{savs}}" value="prof" class="mb-3 mr-2">
+                        {% endif %}
+                        <p>{{edit_var['savs'][savs]}}</p>
                     </div>
-                    <div class="d-flex align-items-center mr-3">
-                        <input type="checkbox" name="dex_sav_prof" value="prof" class="mb-3 mr-2">
-                        <p>Dexterity Save</p>
-                    </div>
-                    <div class="d-flex align-items-center mr-3">
-                        <input type="checkbox" name="con_sav_prof" value="prof" class="mb-3 mr-2">
-                        <p>Constitution Save</p>
-                    </div>
-                    <div class="d-flex align-items-center mr-3">
-                        <input type="checkbox" name="int_sav_prof" value="prof" class="mb-3 mr-2">
-                        <p>Intelligence Save</p>
-                    </div>
-                    <div class="d-flex align-items-center mr-3">
-                        <input type="checkbox" name="wis_sav_prof" value="prof" class="mb-3 mr-2">
-                        <p>Wisdom Save</p>
-                    </div>
-                    <div class="d-flex align-items-center mr-3">
-                        <input type="checkbox" name="cha_sav_prof" value="prof" class="mb-3 mr-2">
-                        <p>Charisma Save</p>
-                    </div>
+                    {% endfor %}
                 </div>
                 <label for="skill_prof"><strong>Skill Proficiencies:</strong></label><br>
                 <label for="skill_prof_num" class="mr-3"><strong>Number of Proficiencies to be chosen: </strong></label>
-                <input type="number" name="skill_prof_num" min="1" max="5" value="1" style="width: 50px;"><br>
+                <input type="number" name="skill_prof_num" min="1" max="5" value="{{a_class.skill_prof[0]}}" style="width: 50px;"><br>
                 <label><strong>Select the Class Proficiencies to be chosen from: </strong></label>
-                <div class="">
-                    <div class="d-flex">
+                <div class="border-bottom border-dark mb-2">
+                    <div class="d-flex flex-wrap">
+                        {% for skill in edit_var['skills'] %}
                         <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="acrobatics_prof" class="mb-2 mr-2">
-                            <label>Acrobatics Proficiency</label>
+                            {% if skill in a_class.skill_prof %}
+                            <input type="checkbox" name="{{skill}}" class="mb-2 mr-2" checked>
+                            {% else %}
+                            <input type="checkbox" name="{{skill}}" class="mb-2 mr-2">
+                            {% endif %}
+                            <label>{{edit_var['skills'][skill]}}</label>
                         </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="animal_handling_prof" class="mb-2 mr-2">
-                            <label>Animal Handling Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="arcana_prof" class="mb-2 mr-2">
-                            <label>Arcana Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="athletics_prof" class="mb-2 mr-2">
-                            <label>Athletics Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="deception_prof" class="mb-2 mr-2">
-                            <label>Deception Proficiency</label>
-                        </div>
-                        
-                    </div>
-                    <div class="d-flex">
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="history_prof" class="mb-2 mr-2">
-                            <label>History Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="insight_prof" class="mb-2 mr-2">
-                            <label>Insight Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="intimidation_prof" class="mb-2 mr-2">
-                            <label>Intimidation Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="investigation_prof" class="mb-2 mr-2">
-                            <label>Investigation Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="medicine_prof" class="mb-2 mr-2">
-                            <label>Medicine Proficiency</label>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="nature_prof" class="mb-2 mr-2">
-                            <label>Nature Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="perception_prof" class="mb-2 mr-2">
-                            <label>Perception Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="performance_prof" class="mb-2 mr-2">
-                            <label>Performance Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="persuasion_prof" class="mb-2 mr-2">
-                            <label>Persuasion Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="religion_prof" class="mb-2 mr-2">
-                            <label>Religion Proficiency</label>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="sleight_of_hand_rof" class="mb-2 mr-2">
-                            <label>Sleight of Hand Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="stealth_prof" class="mb-2 mr-2">
-                            <label>Stealth Proficiency</label>
-                        </div>
-                        <div class="d-flex align-items-center mr-3">
-                            <input type="checkbox" name="survival_prof" class="mb-2 mr-2">
-                            <label>Survival Proficiency</label>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <label for="armor_prof"><strong>Class Armor Proficiencies: </strong></label>
-                <div class="d-flex">
-                    <input type="checkbox" name="heavy_armor_prof" class="mb-2 mr-2">
-                    <p class="mr-3">Heavy Armor Proficiencies</p>
-                    <input type="checkbox" name="medium_armor_prof" class="mb-2 mr-2">
-                    <p class="mr-3">Medium Armor Proficiencies</p>
-                    <input type="checkbox" name="light_armor_prof" class="mb-2 mr-2">
-                    <p class="mr-3">Light Armor Proficiencies</p>
+                <div class="d-flex border-bottom border-dark mb-2">
+                    {% for armor in edit_var['armor_prof'] %}
+                    {% if armor in a_class.armor_weapon_prof %}
+                    <input type="checkbox" name="{{armor}}" class="mb-2 mr-2" checked>
+                    {% else %}
+                    <input type="checkbox" name="{{armor}}" class="mb-2 mr-2">
+                    {% endif %}
+                    <p class="mr-3">{{edit_var['armor_prof'][armor]}}</p>
+                    {% endfor %}
                 </div>
                 <label for="weapon_prof"><strong>Class Weapon Proficiencies: </strong></label>
-                <div class="">
-                    <div class="d-flex">
-                        <input type="checkbox" name="simple_weapons_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Simple Weapons Proficiency</p>
-                        <!-- <input type="checkbox" name="simple_ranged_weapon_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Simple Ranged Weapon Proficiency</p> -->
-                        <input type="checkbox" name="martial_weapons_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Martial Weapons Proficiency</p>
-                        <!-- <input type="checkbox" name="martial_ranged_weapon_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Martial Ranged Weapon Proficiency</p> -->
-                        <input type="checkbox" name="sword_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Sword Proficiency</p>
-                        <input type="checkbox" name="axe_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Axe Proficiency</p>
-                    </div>
-                    <div class="d-flex">
-                        <input type="checkbox" name="bow_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Bow Proficiency</p>
-                        <input type="checkbox" name="pole_prof" class="mb-2 mr-2">
-                        <p class="mr-3">Pole Arm Proficiency</p>
-                        <input type="checkbox" name="warhammer_prof" class="mb-2 mr-2">
-                        <p class="mr-3">War Hammer Proficiency</p>
+                <div class="border-bottom border-dark mb-2">
+                    <div class="d-flex flex-wrap">
+                        {% for weapon in edit_var['weapon_prof'] %}
+                        {% if weapon in a_class.armor_weapon_prof %}
+                        <input type="checkbox" name="{{weapon}}" class="mb-2 mr-2" checked>
+                        {% else %}
+                        <input type="checkbox" name="{{weapon}}" class="mb-2 mr-2">
+                        {% endif %}
+                        <p class="mr-3">{{edit_var['weapon_prof'][weapon]}}</p>
+                        {% endfor %}
                     </div>
                 </div>
                 <h5><strong>Class Feature(s)</strong></h5>
                 <!-- <label for="features"><strong>Class Features:</strong></label> -->
-                <div id="feature_container">
-                    <input type="hidden" name="feature_num" id="feature_num" value="1">
-                    <label for="feature_name_1"><strong>Class Feature Name: </strong></label>
-                    <input type="text" name="feature_name_1"><br>
-                    <label for="feature_level_1"><strong>Level Feature is implemented: </strong></label>
-                    <select name="feature_level_1" id="feature_level_1">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                    </select><br>
-                    <div class="d-flex align-items-center">
-                        <label for="feature_descript_1" class="mr-2"><strong>Feature Description: </strong></label>
-                        <textarea name="feature_descript_1" id="feature_descript_1" cols="33" rows="5"></textarea>
+                <div class="border-bottom border-dark mb-2">
+                    <div id="feature_container border-bottom border-dark mb-2">
+                        <input type="hidden" name="feature_num" id="feature_num" value="{{a_class.features['number_of']}}">
+                        {% for section in range(1,a_class.features['number_of'] + 1) %}
+                        {% with name = "feature_name_" + section|string %}
+                        {% with level = "feature_level_" + section|string %}
+                        {% with description = "feature_descript_" + section|string %}
+                        <label for="{{name}}"><strong>Class Feature Name: </strong></label>
+                        <input type="text" name="{{name}}" value="{{a_class.features[name]}}"><br>
+                        <label for="{{level}}"><strong>Level Feature is implemented: </strong></label>
+                        <select name="{{level}}" id="{{level}}">
+                            {% for i in range(1,21) %}
+                            {% if i == a_class.features[level]|int %}
+                            <option value="{{i}}" selected>{{i}}</option>
+                            {% else %}
+                            <option value="{{i}}">{{i}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select><br>
+                        <div class="d-flex align-items-center">
+                            <label for="{{description}}" class="mr-2"><strong>Feature Description: </strong></label>
+                            <textarea name="{{description}}" id="{{description}}" cols="63" rows="5" class="mb-3">{{a_class.features[description]}}</textarea>
+                        </div>
+                        {% endwith %}
+                        {% endwith %}
+                        {% endwith %}
+                        {% endfor %}
                     </div>
+                    <a onclick="add_feature_box()" href="#" class="btn btn-primary mt-4 mb-3">Add Feature Section</a>
                 </div>
-                <a onclick="add_feature_box()" href="#" class="btn btn-primary mt-4">Add Feature Section</a>
-                <br><br>
+                
                 <h3>Starting Equipment Options</h3>
-                <ul class="d-flex list-unstyled">
-                    <p class="mr-2">a)</p>
-                    <li class="mr-2">
-                        <select name="opt1_start1" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt1_start2" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt1_start3" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                </ul>
-                <ul class="d-flex list-unstyled">
-                    <p class="mr-2">b)</p>
-                    <li class="mr-2">
-                        <select name="opt2_start1" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt2_start2" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt2_start3" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                </ul>
-                <ul class="d-flex list-unstyled">
-                    <p class="mr-2">c)</p>
-                    <li class="mr-2">
-                        <select name="opt3_start1" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt3_start2" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt3_start3" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                </ul>
-                <ul class="d-flex list-unstyled">
-                    <p class="mr-2">d)</p>
-                    <li class="mr-2">
-                        <select name="opt4_start1" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt4_start2" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="opt4_start3" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                </ul>
-                <ul class="d-flex list-unstyled">
-                    <p class="mr-2">Default</p>
-                    <li class="mr-2">
-                        <select name="def_start1" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="def_start2" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                    <li class="mr-2">
-                        <select name="def_start3" id="">
-                            <option value="null">Nothing</option>
-                            {% for item in items %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                </ul>
-                <button type="submit" class="btn btn-primary">Submit Class</button>
+                <div class="border-bottom border-dark mb-2">
+                    <ul class="d-flex list-unstyled">
+                        <p class="mr-2">a)</p>
+                        {% for section in range(1,4) %}
+                        {% with option = "opt1_start" + section|string %}
+                        <li class="mr-2">
+                            <select name="{{option}}" id="">
+                                <option value="null">Nothing</option>
+                                {% for weapon in edit_var['starting_equip'] %}
+                                {% if weapon == a_class.start_equipment['option1'][option]  %}
+                                <option value="{{weapon}}" selected>{{edit_var['starting_equip'][weapon]}}</option>
+                                {% else %}
+                                <option value="{{weapon}}">{{edit_var['starting_equip'][weapon]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                                
+                                {% for item in items %}
+                                {% if item.id == a_class.start_equipment['option1'][option]|int  %}
+                                <option value="{{item.id}}" selected>{{item.name}}</option>
+                                {% else %}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </li>
+                        {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    <ul class="d-flex list-unstyled">
+                        <p class="mr-2">b)</p>
+                        {% for section in range(1,4) %}
+                        {% with option = "opt2_start" + section|string %}
+                        <li class="mr-2">
+                            <select name="{{option}}" id="">
+                                <option value="null">Nothing</option>
+                                {% for weapon in edit_var['starting_equip'] %}
+                                {% if weapon == a_class.start_equipment['option2'][option]  %}
+                                <option value="{{weapon}}" selected>{{edit_var['starting_equip'][weapon]}}</option>
+                                {% else %}
+                                <option value="{{weapon}}">{{edit_var['starting_equip'][weapon]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                                
+                                {% for item in items %}
+                                {% if item.id == a_class.start_equipment['option2'][option]|int  %}
+                                <option value="{{item.id}}" selected>{{item.name}}</option>
+                                {% else %}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </li>
+                        {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    <ul class="d-flex list-unstyled">
+                        <p class="mr-2">c)</p>
+                        {% for section in range(1,4) %}
+                        {% with option = "opt3_start" + section|string %}
+                        <li class="mr-2">
+                            <select name="{{option}}" id="">
+                                <option value="null">Nothing</option>
+                                {% for weapon in edit_var['starting_equip'] %}
+                                {% if weapon == a_class.start_equipment['option3'][option]  %}
+                                <option value="{{weapon}}" selected>{{edit_var['starting_equip'][weapon]}}</option>
+                                {% else %}
+                                <option value="{{weapon}}">{{edit_var['starting_equip'][weapon]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                                
+                                {% for item in items %}
+                                {% if item.id == a_class.start_equipment['option3'][option]|int  %}
+                                <option value="{{item.id}}" selected>{{item.name}}</option>
+                                {% else %}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </li>
+                        {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    <ul class="d-flex list-unstyled">
+                        <p class="mr-2">d)</p>
+                        {% for section in range(1,4) %}
+                        {% with option = "opt4_start" + section|string %}
+                        <li class="mr-2">
+                            <select name="{{option}}" id="">
+                                <option value="null">Nothing</option>
+                                {% for weapon in edit_var['starting_equip'] %}
+                                {% if weapon == a_class.start_equipment['option4'][option]  %}
+                                <option value="{{weapon}}" selected>{{edit_var['starting_equip'][weapon]}}</option>
+                                {% else %}
+                                <option value="{{weapon}}">{{edit_var['starting_equip'][weapon]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                                
+                                {% for item in items %}
+                                {% if item.id == a_class.start_equipment['option4'][option]|int  %}
+                                <option value="{{item.id}}" selected>{{item.name}}</option>
+                                {% else %}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </li>
+                        {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    <ul class="d-flex list-unstyled">
+                        <p class="mr-2">Default</p>
+                        {% for section in range(1,4) %}
+                        {% with option = "def_start" + section|string %}
+                        <li class="mr-2">
+                            <select name="{{option}}" id="">
+                                <option value="null">Nothing</option>
+                                {% for weapon in edit_var['starting_equip'] %}
+                                {% if weapon == a_class.start_equipment['default'][option]  %}
+                                <option value="{{weapon}}" selected>{{edit_var['starting_equip'][weapon]}}</option>
+                                {% else %}
+                                <option value="{{weapon}}">{{edit_var['starting_equip'][weapon]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                                
+                                {% for item in items %}
+                                {% if item.id == a_class.start_equipment['default'][option]|int  %}
+                                <option value="{{item.id}}" selected>{{item.name}}</option>
+                                {% else %}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </li>
+                        {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    <button type="submit" class="btn btn-primary mb-3">Submit Class</button>
+                </div>
                 <br>
                 
 

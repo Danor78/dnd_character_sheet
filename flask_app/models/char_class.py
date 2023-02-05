@@ -19,14 +19,14 @@ class Char_class:
     def __init__(self, data):
         self.id = data['id']
         self.name = data['name']
-        self.description = data['description']
+        self.description = json.loads(data['description'])
         self.hit_die = data['hit_die']
         self.primary_ability = data['primary_ability']
         self.sav_prof = json.loads(data['sav_prof'])
         self.skill_prof = json.loads(data['skill_prof'])
         self.armor_weapon_prof = json.loads(data['armor_weapon_prof'])
-        self.features = data['features']
-        self.start_equipment = data['start_equipment']
+        self.features = json.loads(data['features'])
+        self.start_equipment = json.loads(data['start_equipment'])
         self.sub_classes = data['sub_classes']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
