@@ -4,10 +4,7 @@ from flask_app.models import char_class
 from flask_app.models import item
 from flask_app.models import user
 import math
-import pprint
-
 from pprint import pprint
-
 import json
 
 @app.route("/new_class")
