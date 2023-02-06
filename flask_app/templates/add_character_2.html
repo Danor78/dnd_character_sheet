@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='new_character.css') }}">
+
+</head>
+<body class="" style="width: 75%; margin-left: 10%; margin-right: 20%;">
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <a class="text-light" href="/new_armor">New Armor Piece</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    <br><br><br>
+    <h1 class="text-center">Enter New Character</h1>
+    <div class="container" id="columns_container">
+        <div >
+            {% with messages = get_flashed_messages(category_filter=["char_input"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-danger fs-2 fw-bolder">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <form action="/character_creation" class="border border-dark p-3" method="post" id="character_form">
+            <input type="hidden" name="user_id" value="{{session['user_id']}}">
+            <input type="hidden" name="classes" id="classes" value="{{classes}}">
+            <div class=" border border-dark p-3 w-75">
+                    <h4>Please Select attributes and proficiencies</h4>
+                    <div class="">
+                        <div>
+                            <label for="str" class="mr-2"><strong>Strength </strong></label>
+                            <input type="number" name="str" id="str" min="1" max="20" value="10" class="mr-3" style="width: 60px;" onchange="populate_mods()">
+                            <label for="dex" class="mr-2"><strong>Dexterity: </strong></label>
+                            <input type="number" name="dex" id="dex" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
+                            <label for="con" class="mr-2"><strong>Constitution: </strong></label>
+                            <input type="number" name="con" id="con" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
+                        </div>
+                        <div>
+                            <label for="int" class="mr-2"><strong>Intelligence: </strong></label>
+                            <input type="number" name="int" id="int" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
+                            <label for="wis" class="mr-2"><strong>Wisdom: </strong></label>
+                            <input type="number" name="wis" id="wis" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
+                            <label for="cha" class="mr-2"><strong>Charisma: </strong></label>
+                            <input type="number" name="cha" id="cha" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
+                        </div>
+                        <a onclick="roll_attrib()" href="#" class="btn btn-primary">Roll Attributes</a>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-around">
+                        <a onclick="clear_prof()" href="#" class="btn btn-primary">Clear Proficiencies</a>
+                        <a onclick="clear_all()" href="#" class="btn btn-primary">Clear Everything</a>
+                    </div>
+                    <h3 class="text-center">Choose {{a_class.skill_prof[0]}} Skill Proficiencies</h3>
+                    <div class=" d-flex" id="row_2">
+                        <div class="p-2  mt-2 mr-4 border border-dark" >
+                            <h3>Saving Throws</h3>
+                            {% for sav in char_dict['savs'] %}
+                            {% set save = sav + "_prof" %}
+                            {% set prof = sav + "_mod" %}
+                            <!-- <p>{{save}}</p> -->
+                            <div class="d-flex">
+                                {% if save in a_class['sav_prof'] %}
+                                <input type="checkbox" name="{{save}}" id="{{save}}" disabled class="mb-3 mr-2" value="prof" onchange="populate_mods()" checked>
+                                {% else %}
+                                <input type="checkbox" name="{{save}}" id="{{save}}" disabled class="mb-3 mr-2" value="prof" onchange="populate_mods()">
+                                {% endif %}
+                                <p class="border-bottom border-dark mr-2 text-center" id="{{prof}}" style="width: 20px;"></p>
+                                <label for="{{save}}" id="{{sav}}">{{char_dict['savs'][sav]}}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="p-2  mt-2 border border-dark">
+                            <h3>Skills</h3>
+                            <div class="d-flex skill_container">
+                                {% for skill_dict in char_dict['skills'] %}
+                                <div class="mr-3 ">
+                                    {% for skill in skill_dict %}
+                                    {% set skill_prof = skill + '_prof' %}
+                                    {% set prof = skill + "_mod" %}
+                                    <!-- <p>{{skill_prof}}</p> -->
+                                    <div class="d-flex">
+                                        {% if skill_prof in a_class['skill_prof'] %}
+                                        <input type="checkbox" name="{{skill_prof}}" id="{{skill_prof}}" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
+                                        {% else %}
+                                        <input type="checkbox" name="{{skill_prof}}" disabled id="{{skill_prof}}" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
+                                        {% endif %}
+                                        <p class="border-bottom border-dark mr-2 text-center" id="{{prof}}" style="width: 20px;"></p>
+                                        <label for="" id="skill + '_skil'">{{skill_dict[skill][0]}}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="../static/add_character-2.js"></script>
+</body>
+</html>

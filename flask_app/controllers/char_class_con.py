@@ -4,6 +4,7 @@ from flask_app.models import char_class
 from flask_app.models import item
 from flask_app.models import user
 import math
+import pprint
 
 from pprint import pprint
 
@@ -19,6 +20,8 @@ def new_class():
     features_num = 1
     start_equip = 1
     items = item.Item.get_all_by_order('type')
+    classes = char_class.Char_class.dict_get_all()
+    pprint(classes, indent= 3, depth=3)
     return render_template("new_class.html", descriptions_num = descriptions_num, features_num = features_num, start_equip=start_equip, items=items, user=logged_in_user)
 
 @app.route("/create_class", methods=['POST'])
@@ -83,7 +86,8 @@ def create_class():
         "armor_prof" : [
             "heavy_armor_prof",
             "medium_armor_prof",
-            "light_armor_prof"
+            "light_armor_prof",
+            "shields"
             ],
         "weapon_prof" : [
             "simple_weapons_prof",
@@ -110,7 +114,10 @@ def create_class():
     
     
     armor_weapon_prof = []
-    for prof in prof_dict["armor_weapon_prof"]:
+    for prof in prof_dict["weapon_prof"]:
+        if prof in request.form:
+            armor_weapon_prof.append(prof)
+    for prof in prof_dict["armor_prof"]:
         if prof in request.form:
             armor_weapon_prof.append(prof)
     data['armor_weapon_prof'] = json.dumps(armor_weapon_prof)
@@ -309,7 +316,8 @@ def update_class(id):
         "armor_prof" : [
             "heavy_armor_prof",
             "medium_armor_prof",
-            "light_armor_prof"
+            "light_armor_prof",
+            "shields"
             ],
         "weapon_prof" : [
             "simple_weapons_prof",
@@ -457,7 +465,8 @@ def show_class(id):
         "armor_prof" : {
             "heavy_armor_prof" : "Heavy Armor",
             "medium_armor_prof" : "Medium Armor",
-            "light_armor_prof" : "Light Armor"
+            "light_armor_prof" : "Light Armor",
+            "shields" : "Shields"
             },
         "weapon_prof" : {
             "simple_weapons_prof" : "Simple Weapons",
@@ -469,23 +478,27 @@ def show_class(id):
             "warhammer_prof" : "War Hammers"
             },
         "starting_equip" : {
-            "simple_weapon" : "Simple Weapons",
-            "martial_weapon" : "Martial Weapons"
+            "simple_weapon" : "Any Simple Weapon",
+            "martial_weapon" : "Any Martial Weapon"
         }
     }
     show_var['hit_mod'] = math.floor(int(a_class.hit_die) / 2) + 1
+    
     show_var['armor_proficiencies'] = ""
     for prof in show_var['armor_prof']:
         if prof in a_class.armor_weapon_prof:
             show_var['armor_proficiencies'] += show_var['armor_prof'][prof] + " / "
+    
     show_var['weapon_proficiencies'] = ""
     for prof in show_var['weapon_prof']:
         if prof in a_class.armor_weapon_prof:
             show_var['weapon_proficiencies'] += show_var['weapon_prof'][prof] + " / "
+    
     show_var['sav_throws'] = ""
     for prof in show_var['savs']:
         if prof in a_class.sav_prof:
             show_var['sav_throws'] += show_var['savs'][prof] + " / "
+    
     show_var['skills'] = ""
     for prof in show_var['skill_prof']:
         print("\n __Prof__", prof)
@@ -494,4 +507,154 @@ def show_class(id):
             print("\n __Prof in class.sav_prof__ => true")
             show_var['skills'] += show_var['skill_prof'][prof] + " / "
     
+    show_var['equipment'] = {}
+    for x in range(3):
+        section = 'option' + str(x+1)
+        print("\n __ section is __", section)
+        show_var['equipment'][section] = ""
+        for i in range(3):
+            option = "opt" + str(x+1) + "_start" + str(i+1)
+            if a_class.start_equipment[section][option] != 'null':
+                if a_class.start_equipment[section][option].isdigit():
+                    a_item = item.Item.get_item_by_id(int(a_class.start_equipment[section][option]))
+                    show_var['equipment'][section] += f"{chr(ord('a')+i)}) {a_item.name} "
+                else:
+                    option = a_class.start_equipment[section][option]
+                    show_var['equipment'][section] += f"{chr(ord('a')+i)}) {show_var['starting_equip'][option]} "
+            else:
+                show_var['equipment'][section] += f"{chr(ord('a')+i)}) nothing "
+        print(f"\n ___ show_var['equipment'][{section}]___" , show_var['equipment'][section])
+    
+    show_var['equipment']['default'] = ""
+    for i in range(3):
+        option = "def_start" + str(i+1)
+        if a_class.start_equipment['default'][option] != 'null':
+            if a_class.start_equipment['default'][option].isdigit():
+                a_item = item.Item.get_item_by_id(int(a_class.start_equipment['default'][option]))
+                show_var['equipment']['default'] += f"{a_item.name} / "
+            else:
+                option = a_class.start_equipment['default'][option]
+                show_var['equipment']['default'] += f"{show_var['starting_equip'][option]} / "
+        else:
+            show_var['equipment']['default'] += f"nothing / "
+    print(f"\n ___ show_var['equipment'][{'default'}]___" , show_var['equipment']['default'])
+    
+    
     return render_template("show_class.html", a_class = a_class, user = logged_in_user, show_var = show_var)
+
+@app.route("/display_class/<int:id>")
+def display_class(id):
+    if "user_id" not in session:
+        print("\n___<<< User not logged in >>>___")
+        return redirect("/")
+    a_class = char_class.Char_class.get_class_by_id(id)
+    logged_in_user =user.User.get_by_id(session["user_id"])
+    show_var = {
+        "hit_die": [ 4,6,8,10,12],
+        "savs" : {
+            "str_sav_prof" : "Strength",
+            "dex_sav_prof" : "Dexterity",
+            "con_sav_prof" : "Constitution",
+            "int_sav_prof" : "Intelligence",
+            "wis_sav_prof" : "Wisdom",
+            "cha_sav_prof" : "Charisma"
+            },
+        "skill_prof" : {
+            "acrobatics_prof" : "Acrobatics",
+            "animal_handling_prof" : "Animal Handling",
+            "arcana_prof" : "Arcana",
+            "athletics_prof" : "Athletics",
+            "deception_prof" : "Deception",
+            "history_prof" : "History",
+            "insight_prof" : "Insight",
+            "intimidation_prof" : "Intimidation",
+            "investigation_prof" : "Investigation",
+            "medicine_prof" : "Medicine",
+            "nature_prof" : "Nature",
+            "perception_prof" : "Perception",
+            "performance_prof" : "Performance",
+            "persuasion_prof" : "Persuasion",
+            "religion_prof" : "Religion",
+            "sleight_of_hand_prof" : "Sleight of Hand",
+            "stealth_prof" : "Stealth",
+            "survival_prof" : "Survival",
+            },
+        "armor_prof" : {
+            "heavy_armor_prof" : "Heavy Armor",
+            "medium_armor_prof" : "Medium Armor",
+            "light_armor_prof" : "Light Armor",
+            "shields" : "Shields"
+            },
+        "weapon_prof" : {
+            "simple_weapons_prof" : "Simple Weapons",
+            "martial_weapons_prof" : "Martial Weapons",
+            "sword_prof" : "Swords",
+            "axe_prof" : "Axes",
+            "bow_prof" : "Bows",
+            "pole_prof" : "Pole Arms",
+            "warhammer_prof" : "War Hammers"
+            },
+        "starting_equip" : {
+            "simple_weapon" : "Any Simple Weapon",
+            "martial_weapon" : "Any Martial Weapon"
+        }
+    }
+    show_var['hit_mod'] = math.floor(int(a_class.hit_die) / 2) + 1
+    
+    show_var['armor_proficiencies'] = ""
+    for prof in show_var['armor_prof']:
+        if prof in a_class.armor_weapon_prof:
+            show_var['armor_proficiencies'] += show_var['armor_prof'][prof] + " / "
+    
+    show_var['weapon_proficiencies'] = ""
+    for prof in show_var['weapon_prof']:
+        if prof in a_class.armor_weapon_prof:
+            show_var['weapon_proficiencies'] += show_var['weapon_prof'][prof] + " / "
+    
+    show_var['sav_throws'] = ""
+    for prof in show_var['savs']:
+        if prof in a_class.sav_prof:
+            show_var['sav_throws'] += show_var['savs'][prof] + " / "
+    
+    show_var['skills'] = ""
+    for prof in show_var['skill_prof']:
+        print("\n __Prof__", prof)
+        print("\n __ a_class.save_prof__", a_class.sav_prof)
+        if prof in a_class.skill_prof:
+            print("\n __Prof in class.sav_prof__ => true")
+            show_var['skills'] += show_var['skill_prof'][prof] + " / "
+    
+    show_var['equipment'] = {}
+    for x in range(3):
+        section = 'option' + str(x+1)
+        print("\n __ section is __", section)
+        show_var['equipment'][section] = ""
+        for i in range(3):
+            option = "opt" + str(x+1) + "_start" + str(i+1)
+            if a_class.start_equipment[section][option] != 'null':
+                if a_class.start_equipment[section][option].isdigit():
+                    a_item = item.Item.get_item_by_id(int(a_class.start_equipment[section][option]))
+                    show_var['equipment'][section] += f"{chr(ord('a')+i)}) {a_item.name} "
+                else:
+                    option = a_class.start_equipment[section][option]
+                    show_var['equipment'][section] += f"{chr(ord('a')+i)}) {show_var['starting_equip'][option]} "
+            else:
+                show_var['equipment'][section] += f"{chr(ord('a')+i)}) nothing "
+        print(f"\n ___ show_var['equipment'][{section}]___" , show_var['equipment'][section])
+    
+    show_var['equipment']['default'] = ""
+    for i in range(3):
+        option = "def_start" + str(i+1)
+        if a_class.start_equipment['default'][option] != 'null':
+            if a_class.start_equipment['default'][option].isdigit():
+                a_item = item.Item.get_item_by_id(int(a_class.start_equipment['default'][option]))
+                show_var['equipment']['default'] += f"{a_item.name} / "
+            else:
+                option = a_class.start_equipment['default'][option]
+                show_var['equipment']['default'] += f"{show_var['starting_equip'][option]} / "
+        else:
+            show_var['equipment']['default'] += f"nothing / "
+    print(f"\n ___ show_var['equipment'][{'default'}]___" , show_var['equipment']['default'])
+    
+    
+    return render_template("display_class.html", a_class = a_class, user = logged_in_user, show_var = show_var)

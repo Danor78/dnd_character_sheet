@@ -20,7 +20,7 @@
     </div>
     <br><br><br>
     <h1 class="text-center">Enter New Character</h1>
-    <div class="d-flex justify-content-center" id="columns_container">
+    <div class="container" id="columns_container">
         <div >
             {% with messages = get_flashed_messages(category_filter=["char_input"]) %}
             {% if messages %}
@@ -32,6 +32,7 @@
         </div>
         <form action="/character_creation" class="border border-dark p-3" method="post" id="character_form">
             <input type="hidden" name="user_id" value="{{session['user_id']}}">
+            <input type="hidden" name="classes" id="classes" value="{{classes}}">
             <div class="row_container d-flex">
                 <div id="row_1" class="border border-dark mr-2 p-2">
                     <label for="char_name"><strong>Character Name:</strong></label>
@@ -64,20 +65,12 @@
                         <option value="tiefling">Tiefling</option>
                     </select><br>
                     <label for="char_class"><strong>Class: </strong></label>
-                    <select name="char_class" id="char_class" class="mr-3">
-                        <option value="artificer">Artificer</option>>
-                        <option value="barbarian">Barbarian</option>>
-                        <option value="bard">Bard</option>>
-                        <option value="cleric">Cleric</option>>
-                        <option value="druid">Druid</option>>
-                        <option value="fighter">Fighter</option>>
-                        <option value="monk">Monk</option>>
-                        <option value="paladin">Paladin</option>>
-                        <option value="ranger">Ranger</option>>
-                        <option value="rogue">Rogue</option>>
-                        <option value="sorcerer">Sorcerer</option>>
-                        <option value="warlock">Warlock</option>>
-                        <option value="wizard">Wizard</option>>
+                    <select name="char_class" id="char_class" class="mr-3" onchange="display_class(this)" >
+                        <option value="null">Select Class</option>
+                        {% for class in classes %}
+                        <option value="{{class['id']}}">{{class['name']}}</option>
+                        {% endfor %}
+                        
                     </select><br>
                     <label for="char_background"><strong>Background: </strong></label>
                     <select name="char_background" id="char_background">
@@ -110,187 +103,30 @@
                     <br>
                     <div class="d-flex  align-items-center mb-2">
                         <label for="personality_traits" >Personality Traits: </label>
-                        <textarea name="personality_traits" class="mr-2" id="personality_traits" cols="19" rows="2"></textarea>
+                        <textarea name="personality_traits" class="mr-2" id="personality_traits" cols="43" rows="5"></textarea>
                     </div>
                     <div class="d-flex  align-items-center mb-2">
                         <label for="ideal" class="mr-1">Ideal: </label>
-                        <textarea name="ideal" class="mr-2" id="ideal" cols="19" rows="2"></textarea>
+                        <textarea name="ideal" class="mr-2" id="ideal" cols="43" rows="5"></textarea>
                     </div>
                     <div class="d-flex  align-items-center mb-2">
                         <label for="bond" class="mr-1">Bond: </label>
-                        <textarea name="bond" class="mr-2" id="bond" cols="19" rows="2"></textarea>
+                        <textarea name="bond" class="mr-2" id="bond" cols="43" rows="5"></textarea>
                     </div>
                     <div class="d-flex  align-items-center mb-2">
                         <label for="flaw" class="mr-1">Flaw: </label>
-                        <textarea name="flaw" class="mr-1" id="flaw" cols="19" rows="2"></textarea>
+                        <textarea name="flaw" class="mr-1" id="flaw" cols="43" rows="5"></textarea>
                     </div>
                 </div>
-                <div class=" border border-dark p-3">
-                    <h4>Please Select attributes and proficiencies</h4>
-                    <div class="">
-                        <div>
-                            <label for="str" class="mr-2"><strong>Strength </strong></label>
-                            <input type="number" name="str" id="str" min="1" max="20" value="10" class="mr-3" style="width: 60px;" onchange="populate_mods()">
-                            <label for="dex" class="mr-2"><strong>Dexterity: </strong></label>
-                            <input type="number" name="dex" id="dex" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
-                            <label for="con" class="mr-2"><strong>Constitution: </strong></label>
-                            <input type="number" name="con" id="con" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
-                        </div>
-                        <div>
-                            <label for="int" class="mr-2"><strong>Intelligence: </strong></label>
-                            <input type="number" name="int" id="int" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
-                            <label for="wis" class="mr-2"><strong>Wisdom: </strong></label>
-                            <input type="number" name="wis" id="wis" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
-                            <label for="cha" class="mr-2"><strong>Charisma: </strong></label>
-                            <input type="number" name="cha" id="cha" min="1" max="20" value="10" class="mr-3" style="width: 60px;"onchange="populate_mods()">
-                        </div>
-                        <a onclick="roll_attrib()" href="#" class="btn btn-primary">Roll Attributes</a>
-                    </div>
-                    <br>
-                    <div class="d-flex justify-content-around">
-                        <a onclick="clear_prof()" href="#" class="btn btn-primary">Clear Proficiencies</a>
-                        <a onclick="clear_all()" href="#" class="btn btn-primary">Clear Everything</a>
-                    </div>
-                    <div class=" d-flex" id="row_2">
-                        <div class="p-2  mt-2 mr-4 border border-dark" >
-                            <h3>Saving Throws</h3>
-                            <div class="d-flex">
-                                <input type="checkbox" name="str_sav_prof" id="str_sav_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                <p class="border-bottom border-dark mr-2 text-center" id="str_sav_mod" style="width: 20px;"></p>
-                                <label for="str_sav_prof" id="str_sav"> Strength Save</label>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" name="dex_sav_prof" id="dex_sav_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                <p class="border-bottom border-dark mr-2 text-center" id="dex_sav_mod" style="width: 20px;"></p>
-                                <label for="dex_sav_prof" id="dex_sav"> Dexterity Save</label>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" name="con_sav_prof" id="con_sav_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                <p class="border-bottom border-dark mr-2 text-center" id="con_sav_mod" style="width: 20px;"></p>
-                                <label for="con_sav_prof" id="con_sav"> Constitution Save</label>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" name="int_sav_prof" id="int_sav_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                <p class="border-bottom border-dark mr-2 text-center" id="int_sav_mod" style="width: 20px;"></p>
-                                <label for="int_sav_prof" id="int_sav"> Intelligence Save</label>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" name="wis_sav_prof" id="wis_sav_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                <p class="border-bottom border-dark mr-2 text-center" id="wis_sav_mod" style="width: 20px;"></p>
-                                <label for="wis_sav_prof" id="wis_sav"> Wisdom Save</label>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" name="cha_sav_prof" id="cha_sav_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                <p class="border-bottom border-dark mr-2 text-center" id="cha_sav_mod" style="width: 20px;"></p>
-                                <label for="cha_sav_prof" id="cha_sav"> Charisma Save</label>
-                            </div>
-                        </div>
-                        <div class="p-2  mt-2 border border-dark">
-                            <h3>Skills</h3>
-                            <div class="d-flex skill_container">
-                                <div class="mr-3 =">
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="acrobatics_prof" id="acrobatics_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="acrobatics_mod" style="width: 20px;"></p>
-                                        <label for="" id="acrobatics_skil"> Acrobatics</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="animal_handling_prof" id="animal_handling_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="animal_handling_mod" style="width: 20px;"></p>
-                                        <label for="" id="animal_handling_skil">Animal Handling</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="arcana_prof" id="arcana_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="arcana_mod" style="width: 20px;"></p>
-                                        <label for="" id="arcana_skil"> Arcana</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="athletics_prof" id="athletics_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="athletics_mod" style="width: 20px;"></p>
-                                        <label for="" id="athletics_skil"> Athletics</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="deception_prof" id="deception_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="deception_mod" style="width: 20px;"></p>
-                                        <label for="" id="deception_skil"> Deception</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="history_prof" id="history_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="history_mod" style="width: 20px;"></p>
-                                        <label for="" id="history_skil"> History</label>
-                                    </div>
-                                </div>
-                                <div class="mr-3">
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="insight_prof" id="insight_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="insight_mod" style="width: 20px;"></p>
-                                        <label for="" id="insight_skil"> Insight</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="intimidation_prof" id="intimidation_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="intimidation_mod" style="width: 20px;"></p>
-                                        <label for="" id="intimidation_skil"> Intimidation</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="investigation_prof" id="investigation_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="investigation_mod" style="width: 20px;"></p>
-                                        <label for="" id="investigation_skil"> Investigation</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="medicine_prof" id="medicine_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="medicine_mod" style="width: 20px;"></p>
-                                        <label for="" id="medicine_skil"> Medicine</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="nature_prof" id="nature_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="nature_mod" style="width: 20px;"></p>
-                                        <label for="" id="nature_skil"> Nature</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="perception_prof" id="perception_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="perception_mod" style="width: 20px;"></p>
-                                        <label for="" id="perception_skil"> Perception</label>
-                                    </div>
-                                </div>
-                                <div class="mr-3" >
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="performance_prof" id="performance_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="performance_mod" style="width: 20px;"></p>
-                                        <label for="" id="performance_skil"> Performance</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="persuasion_prof" id="persuasion_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="persuasion_mod" style="width: 20px;"></p>
-                                        <label for="" id="persuasion_skil"> Persuasion</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="religion_prof" id="religion_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="religion_mod" style="width: 20px;"></p>
-                                        <label for="" id="religion_skil"> Religion</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="sleight_of_hand_prof" id="sleight_of_hand_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="sleight_of_hand_mod" style="width: 20px;"></p>
-                                        <label for="" id="sleight_of_hand_skil"> Sleight of Hand</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="stealth_prof" id="stealth_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="stealth_mod" style="width: 20px;"></p>
-                                        <label for="" id="stealth_skil"> Stealth</label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" name="survival_prof" id="survival_prof" class="mb-3 mr-2" value="prof" onchange="populate_mods()">
-                                        <p class="border-bottom border-dark mr-2 text-center" id="survival_mod" style="width: 20px;"></p>
-                                        <label for="" id="survival_skil"> Survival</label>
-                                    </div>                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class=" border border-dark " style="width: 500px;"> <!--Second box -->
+                    <input type="hidden" name="chosen_class">
+                    <iframe src="" id="display_class" frameborder="0" style="border:none;width: 500px;height: 400px;">
+
+                    </iframe>
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" class="btn btn-primary" value="Submit Character">
+                <input type="submit" class="btn btn-primary" value="Selecting Attributes">
             </div>
         </form>
     </div>

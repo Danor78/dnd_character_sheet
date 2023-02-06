@@ -1,6 +1,6 @@
 body{
     background-image: url('/static/images/add_character.jpg');
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     background-size: 100%;
     /* display: flex;
     justify-content: center; */

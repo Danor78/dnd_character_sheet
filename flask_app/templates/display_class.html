@@ -10,17 +10,7 @@
 
 </head>
 <body class="container">
-    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
-        <a class="text-light" href="/dashboard">Show all Items</a>
-        <a class="text-light" href="/new_character">Add Character</a>
-        <a class="text-light" href="/new_class">Add Class</a>
-        <a class="text-light" href="/new_item">New Item</a>
-        <a class="text-light" href="/new_weapon">New Weapon</a>
-        <a class="text-light" href="/new_armor">New Armor Piece</a>
-        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
-    </div>
-    <br><br><br>
-    <h1>Class Name: {{a_class.name}}</h1>
+    <br><br>
     {% for section in range(1,a_class.description['number_of'] + 1) %}
     {% with heading = "desc_heading_" + section|string %}
     {% with description = "description_" + section|string %}

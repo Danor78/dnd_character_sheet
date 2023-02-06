@@ -53,7 +53,25 @@ class Char_class:
                 
         # print(f"List of item[] is; {all_classes}")
         return all_classes
+    
+    @classmethod
+    def dict_get_all(cls):
+        print("\n__classes get_all Method__")
+        query = f"SELECT * FROM {cls.table_data[0]}; "
+        print("\n___Get all query", query)
+        # make sure to call the connectToMySQL function with the schema you are targeting.
+        results = connectToMySQL(cls.DB).query_db(query)
         
+        for row in results:
+            row['description'] = json.loads(row['description'])
+            row['sav_prof'] = json.loads(row['sav_prof'])
+            row['skill_prof'] = json.loads(row['skill_prof'])
+            row['armor_weapon_prof'] = json.loads(row['armor_weapon_prof'])
+            row['features'] = json.loads(row['features'])
+            row['start_equipment'] = json.loads(row['start_equipment'])
+
+        return results
+    
     @classmethod
     def get_class_by_id(cls,id):
         print("\n____Get Class by Id method____")

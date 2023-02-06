@@ -1,0 +1,36 @@
+body{
+    background-image: url('/static/images/page_background.jpg');
+    /* background-repeat: no-repeat; */
+    background-repeat: repeat-y;
+    background-size: 100%;
+    /* display: flex;
+    justify-content: center; */
+}
+
+/* #item_form {
+    background-color: rgba(255, 255, 255, 0.749);
+
+    color: rgb(246, 240, 174);
+    color: rgb(164, 3, 3);
+    color: rgb(0, 5, 2);
+
+    opacity: .5; 
+    font-weight: bold;
+} */
+
+h1 {
+    /* color: rgb(100, 93, 1); */
+    font-size: 60px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+
+}
+
+h3, p{
+    /* color: rgb(100, 93, 1); */
+    /* font-size: 60px; */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    /* font-style: italic; */
+
+}
