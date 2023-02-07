@@ -18,7 +18,7 @@ function add_racial_box(){
     div.appendChild(racial_label1);
     input = document.createElement("input");
     input.type = "text";
-    input.name = "racial_trait_" + racial_num;
+    input.name = "racial_heading_" + racial_num;
     div.appendChild(racial_label1);
     div.appendChild(input);
 
@@ -36,7 +36,7 @@ function add_racial_box(){
 
     textarea = document.createElement("textarea");
     textarea.name = "racial_trait_" + racial_num;
-    textarea.setAttribute("id", "racial_" + racial_num);
+    textarea.setAttribute("id", "racial_trait_" + racial_num);
     textarea.setAttribute("cols","63");
     textarea.setAttribute("rows","5");
     div_desc.appendChild(textarea);

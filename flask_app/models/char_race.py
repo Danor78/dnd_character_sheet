@@ -101,7 +101,25 @@ race_prof = {
         "armor_prof1",
         "armor_prof2",
         "armor_prof3",        
-    ]
+    ],
+    "lang_prof" : {
+            "common_lang_prof" : "Common",
+            "dwarvish_lang_prof" : "Dwarvish",
+            "elvish_lang_prof" : "Elvish",
+            "giant_lang_prof" : "Giant",
+            "gnomish_lang_prof" : "Gnomish",
+            "goblin_lang_prof" : "Goblin",
+            "halfling_lang_prof" : "Halfling",
+            "orc_lang_prof" : "Orc",
+            "abyssal_lang_prof" : "Abyssal",
+            "celestial_lang_prof" : "Celestial",
+            "draconic_lang_prof" : "Draconic",
+            "deepspeech_lang_prof" : "Deepspeech",
+            "infernal_lang_prof" : "Infernal",
+            "primordial_lang_prof" : "Primordial",
+            "sylvan_lang_prof" : "Sylvan",
+            "undercommon_lang_prof" : "Undercommon"
+        }
 }
 
 class Char_race:

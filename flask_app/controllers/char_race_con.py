@@ -24,7 +24,13 @@ def new_race():
     
     armorType_list = char_race.race_prof['armor_prof']
     
-    return render_template("new_race.html", armor = armorType_list, weapons = weaponType_list, descriptions_num = descriptions_num,
+    race_lang = char_race.race_prof['lang_prof']
+    
+    skill_prof = char_race.race_prof['skill_prof']
+    
+    
+    
+    return render_template("new_race.html", skill_prof = skill_prof, race_lang = race_lang, armor = armorType_list, weapons = weaponType_list, descriptions_num = descriptions_num,
                         racial_num = racial_num, user=logged_in_user)
 
 @app.route("/create_race", methods=['POST'])
@@ -69,6 +75,14 @@ def create_race():
         if racial_trait in request.form:
             racial_traits[racial_trait] = request.form[racial_trait]
     
+    race_lang = char_race.race_prof['lang_prof']
+    
+    for i in range(1,4):
+        lang_prof = "lang_prof_" + str(i)
+        if lang_prof in request.form:
+            if request.form[lang_prof] != 'null' and request.form[lang_prof] != "":
+                racial_traits[lang_prof] = request.form[lang_prof]
+    
     data['racial_traits'] = json.dumps(racial_traits)
     
     attrib = [
@@ -85,16 +99,16 @@ def create_race():
         
     data['racial_attrib'] = json.dumps(racial_attrib)
     
-    racial_profs = []
+    racial_profs = {}
     for prof_type in char_race.race_prof:
         # print("\n prof_type in char_race.race_prof", prof_type)
         for prof in char_race.race_prof[prof_type]:
             # print("\n Prof in prof_type ", prof)
             if prof in request.form:
                 if request.form[prof] == 'on':
-                    racial_profs.append(prof)
+                    racial_profs[prof] = prof
                 elif request.form[prof] != 'null':
-                    racial_profs.append(request.form[prof])
+                    racial_profs[prof]= request.form[prof]
 
     data['racial_profs'] = json.dumps(racial_profs)
     # print("\n___racial_profs___")
@@ -135,6 +149,44 @@ def edit_race(id):
             "bow_prof" : "Bow",
             "pole_prof" : "Pole Arm",
             "warhammer_prof" : "War Hammer"
+            },
+        "lang_prof" : {
+            "common_lang_prof" : "Common",
+            "dwarvish_lang_prof" : "Dwarvish",
+            "elvish_lang_prof" : "Elvish",
+            "giant_lang_prof" : "Giant",
+            "gnomish_lang_prof" : "Gnomish",
+            "goblin_lang_prof" : "Goblin",
+            "halfling_lang_prof" : "Halfling",
+            "orc_lang_prof" : "Orc",
+            "abyssal_lang_prof" : "Abyssal",
+            "celestial_lang_prof" : "Celestial",
+            "draconic_lang_prof" : "Draconic",
+            "deepspeech_lang_prof" : "Deepspeech",
+            "infernal_lang_prof" : "Infernal",
+            "primordial_lang_prof" : "Primordial",
+            "sylvan_lang_prof" : "Sylvan",
+            "undercommon_lang_prof" : "Undercommon"
+        },
+        "skill_prof" : {
+            "acrobatics_prof" : "Acrobatics",
+            "animal_handling_prof" : "Animal Handling",
+            "arcana_prof" : "Arcana",
+            "athletics_prof" : "Athletics",
+            "deception_prof" : "Deception",
+            "history_prof" : "History",
+            "insight_prof" : "Insight",
+            "intimidation_prof" : "Intimidation",
+            "investigation_prof" : "Investigation",
+            "medicine_prof" : "Medicine",
+            "nature_prof" : "Nature",
+            "perception_prof" : "Perception",
+            "performance_prof" : "Performance",
+            "persuasion_prof" : "Persuasion",
+            "religion_prof" : "Religion",
+            "sleight_of_hand_prof" : "Sleight of Hand",
+            "stealth_prof" : "Stealth",
+            "survival_prof" : "Survival",
             },
     }
     
