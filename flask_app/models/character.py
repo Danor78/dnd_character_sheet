@@ -181,8 +181,8 @@ class Character:
 
     @classmethod
     def get_all(cls):
-        print("")
-        print("__Armor Class Method__")
+        # print("")
+        # print("__Armor Class Method__")
         query = "SELECT * FROM characters;"
         # make sure to call the connectToMySQL function with the schema you are targeting.
         results = connectToMySQL(cls.DB).query_db(query)
@@ -202,8 +202,8 @@ class Character:
         data = {
             "id" : id
         }
-        print("")
-        print("__Armor Class Method__")
+        # print("")
+        # print("__Armor Class Method__")
         query = "SELECT * FROM characters WHERE user_id=%(id)s;"
         # make sure to call the connectToMySQL function with the schema you are targeting.
         results = connectToMySQL(cls.DB).query_db(query, data)
@@ -227,20 +227,20 @@ class Character:
         query = "SELECT * FROM characters WHERE id=%(id)s;"
         # make sure to call the connectToMySQL function with the schema you are targeting.
         result = connectToMySQL(cls.DB).query_db(query,data)
-        print("")
-        print(f"The Result is: {result}")
+        # print("")
+        # print(f"The Result is: {result}")
         # Create an empty list to append our instances of friends
         a_character = cls(result[0])
-        print("")
-        print(f"The character is: {a_character}")
+        # # print("")
+        # print(f"The character is: {a_character}")
         # Iterate over the db results and create instances of friends with cls.
         return a_character
     
     
     @classmethod
     def save(cls, data ):
-        print("")
-        print("__Character Save Method__")
+        # print("")
+        # print("__Character Save Method__")
         # print(f"data: {data}")
         query = """
             INSERT INTO characters ( char_name, char_class, char_background, char_race, char_level, owner_name, char_alignment, experience_points, 

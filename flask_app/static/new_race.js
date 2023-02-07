@@ -57,8 +57,8 @@ function add_description_box(){
     const div = document.createElement("div");
     div.classList.add("mt-3");
     const descipt_label1 = document.createElement("label");
-    descipt_label1.for = "racial_heading_" + description_num
-    text = document.createTextNode("Racial Heading: ");
+    descipt_label1.for = "description_heading_" + description_num
+    text = document.createTextNode("Description Heading: ");
     strong = document.createElement("strong");
     strong.appendChild(text);
     descipt_label1.appendChild(strong);
@@ -66,7 +66,7 @@ function add_description_box(){
     div.appendChild(descipt_label1);
     input = document.createElement("input");
     input.type = "text";
-    input.name = "racial_heading_" + description_num;
+    input.name = "description_heading_" + description_num;
     div.appendChild(descipt_label1);
     div.appendChild(input);
     // div.appendChild(document.createElement("br"));

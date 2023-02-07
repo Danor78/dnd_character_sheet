@@ -18,7 +18,7 @@ def new_class():
     start_equip = 1
     items = item.Item.get_all_by_order('type')
     classes = char_class.Char_class.dict_get_all()
-    pprint(classes, indent= 3, depth=3)
+    # pprint(classes, indent= 3, depth=3)
     return render_template("new_class.html", descriptions_num = descriptions_num, features_num = features_num, start_equip=start_equip, items=items, user=logged_in_user)
 
 @app.route("/create_class", methods=['POST'])
@@ -27,7 +27,7 @@ def create_class():
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
     logged_in_user =user.User.get_by_id(session["user_id"])
-    print("\n___Class Request.form", request.form)
+    # print("\n___Class Request.form", request.form)
     data = {
         "user_id" : logged_in_user.id,
         "name" : request.form["name"],
@@ -121,7 +121,7 @@ def create_class():
     
     descriptions = {}
     nums = request.form['descript_num']
-    print("\n___Desc nums is___",type(nums))
+    # print("\n___Desc nums is___",type(nums))
     descriptions['number_of'] = int(nums)
     tnums = int(nums) + 1
     for num in range(1,tnums):
@@ -142,7 +142,7 @@ def create_class():
         name = "feature_name_" + str(num)
         lvl = "feature_level_" + str(num)
         desc = "feature_descript_" + str(num)
-        print("\n___for loop___",num,name,lvl,desc)
+        # print("\n___for loop___",num,name,lvl,desc)
         if name in request.form:
             features[name] = request.form[name]
         if lvl in request.form:
@@ -155,7 +155,7 @@ def create_class():
     start_equipment = {}
     for i in range(1,5):
         option= 'option' + str(i)
-        print("\n___option___", option)
+        # print("\n___option___", option)
         start_equipment[option] = {}
         for j in range(1,4):
             opt = "opt" + str(i) + "_start" + str(j)
@@ -169,15 +169,15 @@ def create_class():
         if opt in request.form:
             start_equipment['default'][opt] = request.form[opt]
                 
-    print("\n__start_equipment__",start_equipment)
+    # print("\n__start_equipment__",start_equipment)
     data['start_equipment'] = json.dumps(start_equipment)
     # print("\n__Json start_equipment__", data['start_equipment'])
-    print("\n__Json start_equipment__", json.dumps(start_equipment))
+    # print("\n__Json start_equipment__", json.dumps(start_equipment))
     
     
-    print("\n____Class Data___",data)
-    print("\n____Pretty Class Data___")
-    pprint(data, depth=2, indent=4)
+    # print("\n____Class Data___",data)
+    # print("\n____Pretty Class Data___")
+    # pprint(data, depth=2, indent=4)
     
     char_class.Char_class.save(data)
     
@@ -247,7 +247,7 @@ def edit_class(id):
         }
     }
 
-    print("\n__ a_class.start_equipment['option1'] = ", a_class.start_equipment['option1']['opt1_start1'])
+    # print("\n__ a_class.start_equipment['option1'] = ", a_class.start_equipment['option1']['opt1_start1'])
 
     return render_template("edit_class.html", edit_var = edit_var, a_class = a_class, descriptions_num = descriptions_num, features_num = features_num, start_equip=start_equip, items=items, user=logged_in_user)
 
@@ -498,16 +498,16 @@ def show_class(id):
     
     show_var['skills'] = ""
     for prof in show_var['skill_prof']:
-        print("\n __Prof__", prof)
-        print("\n __ a_class.save_prof__", a_class.sav_prof)
+        # print("\n __Prof__", prof)
+        # print("\n __ a_class.save_prof__", a_class.sav_prof)
         if prof in a_class.skill_prof:
-            print("\n __Prof in class.sav_prof__ => true")
+            # print("\n __Prof in class.sav_prof__ => true")
             show_var['skills'] += show_var['skill_prof'][prof] + " / "
     
     show_var['equipment'] = {}
     for x in range(3):
         section = 'option' + str(x+1)
-        print("\n __ section is __", section)
+        # print("\n __ section is __", section)
         show_var['equipment'][section] = ""
         for i in range(3):
             option = "opt" + str(x+1) + "_start" + str(i+1)
@@ -520,7 +520,7 @@ def show_class(id):
                     show_var['equipment'][section] += f"{chr(ord('a')+i)}) {show_var['starting_equip'][option]} "
             else:
                 show_var['equipment'][section] += f"{chr(ord('a')+i)}) nothing "
-        print(f"\n ___ show_var['equipment'][{section}]___" , show_var['equipment'][section])
+        # print(f"\n ___ show_var['equipment'][{section}]___" , show_var['equipment'][section])
     
     show_var['equipment']['default'] = ""
     for i in range(3):
@@ -534,7 +534,7 @@ def show_class(id):
                 show_var['equipment']['default'] += f"{show_var['starting_equip'][option]} / "
         else:
             show_var['equipment']['default'] += f"nothing / "
-    print(f"\n ___ show_var['equipment'][{'default'}]___" , show_var['equipment']['default'])
+    # print(f"\n ___ show_var['equipment'][{'default'}]___" , show_var['equipment']['default'])
     
     
     return render_template("show_class.html", a_class = a_class, user = logged_in_user, show_var = show_var)
@@ -615,16 +615,16 @@ def display_class(id):
     
     show_var['skills'] = ""
     for prof in show_var['skill_prof']:
-        print("\n __Prof__", prof)
-        print("\n __ a_class.save_prof__", a_class.sav_prof)
+        # print("\n __Prof__", prof)
+        # print("\n __ a_class.save_prof__", a_class.sav_prof)
         if prof in a_class.skill_prof:
-            print("\n __Prof in class.sav_prof__ => true")
+            # print("\n __Prof in class.sav_prof__ => true")
             show_var['skills'] += show_var['skill_prof'][prof] + " / "
     
     show_var['equipment'] = {}
     for x in range(3):
         section = 'option' + str(x+1)
-        print("\n __ section is __", section)
+        # print("\n __ section is __", section)
         show_var['equipment'][section] = ""
         for i in range(3):
             option = "opt" + str(x+1) + "_start" + str(i+1)
@@ -637,7 +637,7 @@ def display_class(id):
                     show_var['equipment'][section] += f"{chr(ord('a')+i)}) {show_var['starting_equip'][option]} "
             else:
                 show_var['equipment'][section] += f"{chr(ord('a')+i)}) nothing "
-        print(f"\n ___ show_var['equipment'][{section}]___" , show_var['equipment'][section])
+        # print(f"\n ___ show_var['equipment'][{section}]___" , show_var['equipment'][section])
     
     show_var['equipment']['default'] = ""
     for i in range(3):
@@ -651,7 +651,7 @@ def display_class(id):
                 show_var['equipment']['default'] += f"{show_var['starting_equip'][option]} / "
         else:
             show_var['equipment']['default'] += f"nothing / "
-    print(f"\n ___ show_var['equipment'][{'default'}]___" , show_var['equipment']['default'])
+    # print(f"\n ___ show_var['equipment'][{'default'}]___" , show_var['equipment']['default'])
     
     
     return render_template("display_class.html", a_class = a_class, user = logged_in_user, show_var = show_var)

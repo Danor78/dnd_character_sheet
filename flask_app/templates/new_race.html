@@ -22,28 +22,28 @@
     <br><br><br>
     <h1 class="text-center">Enter New Race</h1>
     <div class="container border border-dark p-3" style="background-color: rgba(240, 248, 255, 0.407);">
-        <form action="/create_race" class="form">
-            <label for="name"><strong>Name: </strong></label>
+        <form action="/create_race" class="form" method="post">
+            <label for="name"><strong>Name Of Race: </strong></label>
             <input type="text" name="name">
             <br>
             <div class="border-bottom border-dark mb-2">
-                <h5><strong>Racial Description(s)</strong></h5>
+                <h3>Racial Description(s)</h3>
                 <div id="description_section_1">
-                    <input type="hidden" name="description_num" id="description_num" value="{{descriptions_num}}">
-                    <label for="racial_heading_1"><strong>Racial Heading</strong></label>
-                    <input type="text" name="racial_heading_1">
+                    <input type="hidden" name="descriptions_num" id="description_num" value="{{descriptions_num}}">
+                    <label for="description_heading_1"><strong>Description Heading</strong></label>
+                    <input type="text" name="description_heading_1">
                     <div class="d-flex align-items-center">
                         <label for="description_1"><strong>Racial Description:</strong></label>
-                        <textarea name="description_1" id="class_description_1" cols="63" rows="5"></textarea>
+                        <textarea name="description_1" id="race_description_1" cols="63" rows="5"></textarea>
                     </div>
                 </div>
                 <a onclick="add_description_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add Racial Description </a>
             </div>
             <br>
             <div class="border-bottom border-dark mb-2">
-                <h5><strong>Racial Trait(s)</strong></h5>
+                <h3>Racial Trait(s)</h3>
                 <h5><strong>Racial Ability Increase</strong></h5>
-                <div class="d-flex flex-wrap" >
+                <div class="d-flex flex-wrap border-bottom border-dark mb-3" >
                     <div class="d-flex">
                         <input type="number" name="str" id="str" class="mb-3 mr-2 ml-2" min="0" max="2" value="0" style="width: 50px">
                         <label for="str" id="str" class="mr-3"><strong>Strength</strong></label>
@@ -71,6 +71,100 @@
                 </div>
                 <label for="speed"><strong>Speed: </strong></label>
                 <input type="number" name="speed" min="15" max="40" value="30" step="5" style="width: 60px;">
+                <div>
+                    <h3>Weapon/Combat Proficiencies</h3>
+                </div>
+                <div class="" style="font-weight: bold;">
+                    <div class="d-flex flex-wrap border-bottom border-dark mb-3">
+                        <div class="d-flex">
+                            <input type="checkbox" name="simple_weapons_prof" class="mb-2 mr-2" value="simple_weapons_prof">
+                            <p class="mr-3">Simple Weapons Proficiency</p>
+                        </div>
+                        <div class="d-flex">
+                            <input type="checkbox" name="martial_weapons_prof" class="mb-2 mr-2" value="martial_weapons_prof">
+                            <p class="mr-3">Martial Weapons Proficiency</p>
+                        </div>
+                        <div class="d-flex">
+                            <input type="checkbox" name="sword_prof" class="mb-2 mr-2" value="sword_prof">
+                            <p class="mr-3">Sword Proficiency</p>
+                        </div>
+                        <div class="d-flex">
+                            <input type="checkbox" name="axe_prof" class="mb-2 mr-2" value="axe_prof">
+                            <p class="mr-3">Axe Proficiency</p>
+                        </div>
+                        <div class="d-flex">
+                            <input type="checkbox" name="bow_prof" class="mb-2 mr-2" value="bow_prof">
+                            <p class="mr-3">Bow Proficiency</p>
+                        </div>
+                        <div class="d-flex">
+                            <input type="checkbox" name="pole_prof" class="mb-2 mr-2">
+                            <p class="mr-3">Pole Arm Proficiency</p>
+                        </div>
+                        <div class="d-flex">
+                            <input type="checkbox" name="warhammer_prof" class="mb-2 mr-2">
+                            <p class="mr-3">War Hammer Proficiency</p>
+                        </div>
+                        <div  class="mb-2 mr-2">
+                            <select name="weapon_prof1" id="">
+                                <option value="null">Nothing</option>
+                                {% for type in weapons %}
+                                <option value="{{type}}">{{weapons[type]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-2 mr-2">
+                            <select name="weapon_prof2" id="">
+                                <option value="null">Nothing</option>
+                                {% for type in weapons %}
+                                <option value="{{type}}">{{weapons[type]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-2 mr-2">
+                            <select name="weapon_prof3" id="">
+                                <option value="null">Nothing</option>
+                                {% for type in weapons %}
+                                <option value="{{type}}">{{weapons[type]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-2 mr-2">
+                            <select name="weapon_prof4" id="">
+                                <option value="null">Nothing</option>
+                                {% for type in weapons %}
+                                <option value="{{type}}">{{weapons[type]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <h3>Armor Proficiencies</h3>
+                    <div class="d-flex flex-wrap border-bottom border-dark mb-3">
+                        <div class="mb-2 mr-2">
+                            <select name="armor_prof1" id="">
+                                <option value="null">Nothing</option>
+                                {% for type in armor %}
+                                <option value="{{type}}">{{armor[type]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-2 mr-2">
+                            <select name="armor_prof2" id="">
+                                <option value="null">Nothing</option>
+                                {% for type in armor %}
+                                <option value="{{type}}">{{armor[type]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-2 mr-2">
+                            <select name="armor_prof3" id="">
+                                <option value="null">Nothing</option>
+                                {% for type in armor %}
+                                <option value="{{type}}">{{armor[type]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div id="racial_section_1">
                     <input type="hidden" name="racial_num" id="racial_num" value="{{racial_num}}">
                     <label for="racial_heading_1"><strong>Racial Heading</strong></label>
@@ -82,6 +176,7 @@
                 </div>
                 <a onclick="add_racial_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add Racial Trait</a>
             </div>
+            <input type="submit" class="btn btn-primary" value="Create Race">
         </form>
     </div>
     <script src="../static/new_race.js"></script>

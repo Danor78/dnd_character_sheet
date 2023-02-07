@@ -91,18 +91,18 @@ class Weapon():             # this is the weapon class that is a child of the It
     
     @classmethod
     def get_all(cls):
-        print("")
-        print("__Weapon Class Method__")
+        # print("")
+        # print("__Weapon Class Method__")
         query = "SELECT * FROM weapons;"
         # make sure to call the connectToMySQL function with the schema you are targeting.
         results = connectToMySQL(cls.DB).query_db(query)
-        print(f"Results are: {results}")
+        # print(f"Results are: {results}")
         # Create an empty list to append our instances of friends
         all_weapons = []
         # Iterate over the db results and create instances of friends with cls.
         for a_weapon in results:
             all_weapons.append( cls(a_weapon) )
-        print(f"List of dojo[] is; {all_weapons}")
+        # print(f"List of dojo[] is; {all_weapons}")
         return all_weapons
 
     
@@ -124,9 +124,9 @@ class Weapon():             # this is the weapon class that is a child of the It
     
     @classmethod
     def save(cls, data ):
-        print("")
-        print("__Weapon Save Method__")
-        print(f"data: {data}")
+        # print("")
+        # print("__Weapon Save Method__")
+        # print(f"data: {data}")
         query = """INSERT INTO weapons ( weapon_type, damage_die, damage_type, properties, base_attrb_key, base_attribute, created_at, updated_at) 
         VALUES ( %(weapon_type)s, %(damage_die)s, %(damage_type)s, %(properties)s, %(base_attrb_key)s, %(base_attribute)s, NOW(), NOW() );
         """

@@ -26,8 +26,8 @@ def create_item():
         return redirect("/new_item")
     
     logged_in_user =user.User.get_by_id(session["user_id"])
-    print("\n __Item Request.form__")
-    print(request.form)
+    # print("\n __Item Request.form__")
+    # print(request.form)
     
     item_info = {
         "user_id" : logged_in_user.id,
@@ -45,8 +45,8 @@ def create_item():
         "img": None
     }
     
-    print("\n __Item info__")
-    print(item_info)
+    # print("\n __Item info__")
+    # print(item_info)
     
     item.Item.save(item_info)
     return redirect("/dashboard")
@@ -56,7 +56,7 @@ def display_item(id):
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
-    print("\n____display Item route____")
+    # print("\n____display Item route____")
     a_item = item.Item.get_item_by_id(id)
     logged_in_user =user.User.get_by_id(session["user_id"])
     creator = user.User.get_by_id(a_item.user_id)
@@ -68,7 +68,7 @@ def edit_item(id):
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
-    print("\n____Edit Item route____")
+    # print("\n____Edit Item route____")
     a_item = item.Item.get_item_by_id(id)
     creator = user.User.get_by_id(a_item.user_id)
     logged_in_user =user.User.get_by_id(session["user_id"])
@@ -88,7 +88,7 @@ def edit_item(id):
         weapons['damage_type'] = weapon.damage_type
         weapons['properties'] = weapon.weapon_properties
         a_item.weapon.properties = a_item.weapon.properties.rsplit(',')
-        print("\n____Weapons Properties____ ->",a_item.weapon.properties)
+        # print("\n____Weapons Properties____ ->",a_item.weapon.properties)
         a_item.weapon.damage_die = str(a_item.weapon.damage_die)
     
     return render_template("edit_item.html", item = a_item, weapons=weapons, creator = creator, user = logged_in_user)
@@ -99,8 +99,8 @@ def update_item():
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
     logged_in_user =user.User.get_by_id(session["user_id"])
-    print("\n _____update item route____")
-    print("\n ____Update Request Form___", request.form)
+    # print("\n _____update item route____")
+    # print("\n ____Update Request Form___", request.form)
     item_info = {
         "user_id" : request.form['user_id'],
         "id" : request.form["id"],
@@ -151,12 +151,12 @@ def update_item():
         item_info['armor_AC'] = request.form['armor_AC']
         item_info['str_req'] = request.form['str_req']
         item_info['stealth_property'] = request.form['stealth_property']
-        print("\n___Armor Update Data___", item_info)
+        # print("\n___Armor Update Data___", item_info)
         armor.Armor.update(item_info)
     
         
     
-    print("\n____item info____->", item_info)
+    # print("\n____item info____->", item_info)
     item.Item.update(item_info)
     
     return redirect("/dashboard")

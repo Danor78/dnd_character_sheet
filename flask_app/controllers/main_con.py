@@ -44,11 +44,11 @@ def character_sheet():
     classes = char_class.Char_class.get_all()
     for a_class in classes:
         savs = ""
-        print("\na_class.sav_prof is: ",a_class.sav_prof)
+        # print("\na_class.sav_prof is: ",a_class.sav_prof)
         for sav in a_class.sav_prof:
             _sav = f3(sav)
             # _sav.title()
-            print("\n__sav of sav_prof 2 ",_sav)
+            # print("\n__sav of sav_prof 2 ",_sav)
             savs += _sav + ' '
         a_class.sav_prof = savs
         
@@ -66,9 +66,9 @@ def character_sheet():
             tmp = no_prof(armor_weapon)
             armor_weapons += tmp + ', '
         a_class.armor_weapon_prof = armor_weapons
-        print(f"\n___{a_class.name} Saves: {savs}")    
-        print(f"\n___{a_class.name} Skills: {skills}")
-        print(f"\n___{a_class.name} Armor and Weapons: {armor_weapons}")            
+        # print(f"\n___{a_class.name} Saves: {savs}")    
+        # print(f"\n___{a_class.name} Skills: {skills}")
+        # print(f"\n___{a_class.name} Armor and Weapons: {armor_weapons}")            
     return render_template("item_dashboard.html", items=items, characters = characters, user = logged_in_user, classes = classes)
     
 @app.route("/dashboard/<type>")

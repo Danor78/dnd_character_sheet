@@ -9,17 +9,114 @@ from flask_app.models import user
 from flask_app.models import query_gen
 from pprint import pprint
 
+race_prof = {
+    "sav_prof" : {
+        "str_sav_prof" : "Strength",
+        "dex_sav_prof" : "Dexterity",
+        "con_sav_prof" : "Constitution",
+        "int_sav_prof" : "Intelligence",
+        "wis_sav_prof" : "Wisdom",
+        "cha_sav_prof" : "Charisma"
+        },
+    "skill_prof" : {
+        "acrobatics_prof" : "Acrobatics",
+        "animal_handling_prof" : "Animal Handling",
+        "arcana_prof" : "Arcana",
+        "athletics_prof" : "Athletics",
+        "deception_prof" : "Deception",
+        "history_prof" : "History",
+        "insight_prof" : "Insight",
+        "intimidation_prof" : "Intimidation",
+        "investigation_prof" : "Investigation",
+        "medicine_prof" : "Medicine",
+        "nature_prof" : "Nature",
+        "perception_prof" : "Perception",
+        "performance_prof" : "Performance",
+        "persuasion_prof" : "Persuasion",
+        "religion_prof" : "Religion",
+        "sleight_of_hand_prof" : "Sleight of Hand",
+        "stealth_prof" : "Stealth",
+        "survival_prof" : "Survival",
+        },
+    "armor_prof" : {
+        "heavy_armor_prof" : "Heavy Armor",
+        "medium_armor_prof" : "Medium Armor",
+        "light_armor_prof" : "Light Armor",
+        "shields_prof" : "Shields"
+        },
+    "weapon_prof" : {
+        "simple_weapons_prof" : "Simple Weapons",
+        "martial_weapons_prof" : "Martial Weapons",
+        "sword_prof" : "Swords",
+        "axe_prof" : "Axes",
+        "bow_prof" : "Bows",
+        "pole_prof" : "Pole Arms",
+        "warhammer_prof" : "War Hammers"
+        },
+    "weapon_type" : {
+        "club_prof" : "Club",
+        "dagger_prof" : "Dagger",
+        "greatclub_prof" : "Greatclub",
+        "handaxe_prof" : "Handaxe",
+        "javelin_prof" : "Javelin",
+        "light_hammer_prof" : "Light Hammer",
+        "mace_prof" : "Mace",
+        "quarterstaff_prof" : "Quarterstaff",
+        "sickle_prof" : "Sickle",
+        "spear_prof" : "Spear",
+        "unarmed_strike_prof" : "Unarmed Strike",
+        "light_crossbow_prof" : "Light Crossbow",
+        "dart_prof" : "Dart",
+        "shortbow_prof" : "Shortbow",
+        "sling_prof" : "Sling",
+        "battleaxe_prof" : "Battleaxe",
+        "flail_prof" : "Flail",
+        "glaive_prof" : "Glaive",
+        "greateaxe_prof" : "Greateaxe",
+        "greatsword_prof" : "Greatsword",
+        "halberd_prof" : "Halberd",
+        "lance_prof" : "Lance",
+        "longsword_prof" : "Longsword",
+        "maul_prof" : "Maul",
+        "morningstar_prof" : "Morningstar",
+        "pike_prof" : "Pike",
+        "rapier_prof" : "Rapier",
+        "scimitar_prof" : "Scimitar",
+        "shortsword_prof" : "Shortsword",
+        "trident_prof" : "Trident",
+        "war_pick_prof" : "War_pick",
+        "warhammer_prof" : "Warhammer",
+        "whip_prof" : "Whip",
+        "blowgun_prof" : "Blowgun",
+        "crossbow_hand_prof" : "Crossbow, Hand",
+        "crossbow_heavy_prof" : "Crossbow, Heavy",
+        "longbow_prof" : "Longbow",
+        "net_prof" : "Net"
+    },
+    "racial_profs" : [
+        "weapon_prof1",
+        "weapon_prof2",
+        "weapon_prof3",
+        "weapon_prof4",
+        "armor_prof1",
+        "armor_prof2",
+        "armor_prof3",        
+    ]
+}
 
 class Char_race:
     DB="character_sheet"
-    table_data = ["char_races", "name", "description", "racial_traits", "racial_attrib", "speed", "created_at", "updated_at", "user_id"]
+    table_data = ["char_races", "name", "description", 
+                "racial_traits", "racial_attrib", "racial_profs", 
+                "speed", "created_at", "updated_at", "user_id"]
     
     def __init__(self, data):
         self.id = data['id']
         self.name = data['name']
         self.description = json.loads(data['description'])
         self.racial_traits = json.loads(data['racial_traits'])
-        self.racial_attrib = json.loads(data['description'])
+        self.racial_attrib = json.loads(data['racial_attrib'])
+        self.racial_profs = json.loads(data['racial_profs'])
         self.speed = data['speed']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']

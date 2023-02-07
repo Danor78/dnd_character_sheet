@@ -7,7 +7,7 @@ armor_type = {
     "heavy_armor" : "Heavy Armor",
     "medium_armor" : "Medium Armor",
     "light_armor" : "Light Armor",
-    "shield" : "Shield"
+    "shield" : "Shields"
 }
 
 body_part ={
@@ -51,18 +51,18 @@ class Armor():
 
     @classmethod
     def get_all(cls):
-        print("")
-        print("__Armor Class Method__")
+        # print("")
+        # print("__Armor Class Method__")
         query = "SELECT * FROM armors;"
         # make sure to call the connectToMySQL function with the schema you are targeting.
         results = connectToMySQL(cls.DB).query_db(query)
-        print(f"Results are: {results}")
+        # print(f"Results are: {results}")
         # Create an empty list to append our instances of friends
         all_armor = []
         # Iterate over the db results and create instances of friends with cls.
         for piece_of_armor in results:
             all_armor.append( cls(piece_of_armor) )
-        print(f"List of dojo[] is; {all_armor}")
+        # print(f"List of dojo[] is; {all_armor}")
         return all_armor
 
     
@@ -72,21 +72,21 @@ class Armor():
         query = "SELECT * FROM armors WHERE id=%(id)s;"
         # make sure to call the connectToMySQL function with the schema you are targeting.
         result = connectToMySQL(cls.DB).query_db(query,data)
-        print("")
-        print(f"The Result is: {result}")
+        # print("")
+        # print(f"The Result is: {result}")
         # Create an empty list to append our instances of friends
         armor_item = cls(result[0])
-        print("")
-        print(f"The a_item is: {armor_item}")
+        # print("")
+        # print(f"The a_item is: {armor_item}")
         # Iterate over the db results and create instances of friends with cls.
         return armor_item
     
     
     @classmethod
     def save(cls, data ):
-        print("")
-        print("__Armor Save Method__")
-        print(f"data: {data}")
+        # print("")
+        # print("__Armor Save Method__")
+        # print(f"data: {data}")
         query = "INSERT INTO armors ( armor_type, body_part, armor_AC, magical_mod, str_req, stealth_property, created_at, updated_at) VALUES ( %(armor_type)s, %(body_part)s, %(armor_AC)s, %(magical_mod)s, %(str_req)s, %(stealth_property)s, NOW(), NOW() );"
         # data is a dictionary that will be passed into the save method from server.py,
         return connectToMySQL(cls.DB).query_db( query, data )

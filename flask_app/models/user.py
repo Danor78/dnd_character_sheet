@@ -30,12 +30,12 @@ class User:
         }
         query = "INSERT INTO users (first_name, last_name,email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
         id = connectToMySQL(cls.DB).query_db(query,data)
-        print("\n ___REGISTERED ID___ ->",id)
+        # print("\n ___REGISTERED ID___ ->",id)
         return id
     
     @classmethod
     def get_by_email(cls,email):
-        print("\n ____User get by email method____ ->", email)
+        # print("\n ____User get by email method____ ->", email)
         data = {"email" : email}
         query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(cls.DB).query_db(query,data)
@@ -45,12 +45,10 @@ class User:
     
     @classmethod
     def get_by_id(cls,id):
-        print("\n ____User get by id method____ ->", id)
+        # print("\n ____User get by id method____ ->", id)
         data = {"id" : id}
         query = "SELECT * FROM users WHERE id = %(id)s;"
         results = connectToMySQL(cls.DB).query_db(query,data)
-        if len(results) == 0:
-            return False
         return cls(results[0])
     
     @staticmethod
@@ -80,13 +78,13 @@ class User:
     
     @staticmethod
     def validate_register(user):
-        print("")
-        print("____Validate Registration____")
+        # print("")
+        # print("____Validate Registration____")
         print(user)
         is_valid =True
         user_in_db = User.get_by_email(user["email"])
-        print("")
-        print("____User in DB____", user_in_db)
+        # print("")
+        # print("____User in DB____", user_in_db)
         if not user["first_name"] or len(user["first_name"]) < 2 or not user["first_name"].isalpha():
             print("____User first name FAILED____")
             flash("first name must be at least 2 characters and only contain alpha characters","register")

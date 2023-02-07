@@ -55,7 +55,7 @@ def create_weapon():
             elif prop in request.form:
                 weapon_info['properties'] += ', ' + prop
 
-    print("\n____Weapon Info____->", weapon_info)
+    # print("\n____Weapon Info____->", weapon_info)
     
     item_info = {
         "user_id" : request.form['user_id'],

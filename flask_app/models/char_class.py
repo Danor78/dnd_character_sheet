@@ -34,9 +34,9 @@ class Char_class:
 
     @classmethod
     def get_all(cls):
-        print("\n__classes get_all Method__")
+        # print("\n__classes get_all Method__")
         query = f"SELECT * FROM {cls.table_data[0]}; "
-        print("\n___Get all query", query)
+        # print("\n___Get all query", query)
         # make sure to call the connectToMySQL function with the schema you are targeting.
         results = connectToMySQL(cls.DB).query_db(query)
         # for result in results:
@@ -56,9 +56,9 @@ class Char_class:
     
     @classmethod
     def dict_get_all(cls):
-        print("\n__classes get_all Method__")
+        # print("\n__classes get_all Method__")
         query = f"SELECT * FROM {cls.table_data[0]}; "
-        print("\n___Get all query", query)
+        # print("\n___Get all query", query)
         # make sure to call the connectToMySQL function with the schema you are targeting.
         results = connectToMySQL(cls.DB).query_db(query)
         
@@ -91,13 +91,13 @@ class Char_class:
     
     @classmethod
     def save(cls, data ):
-        print("")
-        print("__Class Save Method__")
+        # print("")
+        # print("__Class Save Method__")
         # print(f"data: {data}")
-        pprint(data, depth=2, indent=4)
+        # pprint(data, depth=2, indent=4)
         query = query_gen.save_query(cls.table_data)
-        print("\n__Save query__",query)
-        print("")
+        # print("\n__Save query__",query)
+        # print("")
         # query = """INSERT INTO char_classes ( name, description, hit_die, primary_ability, save_prof, armor_weapon_prof, 
         # features, start_equipment, sub_classes, created_at, updated_at) 
         # VALUES ( %(name)s, %(description)s, %(hit_die)s, %(primary_ability)s, %(sav_prof)s, %(armor_weapon_prof)s, %(features)s, 

@@ -13,9 +13,9 @@ def registration():
 @app.route("/register", methods={"POST"})
 def register():
     # print("")
-    print("\n ____user_con /register____")
-    print("\n ____Request.Form info____")
-    print(request.form)
+    # print("\n ____user_con /register____")
+    # print("\n ____Request.Form info____")
+    # print(request.form)
     if not user.User.validate_register(request.form): # if not (false)
         print("\n ____user_con validation FAILED____")
         return redirect("/registration")
@@ -39,7 +39,7 @@ def logout():
 @app.route("/login", methods={"POST"})
 def login():
     # print("")
-    print("\n ____user_con /login____")
+    # print("\n ____user_con /login____")
     logged_in_user = user.User.validate_login(request.form)
     if not logged_in_user:
         print("\n ____user_con loin FAILED____")

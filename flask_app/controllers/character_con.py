@@ -224,7 +224,7 @@ def update_char(id):
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
-    print("\n___Character form data", request.form)
+    # print("\n___Character form data", request.form)
     mods = {
         "str" : math.floor((int(request.form["str"]) - 10)/2),
         "dex" : math.floor((int(request.form["dex"]) - 10)/2),
@@ -326,7 +326,7 @@ def update_char(id):
             if prof in request.form:
                 proficiencies[prof_section][prof] = request.form[prof]
     
-    print("\n___Character_con proficiencies___ ->",proficiencies)
+    # print("\n___Character_con proficiencies___ ->",proficiencies)
     
     
     attributes = {
@@ -382,7 +382,7 @@ def update_char(id):
     data['skills'] = json.dumps(skills)
     data['coin'] = json.dumps(coin)
     
-    print("\n___Update Character___")
+    # print("\n___Update Character___")
     character.Character.update(data)
     
     return redirect("/dashboard")

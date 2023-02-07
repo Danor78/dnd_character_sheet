@@ -19,7 +19,7 @@ def add_character():
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
     logged_in_user =user.User.get_by_id(session["user_id"])
-    print("\n___new character route____")
+    # print("\n___new character route____")
     # classes = char_class.Char_class.get_all()
     classes = char_class.Char_class.dict_get_all()
     # pprint(classes, indent= 3, depth=5)
@@ -32,7 +32,7 @@ def create_character():
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
     logged_in_user =user.User.get_by_id(session["user_id"])
-    print("\n___Character form data", request.form)
+    # print("\n___Character form data", request.form)
     mods = {
         "str" : math.floor((int(request.form["str"]) - 10)/2),
         "dex" : math.floor((int(request.form["dex"]) - 10)/2),
@@ -134,7 +134,7 @@ def create_character():
             if prof in request.form:
                 proficiencies[prof_section][prof] = request.form[prof]
     
-    print("\n___Character_con proficiencies___ ->",proficiencies)
+    # print("\n___Character_con proficiencies___ ->",proficiencies)
     
     
     attributes = {
@@ -221,7 +221,7 @@ def update_char(id):
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
-    print("\n___Character form data", request.form)
+    # print("\n___Character form data", request.form)
     mods = {
         "str" : math.floor((int(request.form["str"]) - 10)/2),
         "dex" : math.floor((int(request.form["dex"]) - 10)/2),
@@ -323,7 +323,7 @@ def update_char(id):
             if prof in request.form:
                 proficiencies[prof_section][prof] = request.form[prof]
     
-    print("\n___Character_con proficiencies___ ->",proficiencies)
+    # print("\n___Character_con proficiencies___ ->",proficiencies)
     
     
     attributes = {
