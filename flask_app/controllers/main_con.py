@@ -4,6 +4,8 @@ from flask_app.models import item
 from flask_app.models import character
 from flask_app.models import user
 from flask_app.models import char_class
+from flask_app.models import char_race
+
 
 
 
@@ -68,8 +70,9 @@ def character_sheet():
         a_class.armor_weapon_prof = armor_weapons
         # print(f"\n___{a_class.name} Saves: {savs}")    
         # print(f"\n___{a_class.name} Skills: {skills}")
-        # print(f"\n___{a_class.name} Armor and Weapons: {armor_weapons}")            
-    return render_template("item_dashboard.html", items=items, characters = characters, user = logged_in_user, classes = classes)
+        # print(f"\n___{a_class.name} Armor and Weapons: {armor_weapons}")
+        races = char_race.Char_race.get_all()            
+    return render_template("item_dashboard.html", races = races, items=items, characters = characters, user = logged_in_user, classes = classes)
     
 @app.route("/dashboard/<type>")
 def order_items(type):

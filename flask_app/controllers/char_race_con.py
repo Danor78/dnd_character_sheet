@@ -28,9 +28,11 @@ def new_race():
     
     skill_prof = char_race.race_prof['skill_prof']
     
+    source = char_race.race_prof['source']
     
     
-    return render_template("new_race.html", skill_prof = skill_prof, race_lang = race_lang, armor = armorType_list, weapons = weaponType_list, descriptions_num = descriptions_num,
+    
+    return render_template("new_race.html", source = source, skill_prof = skill_prof, race_lang = race_lang, armor = armorType_list, weapons = weaponType_list, descriptions_num = descriptions_num,
                         racial_num = racial_num, user=logged_in_user)
 
 @app.route("/create_race", methods=['POST'])
@@ -111,6 +113,7 @@ def create_race():
                     racial_profs[prof]= request.form[prof]
 
     data['racial_profs'] = json.dumps(racial_profs)
+    data['source'] = request.form['source']
     # print("\n___racial_profs___")
     # pprint(data['racial_profs'], indent=2, depth=3)
     
@@ -188,8 +191,119 @@ def edit_race(id):
             "stealth_prof" : "Stealth",
             "survival_prof" : "Survival",
             },
+        "source" : {
+            "hmb" : "HomeBrew",
+            "AAG" : "Astral Adventures Guide",
+            "BGDA" : "Balder's Gate: Descent into Avernus",
+            "DMG" : "Dungeon Master's Guide",
+            "EGW" : "Explorer's Guide to WildeMount",
+            "ERLW" : "Eberron Rising from the Last War",
+            "IDRF" : "Icewind Dale: Rime of the Frostmaiden",
+            "JTRC" : "Journeys through the Radiant Citadel",
+            "MTOF" : "Mordenkainen's Tome of Foes",
+            "OOTA" : "Out of the Abyss",
+            "PHB" : "Player's Handbook",
+            "SCAG" : "Sword Coast Adventures Guide",
+            "SCC" : "Strixhaven: A Curriculum of Chaos",
+            "TOA" : "Tomb of Annihilatioin",
+            "VGM" : "Volo's Guide to Monsters",
+            "VRGR" : "Van Richten's Guide to Ravenloft",
+            "WBTW" : "The Wild Beyond the Witchlight",
+            "WDH" : "WaterDeep: Dragon Heist",
+            "WDMM" : "WaterDeep: Dungeon of the Mad Mage",
+            "XGE" : "Xanathar's Guide to Everything",
+            "TCE" : "Tasha's Cauldron of Everything"
+        }
     }
     
     return render_template("edit_race.html", edit_var = edit_var, a_race = a_race, armor = armorType_list, weapons = weaponType_list, user=logged_in_user)
+
+@app.route('/update_race', methods=['POST'])
+def update_race():
+    if "user_id" not in session:
+        print("\n___<<< User not logged in >>>___")
+        return redirect("/")
+    logged_in_user =user.User.get_by_id(session["user_id"])
+    # print("\n___Race Request.form")
+    # pprint(request.form, indent=3, depth=3)
+    data = {
+        "id" : request.form["id"],
+        "user_id" : logged_in_user.id,
+        "name" : request.form["name"],
+        "speed" : request.form["speed"],
+    }
+    
+    descriptions = {}
+    nums = request.form['descriptions_num']
+    # print("\n___Desc nums is___",type(nums))
+    descriptions['number_of'] = int(nums)
+    tnums = int(nums) + 1
+    for num in range(1,tnums):
+        heading = "description_heading_" + str(num)
+        descript = "description_" + str(num)
+        if heading in request.form:
+            descriptions[heading] = request.form[heading]
+        if descript in request.form:
+            descriptions[descript] = request.form[descript]
+    
+    data['description'] = json.dumps(descriptions)
+    
+    racial_traits = {}
+    nums = request.form['racial_num']
+    # print("\n___racial nums is___",type(nums))
+    racial_traits['number_of'] = int(nums)
+    tnums = int(nums) + 1
+    for num in range(1,tnums):
+        heading = "racial_heading_" + str(num)
+        racial_trait = "racial_trait_" + str(num)
+        if heading in request.form:
+            racial_traits[heading] = request.form[heading]
+        if racial_trait in request.form:
+            racial_traits[racial_trait] = request.form[racial_trait]
+    
+    for i in range(1,4):
+        lang_prof = "lang_prof_" + str(i)
+        if lang_prof in request.form:
+            if request.form[lang_prof] != 'null' and request.form[lang_prof] != "":
+                racial_traits[lang_prof] = request.form[lang_prof]
+    
+    data['racial_traits'] = json.dumps(racial_traits)
+    
+    attrib = [
+        "str",
+        "dex",
+        "con",
+        "int",
+        "wis",
+        "cha"
+    ]
+    racial_attrib = {}
+    for atb in attrib:
+        racial_attrib[atb] = request.form[atb]
+        
+    data['racial_attrib'] = json.dumps(racial_attrib)
+    
+    racial_profs = {}
+    for prof_type in char_race.race_prof:
+        # print("\n prof_type in char_race.race_prof", prof_type)
+        for prof in char_race.race_prof[prof_type]:
+            # print("\n Prof in prof_type ", prof)
+            if prof in request.form:
+                if request.form[prof] == 'on':
+                    racial_profs[prof] = prof
+                elif request.form[prof] != 'null':
+                    racial_profs[prof]= request.form[prof]
+
+    data['racial_profs'] = json.dumps(racial_profs)
+    data['source'] = request.form['source']
+    # print("\n___racial_profs___")
+    # pprint(data['racial_profs'], indent=2, depth=3)
+    
+    char_race.Char_race.update(data)
+    
+    return redirect('/dashboard')
+    
+    
+    pass
 
     

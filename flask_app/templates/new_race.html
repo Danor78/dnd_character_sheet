@@ -190,16 +190,24 @@
                         </div>
                     </div>
                 </div>
-                <div id="racial_section_1">
+                <div id="racial_section_1" class="border-bottom border-dark">
                     <input type="hidden" name="racial_num" id="racial_num" value="{{racial_num}}">
                     <label for="racial_heading_1"><strong>Racial Heading</strong></label>
                     <input type="text" name="racial_heading_1">
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center mb-3">
                         <label for="racial_trait_1"><strong>Racial Trait:</strong></label>
                         <textarea name="racial_trait_1" id="racial_1" cols="63" rows="5"></textarea>
                     </div>
                 </div>
                 <a onclick="add_racial_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add Racial Trait</a>
+                <div class="mb-3">
+                    <label for="source"><strong>Source Material:</strong></label><br>
+                    <select name="source" id="">
+                        {% for src in source %}
+                        <option value="{{src}}">{{source[src]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
             <input type="submit" class="btn btn-primary" value="Create Race">
         </form>

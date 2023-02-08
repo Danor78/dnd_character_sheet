@@ -57,7 +57,7 @@ item_src = {
     "ERLW" : "Eberron Rising from the Last War",
     "IDRF" : "Icewind Dale: Rime of the Frostmaiden",
     "JTRC" : "Journeys through the Radiant Citadel",
-    "MTF" : "Mordenkainen's Tome of Foes",
+    "MTOF" : "Mordenkainen's Tome of Foes",
     "OOTA" : "Out of the Abyss",
     "PHB" : "Player's Handbook",
     "SCAG" : "Sword Coast Adventures Guide",

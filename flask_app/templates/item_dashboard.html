@@ -55,6 +55,33 @@
         {% endif %}
     </table>
 
+    <h3><strong>Available Races</strong></h3>
+    <table class="table table-hover border border-dark">
+        <tr style="position: sticky; top: 0px; background-color: white;">
+            <th>Name</th>
+            <th>Source</th>
+            <th>Created by</th>
+            <th>Actions</th>
+        </tr>
+        {% if races %}
+        {% for race in races %}
+        <tr>
+            <td><a href="/show_race/{{race.id}}">{{race.name}}</a></td>
+            <td>{{race.source}}</td>
+            <td>{{race.user.first_name}}</td>
+            <td>
+                <a href="/edit_race/{{race.id}}" style="height: 40px;">Edit</a>
+                <span> | </span>
+                <a href="/delete_race/{{race.id}}" style="height: 40px;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+
+
+
     <h3><strong>Available Classes</strong></h3>
     <table class="table table-hover border border-dark">
         <tr style="position: sticky; top: 0px; background-color: white;">

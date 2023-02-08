@@ -119,14 +119,37 @@ race_prof = {
             "primordial_lang_prof" : "Primordial",
             "sylvan_lang_prof" : "Sylvan",
             "undercommon_lang_prof" : "Undercommon"
-        }
+        },
+    "source" : {
+        "hmb" : "HomeBrew",
+        "AAG" : "Astral Adventures Guide",
+        "BGDA" : "Balder's Gate: Descent into Avernus",
+        "DMG" : "Dungeon Master's Guide",
+        "EGW" : "Explorer's Guide to WildeMount",
+        "ERLW" : "Eberron Rising from the Last War",
+        "IDRF" : "Icewind Dale: Rime of the Frostmaiden",
+        "JTRC" : "Journeys through the Radiant Citadel",
+        "MTOF" : "Mordenkainen's Tome of Foes",
+        "OOTA" : "Out of the Abyss",
+        "PHB" : "Player's Handbook",
+        "SCAG" : "Sword Coast Adventures Guide",
+        "SCC" : "Strixhaven: A Curriculum of Chaos",
+        "TOA" : "Tomb of Annihilatioin",
+        "VGM" : "Volo's Guide to Monsters",
+        "VRGR" : "Van Richten's Guide to Ravenloft",
+        "WBTW" : "The Wild Beyond the Witchlight",
+        "WDH" : "WaterDeep: Dragon Heist",
+        "WDMM" : "WaterDeep: Dungeon of the Mad Mage",
+        "XGE" : "Xanathar's Guide to Everything",
+        "TCE" : "Tasha's Cauldron of Everything"
+    }
 }
 
 class Char_race:
     DB="character_sheet"
     table_data = ["char_races", "name", "description", 
                 "racial_traits", "racial_attrib", "racial_profs", 
-                "speed", "created_at", "updated_at", "user_id"]
+                "speed", "source", "created_at", "updated_at", "user_id"]
     
     def __init__(self, data):
         self.id = data['id']
@@ -136,6 +159,7 @@ class Char_race:
         self.racial_attrib = json.loads(data['racial_attrib'])
         self.racial_profs = json.loads(data['racial_profs'])
         self.speed = data['speed']
+        self.source = data['source']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']

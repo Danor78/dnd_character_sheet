@@ -25,7 +25,7 @@
         <form action="/update_race" class="form" method="post">
             <input type="hidden" name="id" value="{{a_race.id}}">
             <label for="name"><strong>Name Of Race: </strong></label>
-            <input type="text" name="name">
+            <input type="text" name="name" value="{{a_race.name}}">
             <br>
             <div class="border-bottom border-dark mb-2">
                 <h3>Racial Description(s)</h3>
@@ -80,6 +80,7 @@
                             {% endwith %}
                             {% endfor %}
                     </div>
+                </div>
                     <div>
                         <label><strong>Select Racial Skill Proficiencies: </strong></label>
                         <div class="border-bottom border-dark mb-2">
@@ -166,8 +167,18 @@
                     {% endfor %}
                     {% endwith %}
                 </div>
-                <div>
-                    <a onclick="add_racial_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add Racial Trait</a>
+                <a onclick="add_racial_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add Racial Trait</a>
+                <div class="mb-3">
+                    <label for="source"><strong>Source Material:</strong></label><br>
+                    <select name="source" id="">
+                        {% for src in edit_var['source'] %}
+                        {% if src == a_race.source %}
+                        <option value="{{src}}" selected>{{edit_var['source'][src]}}</option>
+                        {% else %}
+                        <option value="{{src}}">{{edit_var['source'][src]}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <input type="submit" class="btn btn-primary" value="Create Race">
