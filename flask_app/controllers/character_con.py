@@ -5,6 +5,7 @@ from flask_app import app
 # from flask_app.models import armor
 from flask_app.models import character
 from flask_app.models import char_class
+from flask_app.models import char_race
 from flask_app.models import user
 from pprint import pprint
 
@@ -21,10 +22,11 @@ def add_character():
     logged_in_user =user.User.get_by_id(session["user_id"])
     print("\n___new character route____")
     # classes = char_class.Char_class.get_all()
-    classes = char_class.Char_class.dict_get_all()
+    classes = char_class.Char_class.get_all()
+    races = char_race.Char_race.get_all()
     # pprint(classes, indent= 3, depth=5)
     # print("classes are",classes)
-    return render_template("new_character.html", classes=classes, user = logged_in_user)
+    return render_template("new_character.html", races = races, classes=classes, user = logged_in_user)
 
 @app.route("/character_creation", methods=['POST'])
 def create_character():
@@ -76,122 +78,6 @@ def create_character():
     #     "experience_points" : 0
     # }
 
-    
-    # prof_dict ={
-    #     "savs" : 
-    #         ["str_sav_prof",
-    #         "dex_sav_prof",
-    #         "con_sav_prof",
-    #         "int_sav_prof",
-    #         "wis_sav_prof",
-    #         "cha_sav_prof"
-    #         ],
-    #     "skills" : 
-    #         ["acrobatics_prof",
-    #         "animal_handling_prof",
-    #         "arcana_prof",
-    #         "athletics_prof",
-    #         "deception_prof",
-    #         "history_prof",
-    #         "insight_prof",
-    #         "intimidation_prof",
-    #         "investigation_prof",
-    #         "medicine_prof",
-    #         "nature_prof",
-    #         "perception_prof",
-    #         "performance_prof",
-    #         "persuasion_prof",
-    #         "religion_prof",
-    #         "sleight_of_hand_prof",
-    #         "stealth_prof",
-    #         "survival_prof"],
-    #     "lang" :
-    #         ["common_lang",
-    #         "dwarvish_lang",
-    #         "Elvish_lang",
-    #         "giant_lang",
-    #         "gnomish_lang",
-    #         "goblin_lang",
-    #         "halfling_lang",
-    #         "orc_lang",
-    #         "abyssal_lang",
-    #         "celestial_lang",
-    #         "draconic_lang",
-    #         "deepspeech_lang",
-    #         "infernal_lang",
-    #         "primordial_lang",
-    #         "sylvan_lang",
-    #         "undercommon_lang"]
-    # }
-    # # {"lang": {}, "savs": {"dex_sav_prof": "prof", "int_sav_prof": "prof"}, "skills": {"nature_prof": "prof", "insight_prof": "prof", "stealth_prof": "prof", "investigation_prof": "prof"}}
-    # proficiencies ={}
-    # for prof_section in prof_dict:
-    #     proficiencies[prof_section] = {}
-        
-    #     for prof in prof_dict[prof_section]:
-    #         # print(f"prof: {prof} in {prof_section}")
-            
-    #         if prof in request.form:
-    #             proficiencies[prof_section][prof] = request.form[prof]
-    
-    # print("\n___Character_con proficiencies___ ->",proficiencies)
-    
-    
-    # attributes = {
-    #     "str" : [request.form["str"], mods["str"]],
-    #     "dex" : [request.form["dex"], mods["dex"]],
-    #     "con" : [request.form["con"], mods["con"]],
-    #     "int" : [request.form["int"], mods["int"]],
-    #     "wis" : [request.form["wis"], mods["wis"]],
-    #     "cha" : [request.form["cha"], mods["cha"]]
-    # }
-    
-    # savs ={
-    #     "str_sav_mod" : mods["str"],
-    #     "dex_sav_mod" : mods["dex"],
-    #     "con_sav_mod" : mods["con"],
-    #     "int_sav_mod" : mods["int"],
-    #     "wis_sav_mod" : mods["wis"],
-    #     "cha_sav_mod" : mods["cha"]
-    # }
-    
-    # skills = {
-    #     "acrobatics_mod" : mods["str"],
-    #     "animal_handling_mod" : mods["wis"],
-    #     "arcana_mod" : mods["int"],
-    #     "athletics_mod" : mods["str"],
-    #     "deception_mod" : mods["cha"],
-    #     "history_mod" : mods["int"],
-    #     "insight_mod" : mods["wis"],
-    #     "intimidation_mod" : mods["cha"],
-    #     "investigation_mod" : mods["int"],
-    #     "medicine_mod" : mods["wis"],
-    #     "nature_mod" : mods["int"],
-    #     "perception_mod" : mods["wis"],
-    #     "performance_mod" : mods["cha"],
-    #     "persuasion_mod" : mods["cha"],
-    #     "religion_mod" : mods["int"],
-    #     "sleight_of_hand_mod" : mods["dex"],
-    #     "stealth_mod" : mods["dex"],
-    #     "survival_mod" : mods["wis"]
-    # }
-    
-    # coin = {"plat" : 0, "gold" : 0, "silver" : 0, "copper" : 0, "elec" : 0}
-    
-    
-    # if 'perception_prof' in request.form:
-    #     data["passive_wisdom"] = math.floor((int(request.form["wis"]) - 10)/2) + 10 + 2
-    # else:
-    #     data["passive_wisdom"] = math.floor((int(request.form["wis"]) - 10)/2) + 10
-        
-    # data['attributes'] = json.dumps(attributes)
-    # data['proficiencies'] = json.dumps(proficiencies)
-    # data['savs'] = json.dumps(savs)
-    # data['skills'] = json.dumps(skills)
-    # data['coin'] = json.dumps(coin)
-    
-    
-    # character.Character.save(data)
     logged_in_user =user.User.get_by_id(session["user_id"])
     a_class = char_class.Char_class.get_class_by_id(int(session['character']['char_class']))
     char_dict = character.char_dict

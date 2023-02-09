@@ -38,39 +38,18 @@
                     <label for="char_name"><strong>Character Name:</strong></label>
                     <input type="text" name="char_name" class="mr-3"><br>
                     <label for="char_race" class="mt-2"><strong>Race: </strong></label>
-                    <select name="char_race" id="char_race" class="mr-3">
-                        <option value="human">Human</option>
-                        <option value="duergar_dwarf">Duergar Dwarf</option>
-                        <option value="hill_dwarf">Hill Dwarf</option>
-                        <option value="mountain_dwarf">Mountain Dwarf</option>
-                        <option value="sun_elf">Sun Elf</option>
-                        <option value="wood_elf">Wood Elf</option>
-                        <option value="dark_elf">Dark Elf</option>
-                        <option value="gold_dragonborn">Gold Dragonborn</option>
-                        <option value="silver_dragonborn">Silver Dragonborn</option>
-                        <option value="Copper_dragonborn">Copper Dragonborn</option>
-                        <option value="brass_dragonborn">Brass Dragonborn</option>
-                        <option value="bronze_dragonborn">Bronze Dragonborn</option>
-                        <option value="red_dragonborn">Red Dragonborn</option>
-                        <option value="black_dragonborn">Black Dragonborn</option>
-                        <option value="blue_dragonborn">Blue Dragonborn</option>
-                        <option value="green_dragonborn">Green Dragonborn</option>
-                        <option value="white_dragonborn">White Dragonborn</option>
-                        <option value="forest_gnome">Forest Gnome</option>
-                        <option value="rock_gnome">Rock Gnome</option>
-                        <option value="half_elf">Half Elf</option>
-                        <option value="half_orc">Half Orc</option>
-                        <option value="lightfoot_halfling">Lightfoot Halfling</option>
-                        <option value="Stout_halfling">Stout Halfling</option>
-                        <option value="tiefling">Tiefling</option>
+                    <select name="char_race" id="char_race" class="mr-3" onchange="display_race(this)" onclick="display_race(this)">
+                        <option value="null">Select Race</option>
+                        {% for race in races %}
+                        <option value="{{race.id}}">{{race.name}}</option>
+                        {% endfor %}
                     </select><br>
                     <label for="char_class"><strong>Class: </strong></label>
-                    <select name="char_class" id="char_class" class="mr-3" onchange="display_class(this)" >
+                    <select name="char_class" id="char_class" class="mr-3" onchange="display_class(this)" onclick="display_class(this)">
                         <option value="null">Select Class</option>
                         {% for class in classes %}
-                        <option value="{{class['id']}}">{{class['name']}}</option>
+                        <option value="{{class.id}}">{{class.name}}</option>
                         {% endfor %}
-                        
                     </select><br>
                     <label for="char_background"><strong>Background: </strong></label>
                     <select name="char_background" id="char_background">
@@ -120,9 +99,8 @@
                 </div>
                 <div class=" border border-dark " style="width: 500px;"> <!--Second box -->
                     <input type="hidden" name="chosen_class">
-                    <iframe src="" id="display_class" frameborder="0" style="border:none;width: 500px;height: 400px;">
-
-                    </iframe>
+                    <iframe src="" id="display_race" frameborder="0" ></iframe>
+                    <iframe src="" id="display_class" frameborder="0"></iframe>
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-3">

@@ -24,3 +24,12 @@ h1 {
     font-style: italic;
 
 }
+
+iframe {
+    border-style: double;
+    border-color: black;
+    border-width: 2px;
+    width: 490px;
+    height: 400px;
+    margin: 5px;
+}

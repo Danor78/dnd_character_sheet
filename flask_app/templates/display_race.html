@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='show_class.css') }}">
+
+</head>
+<body class="container">
+    {% if nav == "True"%}
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_character">Add Character</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <a class="text-light" href="/new_armor">New Armor Piece</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    <br><br><br>
+    <h1>Race Name: {{a_race.name}}</h1>
+    {% else %}
+    <br><br><br>
+    {% endif %}
+    {% for section in range(1,a_race.description['number_of'] + 1) %}
+    {% with heading = "description_heading_" + section|string %}
+    {% with description = "description_" + section|string %}
+    <h3>{{a_race.description[heading]}}</h3>
+    <p>{{a_race.description[description]}}</p>
+    {% endwith %}
+    {% endwith %}
+    {% endfor %}
+    <br>
+    <h1>{{a_race.name}} Traits</h1>
+    <div class="border-bottom border-dark"></div>
+    <p>
+    {% for section in range(1,a_race.racial_traits['number_of']|int + 1) %}
+    {% with name = "racial_heading_" + section|string %}
+    {% with racial_traits = "racial_trait_" + section|string %}
+    <strong>{{a_race.racial_traits[name]}}:</strong> {{a_race.racial_traits[racial_traits]}}<br>
+    {% endwith %}
+    {% endwith %}
+    {% endfor %}
+    </p>
+    <br>
+    <h1>{{a_race.name}} Attributes / Proficiencies</h1>
+    <div class="border-bottom border-dark"></div>
+    <p>
+        <strong>Attributes: </strong>{{racial_prof['attrib']}}<br>
+        <strong>Speed: </strong>{{racial_prof['speed']}} feet<br>
+        <strong>Languages: </strong>{{racial_prof['lang']}}<br>
+        <strong>Skills: </strong>{{racial_prof['skills']}}<br>
+        <strong>Weapons: </strong>{{racial_prof['weapons']}} {{racial_prof['weapon_profs']}}<br>
+        <strong>Armor: </strong>{{racial_prof['armor_profs']}}<br>
+        <strong>Source: </strong>{{racial_prof['source']}}<br>
+    </p>
+
+        
+
+
+
+
+
+
+
+
+
+
+    </p>
+</body>
+</html>

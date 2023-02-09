@@ -279,7 +279,8 @@ def update_race():
     ]
     racial_attrib = {}
     for atb in attrib:
-        racial_attrib[atb] = request.form[atb]
+        if request.form[atb] != '0' and request.form[atb] != "":
+            racial_attrib[atb] = request.form[atb]
         
     data['racial_attrib'] = json.dumps(racial_attrib)
     
@@ -303,7 +304,65 @@ def update_race():
     
     return redirect('/dashboard')
     
-    
-    pass
+@app.route("/display_race/<int:id>/<string:nav>")
+def display_race(id,nav):
+    a_race = char_race.Char_race.get_char_race_by_id(id)
 
+    loggedin_user = user.User.get_by_id(session['user_id'])
     
+    race_dict = char_race.race_prof
+    
+    racial_prof = {}
+    racial_prof['speed'] = a_race.speed
+    
+    racial_prof['attrib'] = ""
+    for atb in  race_dict['attrib']:
+        if atb in a_race.racial_attrib:
+            if a_race.racial_attrib[atb] != "0" and a_race.racial_attrib[atb] != "":
+                racial_prof['attrib'] += atb.title() + ': +' + str(a_race.racial_attrib[atb]) + ' / '
+    if racial_prof['attrib'] == "":
+        racial_prof['attrib'] = "None"
+    
+    racial_prof['lang'] = ""
+    for i in range(1,4):
+        lang = "lang_prof_" + str(i)
+        if lang in a_race.racial_traits:
+            racial_prof['lang'] += race_dict['lang_prof'][a_race.racial_traits[lang]] + ' / '
+    if racial_prof['lang'] == "":
+        racial_prof['lang'] = "None"
+    
+    racial_prof['skills'] = ""
+    for skill in race_dict['skill_prof']:
+        if skill in a_race.racial_profs:
+            racial_prof['skills'] += race_dict['skill_prof'][skill] + ' / '
+    if racial_prof['skills'] == "":
+        racial_prof['skills'] = "None"
+    
+    racial_prof['weapons'] = ""
+    for weapon in race_dict['weapon_prof']:
+        if weapon in a_race.racial_profs:
+            racial_prof['weapons'] += race_dict['weapon_prof'][weapon] + ' / '
+    # if racial_prof['weapons'] == "":
+    #     racial_prof['weapons'] = "None"
+        
+    racial_prof['weapon_profs'] = ""
+    for i in range(1,5):
+        weapon = "weapon_prof" + str(i)
+        if weapon in a_race.racial_profs:
+            racial_prof['weapon_profs'] += race_dict['weapon_type'][a_race.racial_profs[weapon]] + ' / '
+    if racial_prof['weapon_profs'] == "":
+        racial_prof['weapon_profs'] = "None"
+    
+    racial_prof['armor_profs'] = ""
+    for i in range(1,4):
+        armor = "armor_prof" + str(i)
+        if armor in a_race.racial_profs:
+            racial_prof['armor_profs'] += race_dict['armor_prof'][a_race.racial_profs[armor]] + ' / '
+    if racial_prof['armor_profs'] == "":
+        racial_prof['armor_profs'] = "None"
+    
+    racial_prof['source'] = race_dict['source'][a_race.source]
+
+    print("\n__nav is ___", nav)
+    
+    return render_template('display_race.html', racial_prof = racial_prof, a_race = a_race, nav = nav, user = loggedin_user)

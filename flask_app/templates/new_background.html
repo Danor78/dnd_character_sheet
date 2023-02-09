@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="container">
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_character">Add Character</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    <br><br><br>
+    <label for="name"><strong>Background Name: </strong></label>
+    <input type="text" name="name">
+    <br>
+    <textarea name="description" id="description" cols="63" rows="5"></textarea>
+    <br>
+    <h3>Background Skill Proficiencies</h3>
+    <div class="d-flex flex-wrap">
+        {% for skill in bkgrnd_prof['skill_prof'] %}
+        <div class="d-flex align-items-center mr-3">
+            <input type="checkbox" name="{{skill}}" class="mb-2 mr-2">
+            <label><strong>{{bkgrnd_prof['skill_prof'][skill]}} Proficiency</strong></label>
+        </div>
+        {% endfor %}
+    </div>
+    <label for="tool_prof"><strong>Tool Proficiency </strong></label>
+    <p>Select one type of : <br>
+        <select name="tool_type" id="tool_type">
+            <option value="null">None</option>
+            {% for tool in bkrnd_prof['tool_type'] %}
+            <option value="{{tool}}">{{bkrnd_prof['tool_type'][tool]}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        Or Select one Tool
+        <br>
+        <select name="tool" id="tool_type">
+            <option value="null">None</option>
+            {% for tool in tools %}
+            <option value="{{tool.id}}">{{tool.name}}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <br>
+    <label for="num_lang"><strong>Number of Languages to choose from:</strong></label>
+    <input type="number" name="num_lang" id="num_lang">
+    <br>
+    <div class="d-flex justify-content-center">
+        <label for="equiptment"><strong>Equipment: </strong></label>
+        <textarea name="equipment" id="equipment" cols="63" rows="5"></textarea>
+    </div>
+    
+
+
+</body>
+</html>

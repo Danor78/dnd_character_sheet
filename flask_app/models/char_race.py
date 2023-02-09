@@ -142,7 +142,15 @@ race_prof = {
         "WDMM" : "WaterDeep: Dungeon of the Mad Mage",
         "XGE" : "Xanathar's Guide to Everything",
         "TCE" : "Tasha's Cauldron of Everything"
-    }
+    },
+    "attrib" : [
+        "str",
+        "dex",
+        "con",
+        "int",
+        "wis",
+        "cha"
+    ]
 }
 
 class Char_race:
