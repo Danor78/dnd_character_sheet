@@ -1,12 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import armor
-from flask_app.models import weapon
-from flask_app.models import item
 from flask_app.models import user
 from flask_app.models import query_gen
 from pprint import pprint
-import math
-import random
 import json
 
 bkgrnd_prof = {
@@ -37,15 +32,33 @@ bkgrnd_prof = {
         "vehicle" : "Vehicle",
         "vehicle_land" : "Vehicle (Land)",
         "vehicle_water" : "Vehicle (water)"
-    }
+    },
+    "lang_prof" : {
+            "common_lang_prof" : "Common",
+            "dwarvish_lang_prof" : "Dwarvish",
+            "elvish_lang_prof" : "Elvish",
+            "giant_lang_prof" : "Giant",
+            "gnomish_lang_prof" : "Gnomish",
+            "goblin_lang_prof" : "Goblin",
+            "halfling_lang_prof" : "Halfling",
+            "orc_lang_prof" : "Orc",
+            "abyssal_lang_prof" : "Abyssal",
+            "celestial_lang_prof" : "Celestial",
+            "draconic_lang_prof" : "Draconic",
+            "deepspeech_lang_prof" : "Deepspeech",
+            "infernal_lang_prof" : "Infernal",
+            "primordial_lang_prof" : "Primordial",
+            "sylvan_lang_prof" : "Sylvan",
+            "undercommon_lang_prof" : "Undercommon"
+        }
     
 }
 
 
-class Background:
+class Char_Background:
     DB = "character_sheet"
     table_data = ["char_backgrounds", "name", "skill_prof", 
-                "tool_prof", "lang_prof", "equipment", "descriptions", 
+                "tool_prof", "lang_prof", "equipment", "description", 
                 "features", "suggested_char", "personality_traits", 
                 "ideals", "bonds", "flaws", "created_at", "updated_at", 
                 "user_id" ]
@@ -53,17 +66,17 @@ class Background:
     def __init__(self, data):
         self.id = data['id']
         self.name = data['name']
-        self.skill_prof = data['skill_prof']
-        self.tool_prof = data['tool_prof']
-        self.lang_prof = data['lang_prof']
+        self.skill_prof = json.loads(data['skill_prof'])
+        self.tool_prof = json.loads(data['tool_prof'])
+        self.lang_prof = json.loads(data['lang_prof'])
         self.equipment = data['equipment']
-        self.descriptions = data['descriptions']
-        self.features = data['features']
+        self.descriptions = json.loads(data['description'])
+        self.features = json.loads(data['features'])
         self.suggested_char = data['suggested_char']
-        self.personality_traits = data['personality_traits']
-        self.ideals = data['ideals']
-        self.bonds = data['bonds']
-        self.flaws = data['flaws']
+        self.personality_traits = json.loads(data['personality_traits'])
+        self.ideals = json.loads(data['ideals'])
+        self.bonds = json.loads(data['bonds'])
+        self.flaws = json.loads(data['flaws'])
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']

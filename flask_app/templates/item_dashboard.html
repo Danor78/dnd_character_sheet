@@ -15,6 +15,7 @@
         <a class="text-light" href="/new_character">Add Character</a>
         <a class="text-light" href="/new_class">Add Class</a>
         <a class="text-light" href="/new_race">Add Race</a>
+        <a class="text-light" href="/new_background">Add background</a>
         <a class="text-light" href="/new_item">New Item</a>
         <a class="text-light" href="/new_weapon">New Weapon</a>
         <a class="text-light" href="/new_armor">New Armor Piece</a>
@@ -79,9 +80,6 @@
         {% endif %}
     </table>
 
-
-
-
     <h3><strong>Available Classes</strong></h3>
     <table class="table table-hover border border-dark">
         <tr style="position: sticky; top: 0px; background-color: white;">
@@ -114,6 +112,34 @@
         {% endfor %}
         {% endif %}
     </table>
+    
+    <h3><strong>Available Backgrounds</strong></h3>
+    <table class="table table-hover border border-dark">
+        <tr style="position: sticky; top: 0px; background-color: white;">
+            <!-- <th>id</th> -->
+            <th>Background</th>
+            <th>skill Profs</th>
+            <th>Tool</th>
+            <th>Languages</th>
+            <th>Actions</th>
+        </tr>
+        {% if backgrounds %}
+        {% for bkgrnd in backgrounds %}
+        <tr>
+            <td><a href="/show_background/{{bkgrnd.id}}">{{bkgrnd.name}}</a></td>
+            <td>{{bkgrnd.skill_prof}}</td>
+            <td>{{bkgrnd.tool_prof}}</td>
+            <td>{{bkgrnd.lang_prof}}</td>
+            <td>
+                <a href="/edit_background/{{bkgrnd.id}}" style="height: 40px;">Edit</a>
+                <span> | </span>
+                <a href="/delete_background/{{bkgrnd.id}}" style="height: 40px;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
 
     <h3><strong>Items</strong></h3>
     <div class=" border border-dark " style="height: 250px; overflow: auto;">

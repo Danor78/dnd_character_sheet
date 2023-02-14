@@ -26,7 +26,7 @@ item_type = {
     "spellcasting_focus" : "Spellcasting Focus",
     "staff" : "staff",
     "tack_harness" : "Tack and Harness",
-    "tools" : "tools",
+    "tools" : "Tools",
     "trade_good" : "Trade Good:",
     "vehicle" : "Vehicle",
     "vehicle_land" : "Vehicle (Land)",
@@ -204,6 +204,19 @@ class Item:
         # print(f"List of item[] is; {many_items}")
         return many_items
     
+    @classmethod
+    def get_items_by_type(cls,type):
+        data = {"type" : type}
+        query = "SELECT * FROM items WHERE items.type = %(type)s"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        
+        items = []
+        for row in results:
+            items.append(cls(row))
+        
+        return items
+    
+    
     
     @classmethod
     def get_item_by_id(cls,id):
@@ -212,7 +225,6 @@ class Item:
         query = "SELECT * FROM items LEFT JOIN weapons ON items.weapon_id = weapons.id LEFT JOIN armors ON items.armor_id = armors.id WHERE items.id=%(id)s;"
         # make sure to call the connectToMySQL function with the schema you are targeting.
         result = connectToMySQL(cls.DB).query_db(query,data)
-       
         # print("\n____The Result of get item by id is:_____",result)
         # Create an empty list to append our instances of friends
         a_item = cls(result[0])

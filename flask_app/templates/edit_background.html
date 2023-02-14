@@ -19,17 +19,22 @@
         <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
     </div>
     <br><br><br>
-    <form action="/create_background" class="p-3" method="post" style="background-color: rgba(240, 255, 255, 0.568);">
+    <form action="/update_background" class="p-3" method="post" style="background-color: rgba(240, 255, 255, 0.568);">
+        <input type="hidden" name="id" value="{{background.id}}">
         <label for="name"><strong>Background Name: </strong></label>
-        <input type="text" name="name">
+        <input type="text" name="name" value="{{background.name}}">
         <br>
-        <textarea name="description" id="description" cols="63" rows="5"></textarea>
+        <textarea name="description" id="description" cols="63" rows="5">{{background.descriptions['description']}}</textarea>
         <br>
         <h3>Background Skill Proficiencies</h3>
         <div class="d-flex flex-wrap">
             {% for skill in bkgrnd_prof['skill_prof'] %}
             <div class="d-flex align-items-center mr-3">
+                {% if skill in background.skill_prof %}
+                <input type="checkbox" name="{{skill}}" class="mb-2 mr-2" checked>
+                {% else %}
                 <input type="checkbox" name="{{skill}}" class="mb-2 mr-2">
+                {% endif %}
                 <label><strong>{{bkgrnd_prof['skill_prof'][skill]}} Proficiency</strong></label>
             </div>
             {% endfor %}
@@ -39,7 +44,11 @@
             <select name="tool_type" id="tool_type">
                 <option value="null">None</option>
                 {% for tool in bkgrnd_prof['tool_type'] %}
+                {% if tool == background.tool_prof['type'] %}
+                <option value="{{tool}}" selected>{{bkgrnd_prof['tool_type'][tool]}}</option>
+                {% else %}
                 <option value="{{tool}}">{{bkgrnd_prof['tool_type'][tool]}}</option>
+                {% endif %}
                 {% endfor %}
             </select>
             <br><br>
@@ -47,115 +56,131 @@
             <select name="tool_1" id="tool">
                 <option value="null">None</option>
                 {% for tool in tools %}
+                {% if tool.id == background.tool_prof['tools'][0]|int %}
+                <option value="{{tool.id}}" selected>{{tool.name}}</option>
+                {% else %}
                 <option value="{{tool.id}}">{{tool.name}}</option>
+                {% endif %}
                 {% endfor %}
             </select>
             <select name="tool_2" id="tool">
                 <option value="null">None</option>
                 {% for tool in tools %}
+                {% if tool.id == background.tool_prof['tools'][1]|int %}
+                <option value="{{tool.id}}" selected>{{tool.name}}</option>
+                {% else %}
                 <option value="{{tool.id}}">{{tool.name}}</option>
+                {% endif %}
                 {% endfor %}
             </select>
             <select name="tool_3" id="tool">
                 <option value="null">None</option>
                 {% for tool in tools %}
+                {% if tool.id == background.tool_prof['tools'][2]|int %}
+                <option value="{{tool.id}}" selected>{{tool.name}}</option>
+                {% else %}
                 <option value="{{tool.id}}">{{tool.name}}</option>
+                {% endif %}
                 {% endfor %}
             </select>
         </p>
         <div>
             <label for="num_lang"><strong>Number of Languages to choose:</strong></label>
-            <input type="number" name="num_lang" id="num_lang" min="0" max="4" value="0" style="width: 45px;">
+            <input type="number" name="num_lang" id="num_lang" min="0" max="4" value="{{background.lang_prof['number_of']}}" style="width: 45px;">
         </div>
         <div class="d-flex flex-wrap">
             <p class="mr-2"><strong>Designate Specific Background Language Proficiencies: </strong></p>
             {% for lang_prof in bkgrnd_prof['lang_prof'] %}
             <div class="mr-3">
+                {% if lang_prof in background.lang_prof['lang_prof'] %}
+                <input type="checkbox" name="{{lang_prof}}" class="mb-2" checked>
+                {% else %}
                 <input type="checkbox" name="{{lang_prof}}" class="mb-2">
+                {% endif %}
                 <label><strong>{{bkgrnd_prof['lang_prof'][lang_prof]}}</strong></label>
             </div>
             {% endfor %}
         </div>
         <div class="d-flex align-items-center">
             <label for="equipment" class="mr-3"><strong>Equipment: </strong></label>
-            <textarea name="equipment" id="equipment" cols="63" rows="5"></textarea>
+            <textarea name="equipment" id="equipment" cols="63" rows="5">{{background.equipment}}</textarea>
         </div>
         <br>
         <div>
             <label for="feature_name"><strong>Feature Name:</strong></label>
-            <input type="text" name="feature_name">
+            <input type="text" name="feature_name" value="{{background.features['feature_name']}}">
         </div>  
         <div class="d-flex align-items-center">
             <label for="feature_desc" class="mr-3"><strong>Feature: </strong></label>
-            <textarea name="feature_desc" id="feature_desc" cols="63" rows="5"></textarea>
+            <textarea name="feature_desc" id="feature_desc" cols="63" rows="5">{{background.features['feature_desc']}}</textarea>
         </div>
         <br>
         <div class="border-bottom border-dark mb-2">
             <h3>Further Background Description(s)</h3><p style="color: rgb(44, 43, 43);margin-top: -10px;">(if needed)</p>
             <div id="description_section_1">
-                <input type="hidden" name="description_num" id="description_num" value="{{descriptions_num}}">
-                <!-- <label for="description_heading_1"><strong>Background Description Heading</strong></label>
-                <input type="text" name="description_heading_1">
+                <input type="hidden" name="description_num" id="description_num" value="{{background.descriptions['number_of']}}">
+                {% for i in range(1,background.descriptions['number_of']+1) %}
+                {% with heading = "description_heading_" + i|string %}
+                {% with description = "description_" + i|string %}
+                <label for="{{heading}}"><strong>Background Description Heading</strong></label>
+                <input type="text" name="{{heading}}" value="{{background.descriptions[heading]}}">
                 <div class="d-flex align-items-center">
-                    <label for="description_1"><strong>Background Description:</strong></label>
-                    <textarea name="description_1" id="race_description_1" cols="63" rows="5"></textarea>
-                </div> -->
+                    <label for="{{description}}"><strong>Background Description:</strong></label>
+                    <textarea name="{{description}}" id="description_1" cols="63" rows="5">{{background.descriptions[description]}}</textarea>
+                </div>
+                {% endwith %}
+                {% endwith %}
+                {% endfor %}
             </div>
             <a onclick="add_description_box()" href="#" class="btn btn-primary mt-3 mb-3" >Add another Background Description </a>
         </div>
         <div>
             <h3>Suggested Characteristics</h3>
-            <textarea name="suggested_char" id="feature_desc" cols="63" rows="5"></textarea>
+            <textarea name="suggested_char" id="feature_desc" cols="63" rows="5">{{background.suggested_char}}</textarea>
         </div>
         <div class="d-flex flex-wrap">
             <div>
                 <h4 class="ml-4">Personality Traits</h4>
                 <ol type="1">
-                    <li><input type="text" name="per_trait_1"></li>
-                    <li><input type="text" name="per_trait_2"></li>
-                    <li><input type="text" name="per_trait_3"></li>
-                    <li><input type="text" name="per_trait_4"></li>
-                    <li><input type="text" name="per_trait_5"></li>
-                    <li><input type="text" name="per_trait_6"></li>
-                    <li><input type="text" name="per_trait_7"></li>
-                    <li><input type="text" name="per_trait_8"></li>
+                    {% for i in range(1,9) %}
+                    {% with trait = "per_trait_" + i|string %}
+                    <li><input type="text" name="{{trait}}" value="{{background.personality_traits[trait]}}"></li>
+                    {% endwith %}
+                    {% endfor %}
                 </ol>
             </div>
             <div>
                 <h4 class="ml-4">Ideals</h4>
                 <ol type="1">
-                    <li><input type="text" name="ideal_1"></li>
-                    <li><input type="text" name="ideal_2"></li>
-                    <li><input type="text" name="ideal_3"></li>
-                    <li><input type="text" name="ideal_4"></li>
-                    <li><input type="text" name="ideal_5"></li>
-                    <li><input type="text" name="ideal_6"></li>
+                    {% for i in range(1,7) %}
+                    {% with trait = "ideal_" + i|string %}
+                    <li><input type="text" name="{{trait}}" value="{{background.ideals[trait]}}"></li>
+                    {% endwith %}
+                    {% endfor %}
                 </ol>
             </div>
             <div>
                 <h4 class="ml-4">Bonds</h4>
                 <ol type="1">
-                    <li><input type="text" name="bond_1"></li>
-                    <li><input type="text" name="bond_2"></li>
-                    <li><input type="text" name="bond_3"></li>
-                    <li><input type="text" name="bond_4"></li>
-                    <li><input type="text" name="bond_5"></li>
-                    <li><input type="text" name="bond_6"></li>
+                    {% for i in range(1,7) %}
+                    {% with trait = "bond_" + i|string %}
+                    <li><input type="text" name="{{trait}}" value="{{background.bonds[trait]}}"></li>
+                    {% endwith %}
+                    {% endfor %}
                 </ol>
             </div>
             <div>
                 <h4 class="ml-4">Flaws</h4>
                 <ol type="1">
-                    <li><input type="text" name="flaw_1"></li>
-                    <li><input type="text" name="flaw_2"></li>
-                    <li><input type="text" name="flaw_3"></li>
-                    <li><input type="text" name="flaw_4"></li>
-                    <li><input type="text" name="flaw_5"></li>
-                    <li><input type="text" name="flaw_6"></li>
+                    {% for i in range(1,7) %}
+                    {% with trait = "flaw_" + i|string %}
+                    <li><input type="text" name="{{trait}}" value="{{background.flaws[trait]}}"></li>
+                    {% endwith %}
+                    {% endfor %}
                 </ol>
             </div>
         </div>
-        <input type="submit" class="btn btn-primary" value="Create Background">
+        <input type="submit" class="btn btn-primary" value="Update Background">
     </form>
     <script src="../static/new_background.js"></script>
 

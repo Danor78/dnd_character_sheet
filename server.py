@@ -7,6 +7,8 @@ from flask_app.controllers import character_con
 from flask_app.controllers import char_class_con
 from flask_app.controllers import user_con
 from flask_app.controllers import char_race_con
+from flask_app.controllers import char_background_con
+
 
 
 if __name__ == "__main__":
