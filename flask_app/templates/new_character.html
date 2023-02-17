@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- <html lang="en"> -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +21,7 @@
     <br><br><br>
     <h1 class="text-center">Enter New Character</h1>
     <div class="container" id="columns_container">
-        <div >
+        <div>
             {% with messages = get_flashed_messages(category_filter=["char_input"]) %}
             {% if messages %}
             {% for message in messages %}
@@ -30,11 +30,11 @@
             {% endif %}
             {% endwith %}
         </div>
-        <form action="/character_creation" class="border border-dark p-3" method="post" id="character_form">
+        <form action="/new_character_part2" class="border border-dark p-3" method="post" id="character_form">
             <input type="hidden" name="user_id" value="{{session['user_id']}}">
             <input type="hidden" name="classes" id="classes" value="{{classes}}">
-            <div class="row_container d-flex">
-                <div id="row_1" class="border border-dark mr-2 p-2">
+            <div class="row_container d-flex flex-wrap">
+                <div class=" mr-2 p-2 box">
                     <label for="char_name"><strong>Character Name:</strong></label>
                     <input type="text" name="char_name" class="mr-3"><br>
                     <label for="char_race" class="mt-2"><strong>Race: </strong></label>
@@ -52,57 +52,38 @@
                         {% endfor %}
                     </select><br>
                     <label for="char_background"><strong>Background: </strong></label>
-                    <select name="char_background" id="char_background">
-                        <option value="acolyte">Acolyte</option>>
-                        <option value="charlatan">Charlatan</option>>
-                        <option value="criminal">Criminal</option>>
-                        <option value="entertainer">Entertainer</option>>
-                        <option value="folk_hero">Folk Hero</option>>
-                        <option value="guild_artisan">Build Artisan</option>>
-                        <option value="hermit">Hermit</option>>
-                        <option value="noble">Noble</option>>
-                        <option value="outlander">Outlander</option>>
-                        <option value="sailor">Sailor</option>>
-                        <option value="soldier">Soldier</option>>
-                        <option value="urchin">Urchin</option>>
+                    <select name="char_background" id="char_background" class="mr-3" onchange="display_background(this)" onclick="display_background(this)">
+                        <option value="null">Select Background</option>
+                        {% for background in backgrounds %}
+                        <option value="{{background.id}}">{{background.name}}</option>
+                        {% endfor %}
                     </select>
                     <br>
+                    <input type="hidden" id="alignment" value="{{alignment}}">
                     <label for="char_alignment" class="mr-2"><strong>Alignment: </strong></label>
-                    <select name="char_alignment" id="char_alignment">
-                        <option value="law_good">Lawful Good</option>>
-                        <option value="law_neutral">Lawful Neutral</option>>
-                        <option value="law_evil">Lawful Evil</option>>
-                        <option value="neut_good">Neutral Good</option>>
-                        <option value="neut_neutral">Neutral Neutral</option>>
-                        <option value="neut_evil">Neutral Evil</option>>
+                    <select name="char_alignment" id="char_alignment" onchange="display_alignment(this)" onclick="display_alignment(this)">
+                        <option value ="definition">Select One</option>
+                        <option value ="lawful_good">Lawful Good</option>
+                        <option value="Lawful_neutral">Lawful Neutral</option>>
+                        <option value="lawful_evil">Lawful Evil</option>>
+                        <option value="neutral_good">Neutral Good</option>>
+                        <option value="neutral">Neutral Neutral</option>>
+                        <option value="neutral_evil">Neutral Evil</option>>
                         <option value="chaotic_good">Chaotic Good</option>>
                         <option value="chaotic_neutral">Chaotic Neutral</option>>                                    
                         <option value="chaotic_evil">Chotic Evil</option>>                                    
                     </select>
-                    <br>
-                    <div class="d-flex  align-items-center mb-2">
-                        <label for="personality_traits" >Personality Traits: </label>
-                        <textarea name="personality_traits" class="mr-2" id="personality_traits" cols="43" rows="5"></textarea>
-                    </div>
-                    <div class="d-flex  align-items-center mb-2">
-                        <label for="ideal" class="mr-1">Ideal: </label>
-                        <textarea name="ideal" class="mr-2" id="ideal" cols="43" rows="5"></textarea>
-                    </div>
-                    <div class="d-flex  align-items-center mb-2">
-                        <label for="bond" class="mr-1">Bond: </label>
-                        <textarea name="bond" class="mr-2" id="bond" cols="43" rows="5"></textarea>
-                    </div>
-                    <div class="d-flex  align-items-center mb-2">
-                        <label for="flaw" class="mr-1">Flaw: </label>
-                        <textarea name="flaw" class="mr-1" id="flaw" cols="43" rows="5"></textarea>
+                    <p>Alignment Definition</p>
+                    <div id="alignment_box" class="border border-dark border-double">
+                        <p class="alignment_desc"></p>
                     </div>
                 </div>
-                <div class=" border border-dark " style="width: 500px;"> <!--Second box -->
-                    <input type="hidden" name="chosen_class">
-                    <iframe src="" id="display_race" frameborder="0" ></iframe>
-                    <iframe src="" id="display_class" frameborder="0"></iframe>
+                    <iframe src="" id="display_race" frameborder="0"></iframe>
                 </div>
-            </div>
+                <div class="d-flex flex-wrap">
+                    <iframe src="" id="display_class" frameborder="0" ></iframe>
+                    <iframe src="" id="display_background" frameborder="0"></iframe>
+                </div>
             <div class="d-flex justify-content-center mt-3">
                 <input type="submit" class="btn btn-primary" value="Selecting Attributes">
             </div>

@@ -6,7 +6,7 @@ from flask_app.models import user
 from flask_app.models import char_class
 from flask_app.models import char_race
 from flask_app.models import char_background
-
+from flask_app.models.cs_lib import cs_lib
 
 
 
@@ -75,6 +75,13 @@ def character_sheet():
         races = char_race.Char_race.get_all()
         
     backgrounds = char_background.Char_Background.get_all()
+    
+    bkgrnd_prof = {
+        "skill_prof" : cs_lib['skill_prof'],
+        "tool_type" : cs_lib['tool_type'],
+        "lang_prof" : cs_lib['lang_prof']
+    }
+    
     for bckgrnd in backgrounds:
         tmp = ""
         for skill in bckgrnd.skill_prof:
@@ -84,7 +91,7 @@ def character_sheet():
         print("\n__bckgrnd.tool_prof__", bckgrnd.tool_prof)
         tmp = ""
         if bckgrnd.tool_prof['type'] != "null":
-            tmp = "Tool type: " + char_background.bkgrnd_prof['tool_type'][bckgrnd.tool_prof['type']] + " | "
+            tmp = "Tool type: " + bkgrnd_prof['tool_type'][bckgrnd.tool_prof['type']] + " | "
         tmp2 = ""
         for id in bckgrnd.tool_prof['tools']:
             if id != '0':
@@ -104,12 +111,11 @@ def character_sheet():
         if bckgrnd.lang_prof['lang_prof']:
             tmp += "Proficient Languages: "
             for lang in bckgrnd.lang_prof['lang_prof']:
-                tmp += char_background.bkgrnd_prof['lang_prof'][lang] + " / "
+                tmp += bkgrnd_prof['lang_prof'][lang] + " / "
         if tmp == "":
             tmp = "None"
         bckgrnd.lang_prof = tmp
-        
-            
+                    
     return render_template("item_dashboard.html", backgrounds = backgrounds, races = races, items=items, characters = characters, 
             user = logged_in_user, classes = classes)
     

@@ -1,15 +1,12 @@
 from flask import render_template, redirect, request, session
 from flask_app import app
-# from flask_app.models import item
-# # from flask_app.models import weapon
-# from flask_app.models import armor
 from flask_app.models import character
 from flask_app.models import char_class
 from flask_app.models import char_race
+from flask_app.models import char_background
+from flask_app.models import cs_lib
 from flask_app.models import user
 from pprint import pprint
-
-
 import math
 import json
 
@@ -24,12 +21,22 @@ def add_character():
     # classes = char_class.Char_class.get_all()
     classes = char_class.Char_class.get_all()
     races = char_race.Char_race.get_all()
+    backgrounds = char_background.Char_Background.get_all()
+    alignment = json.dumps(cs_lib.cs_lib['alignment_def'])
+    
     # pprint(classes, indent= 3, depth=5)
     # print("classes are",classes)
-    return render_template("new_character.html", races = races, classes=classes, user = logged_in_user)
+    return render_template("new_character.html", alignment = alignment, backgrounds = backgrounds, races = races, classes=classes, user = logged_in_user)
 
-@app.route("/character_creation", methods=['POST'])
-def create_character():
+    
+
+
+# @app.route("/character_creation", methods=['POST'])
+# def create_character():
+    
+    
+@app.route('/new_character_part2', methods=['POST'])
+def newCharacter_part2():
     if "user_id" not in session:
         print("\n___<<< User not logged in >>>___")
         return redirect("/")
@@ -52,10 +59,6 @@ def create_character():
         "char_class" : request.form["char_class"],
         "char_background" : request.form["char_background"],
         "char_alignment" : request.form["char_alignment"],
-        "personality_traits" : request.form["personality_traits"],
-        "ideals" : request.form["ideal"],
-        "bonds" : request.form["bond"],
-        "flaws" : request.form["flaw"],
         "char_level" : 1,
         "prof_bonus" : 2,
         "inspiration" : 0
@@ -79,10 +82,22 @@ def create_character():
     # }
 
     logged_in_user =user.User.get_by_id(session["user_id"])
-    a_class = char_class.Char_class.get_class_by_id(int(session['character']['char_class']))
-    char_dict = character.char_dict
+    a_class = char_class.Char_class.get_class_by_id(int(request.form["char_class"]))
+    a_race = char_race.Char_race.get_char_race_by_id(int(request.form["char_race"]))
+    a_background = char_background.Char_Background.get_char_background_by_id(int(request.form['char_background']))
+    char_dict = cs_lib.cs_lib['char_dict']
+    
+    skill_profs = []
+    for skill in a_background:
+        if skill not in skill_profs:
+            skill_profs.append(skill)
+        
+    
+    
+    
+    
     # print("\n ___ session['character']___", session['character'])
-    return  render_template("add_character_2.html", char_dict= char_dict, a_class = a_class, user = logged_in_user)
+    return  render_template("add_character_2.html", a_race = a_race, a_background = a_background, char_dict= char_dict, a_class = a_class, user = logged_in_user)
 
 @app.route("/export_char/<int:id>") 
 def export_char(id):

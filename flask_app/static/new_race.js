@@ -1,7 +1,7 @@
 
 function add_racial_box(){
     console.log("add_racial called")
-    org_div = document.getElementById("racial_section_1")
+    org_div = document.getElementById("racial_section")
     racial_num = parseInt(document.querySelector("#racial_num").value) + 1;
     console.log("racial_num", racial_num);
     console.log("racial_num", typeof(racial_num));

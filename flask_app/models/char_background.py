@@ -4,57 +4,6 @@ from flask_app.models import query_gen
 from pprint import pprint
 import json
 
-bkgrnd_prof = {
-    "skill_prof" : {
-        "acrobatics_prof" : "Acrobatics",
-        "animal_handling_prof" : "Animal Handling",
-        "arcana_prof" : "Arcana",
-        "athletics_prof" : "Athletics",
-        "deception_prof" : "Deception",
-        "history_prof" : "History",
-        "insight_prof" : "Insight",
-        "intimidation_prof" : "Intimidation",
-        "investigation_prof" : "Investigation",
-        "medicine_prof" : "Medicine",
-        "nature_prof" : "Nature",
-        "perception_prof" : "Perception",
-        "performance_prof" : "Performance",
-        "persuasion_prof" : "Persuasion",
-        "religion_prof" : "Religion",
-        "sleight_of_hand_prof" : "Sleight of Hand",
-        "stealth_prof" : "Stealth",
-        "survival_prof" : "Survival",
-        },
-    "tool_type" : {
-        "artisans_tools" : "Artisan's Tools",
-        "gaming_set" : "Gaming Set",
-        "instrument" : "Instrument",
-        "vehicle" : "Vehicle",
-        "vehicle_land" : "Vehicle (Land)",
-        "vehicle_water" : "Vehicle (water)"
-    },
-    "lang_prof" : {
-            "common_lang_prof" : "Common",
-            "dwarvish_lang_prof" : "Dwarvish",
-            "elvish_lang_prof" : "Elvish",
-            "giant_lang_prof" : "Giant",
-            "gnomish_lang_prof" : "Gnomish",
-            "goblin_lang_prof" : "Goblin",
-            "halfling_lang_prof" : "Halfling",
-            "orc_lang_prof" : "Orc",
-            "abyssal_lang_prof" : "Abyssal",
-            "celestial_lang_prof" : "Celestial",
-            "draconic_lang_prof" : "Draconic",
-            "deepspeech_lang_prof" : "Deepspeech",
-            "infernal_lang_prof" : "Infernal",
-            "primordial_lang_prof" : "Primordial",
-            "sylvan_lang_prof" : "Sylvan",
-            "undercommon_lang_prof" : "Undercommon"
-        }
-    
-}
-
-
 class Char_Background:
     DB = "character_sheet"
     table_data = ["char_backgrounds", "name", "skill_prof", 

@@ -112,7 +112,6 @@
         {% endfor %}
         {% endif %}
     </table>
-    
     <h3><strong>Available Backgrounds</strong></h3>
     <table class="table table-hover border border-dark">
         <tr style="position: sticky; top: 0px; background-color: white;">
@@ -126,7 +125,7 @@
         {% if backgrounds %}
         {% for bkgrnd in backgrounds %}
         <tr>
-            <td><a href="/show_background/{{bkgrnd.id}}">{{bkgrnd.name}}</a></td>
+            <td><a href="/show_background/{{bkgrnd.id}}/True">{{bkgrnd.name}}</a></td>
             <td>{{bkgrnd.skill_prof}}</td>
             <td>{{bkgrnd.tool_prof}}</td>
             <td>{{bkgrnd.lang_prof}}</td>

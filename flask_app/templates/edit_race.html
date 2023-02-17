@@ -70,7 +70,7 @@
                             <select name="{{lang_prof}}" id="" class="mb-3 mr-2 ml-2">
                                 <option value="null">Nothing</option>
                                 {% for lang in edit_var['lang_prof'] %}
-                                {% if lang == a_race.racial_traits[lang_prof] %}
+                                {% if lang == a_race.racial_traits['lang_prof'][lang_prof] %}
                                 <option value="{{lang}}" selected>{{edit_var['lang_prof'][lang]}}</option>
                                 {% else %}
                                 <option value="{{lang}}">{{edit_var['lang_prof'][lang]}}</option>
@@ -87,7 +87,7 @@
                             <div class="d-flex flex-wrap">
                                 {% for skill in edit_var['skill_prof'] %}
                                 <div class="d-flex align-items-center mr-3">
-                                    {% if skill in a_race.racial_profs %}
+                                    {% if skill in a_race.racial_profs['skill_prof'] %}
                                     <input type="checkbox" name="{{skill}}" class="mb-2 mr-2" checked>
                                     {% else %}
                                     <input type="checkbox" name="{{skill}}" class="mb-2 mr-2">
@@ -105,7 +105,7 @@
                         <div class="d-flex flex-wrap border-bottom border-dark mb-3">
                             {% for prof in edit_var['weapon_prof'] %}
                             <div class="d-flex">
-                                {% if prof in a_race.racial_profs %}
+                                {% if prof in a_race.racial_profs['weapon_profs']['weaponTypeProf'] %}
                                 <input type="checkbox" name="{{prof}}" class="mb-2 mr-2" value="simple_weapons_prof" checked>
                                 {% else %}
                                 <input type="checkbox" name="{{prof}}" class="mb-2 mr-2" value="simple_weapons_prof">
@@ -118,11 +118,11 @@
                             <div  class="mb-2 mr-2">
                                 <select name="{{name}}" id="">
                                     <option value="null">Nothing</option>
-                                    {% for prof in weapons %}
-                                    {% if prof == a_race.racial_profs[name] %}
-                                    <option value="{{prof}}" selected>{{weapons[prof]}}</option>
+                                    {% for prof in edit_var['weapon_type'] %}
+                                    {% if prof == a_race.racial_profs['weapon_profs']['weapon_prof'][name] %}
+                                    <option value="{{prof}}" selected>{{edit_var['weapon_type'][prof]}}</option>
                                     {% else %}
-                                    <option value="{{prof}}">{{weapons[prof]}}</option>
+                                    <option value="{{prof}}">{{edit_var['weapon_type'][prof]}}</option>
                                     {% endif %}
                                     {% endfor %}
                                 </select>
@@ -137,11 +137,11 @@
                             <div class="mb-2 mr-2">
                                 <select name="{{name}}" id="">
                                     <option value="null">Nothing</option>
-                                    {% for prof in armor %}
-                                    {% if prof == a_race.racial_profs[name] %}
-                                    <option value="{{prof}}" selected>{{armor[prof]}}</option>
+                                    {% for prof in edit_var['armor_prof'] %}
+                                    {% if prof == a_race.racial_profs['armor_prof'][name] %}
+                                    <option value="{{prof}}" selected>{{edit_var['armor_prof'][prof]}}</option>
                                     {% else %}
-                                    <option value="{{prof}}">{{armor[prof]}}</option>
+                                    <option value="{{prof}}">{{edit_var['armor_prof'][prof]}}</option>
                                     {% endif %}
                                     {% endfor %}
                                 </select>
@@ -150,8 +150,8 @@
                             {% endfor %}
                         </div>
                     </div>
-                <div id="racial_section_1">
-                    <input type="hidden" name="racial_num" id="racial_num" value="{{a_race.description['number_of']}}">
+                <div id="racial_section">
+                    <input type="hidden" name="racial_num" id="racial_num" value="{{a_race.racial_traits['number_of']}}">
                     {% with num = a_race.description['number_of']%}
                     {% for section in range(1,a_race.racial_traits['number_of'] + 1) %}
                     {% with heading = "racial_heading_" + section|string %}

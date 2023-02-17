@@ -28,8 +28,27 @@ h1 {
 iframe {
     border-style: double;
     border-color: black;
-    border-width: 2px;
+    border-width: 4px;
     width: 490px;
     height: 400px;
     margin: 5px;
+}
+
+.box {
+    border-style: double;
+    border-color: black;
+    border-width: 4px;
+    width: 490px;
+    height: 400px;
+    margin: 5px;
+}
+
+#alignment_box {
+    width: 440px;
+    height: 150px;
+    overflow:auto;
+}
+.alignment_desc {
+    
+    overflow:auto;
 }

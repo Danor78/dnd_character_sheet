@@ -41,18 +41,18 @@ function get_profs(){
     return profArray;
 }
 
-function get_classes() {
-    var classes = document.querySelector('#classes')
-    return classes
-}
+// function get_classes() {
+//     var classes = document.querySelector('#classes')
+//     return classes
+// }
 
-function display_class(element){
-    var id = element.value
-    var source = "/display_class" + String(id)
-    console.log("display class id: ", id)
-    document.querySelector("#display_class").setAttribute("src",source)
+// function display_class(element){
+//     var id = element.value
+//     var source = "/display_class" + String(id)
+//     console.log("display class id: ", id)
+//     document.querySelector("#display_class").setAttribute("src",source)
 
-}
+// }
 
 function populate_mods(){
     console.log("___populate mods called___")

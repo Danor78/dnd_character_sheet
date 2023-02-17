@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='show_class.css') }}">
+    
+</head>
+<body class="container">
+    {% if nav == "True"%}
+    <div class="d-flex justify-content-around align-items-center bg-primary" style="height:  60px;">
+        <a class="text-light" href="/dashboard">Show all Items</a>
+        <a class="text-light" href="/new_character">Add Character</a>
+        <a class="text-light" href="/new_class">Add Class</a>
+        <a class="text-light" href="/new_item">New Item</a>
+        <a class="text-light" href="/new_weapon">New Weapon</a>
+        <a class="text-light" href="/new_armor">New Armor Piece</a>
+        <p class="text-light mt-3"><strong>Logged in: {{user.first_name}}</strong> <a class="text-light ml-4" href="/logout">Logout</a></p>
+    </div>
+    {% endif %}
+    <br><br><br>
+    <h1>Background Name: {{background.name}}</h1>
+    <div class="border-bottom border-dark"></div>
+    <p>{{background.descriptions['description']}}</p>
+    <p>
+        {% if background.skill_prof %}
+        <strong>Skill Proficiencies: </strong>{{background.skill_prof}}<br>
+        {% endif %}
+        {% if background.lang_prof['number_of'] %}
+        <strong>Languages:  </strong>{{background.lang_prof['number_of']}}<br>
+        {% endif %}
+        {% if background.lang_prof['lang_prof'] %}
+        <strong>Languages:  </strong>{{background.lang_prof['lang_prof']}}<br>
+        {% endif %}
+        {% if background.tool_prof['type'] %}
+        <strong>Tool Proficiencies:  </strong>One type of {{background.tool_prof['type']}}<br>
+        {% endif %}
+        {% if background.tool_prof['tools'] %}
+        <strong>Tool Proficiencies:  </strong>{{background.tool_prof['tools']}}<br>
+        {% endif %}
+        {% if background.equipment %}
+        <strong>Equipment:  </strong>{{background.equipment}}<br>
+        {% endif %}
+    </p>
+    {% for section in range(1,background.descriptions['number_of'] + 1) %}
+    {% with heading = "description_heading_" + section|string %}
+    {% with description = "description_" + section|string %}
+    <h3>{{background.descriptions[heading]}}</h3>
+    <p>{{background.descriptions[description]}}</p>
+    {% endwith %}
+    {% endwith %}
+    {% endfor %}
+    <h3>Feature: {{background.features['feature_name']}}</h3>
+    <p>{{background.features['feature_desc']}}</p>
+    <h3>Suggested Characteristics</h3>
+    <p>{{background.suggested_char}}</p>
+    <div class="d-flex flex-wrap">
+        <div>
+            <h4 class="ml-4">Personality Traits</h4>
+            <ol type="1">
+                {% for i in range(1,9) %}
+                {% with trait = "per_trait_" + i|string %}
+                <li>{{background.personality_traits[trait]}}</li>
+                {% endwith %}
+                {% endfor %}
+            </ol>
+        </div>
+        <div>
+            <h4 class="ml-4">Ideals</h4>
+            <ol type="1">
+                {% for i in range(1,7) %}
+                {% with trait = "ideal_" + i|string %}
+                <li>{{background.ideals[trait]}}</li>
+                {% endwith %}
+                {% endfor %}
+            </ol>
+        </div>
+        <div>
+            <h4 class="ml-4">Bonds</h4>
+            <ol type="1">
+                {% for i in range(1,7) %}
+                {% with trait = "bond_" + i|string %}
+                <li>{{background.bonds[trait]}}</li>
+                {% endwith %}
+                {% endfor %}
+            </ol>
+        </div>
+        <div>
+            <h4 class="ml-4">Flaws</h4>
+            <ol type="1">
+                {% for i in range(1,7) %}
+                {% with trait = "flaw_" + i|string %}
+                <li>{{background.flaws[trait]}}</li>
+                {% endwith %}
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
